@@ -30,6 +30,7 @@ import {
 import Link from "next/link";
 import { deleteCookie } from "@/utils/tokenHandler";
 import LogoutUserButton from "@/components/LogoutUserButton";
+import getLogedInUser from "@/utils/getLogedInUser";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -79,7 +80,10 @@ const navigationLinks = [
   },
 ];
 
-export default function Navbar() {
+export default async function Navbar() {
+
+  const user = await getLogedInUser()
+  console.log(user, 'my user')
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -272,24 +276,32 @@ export default function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Avatar className="cursor-pointer">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <Link href={'/profile'} className="cursor-pointer">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+          {user?.email ?
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar className="cursor-pointer border border-black">
+                  <AvatarImage src={user?.profileImage} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Link href={'/profile'} className="cursor-pointer">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>
+                <DropdownMenuItem>
+                  <LogoutUserButton />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            : 
+              <Link href={'/login'}>
+                <Button className="cursor-pointer">Login</Button>
               </Link>
-              <DropdownMenuItem>
-                <LogoutUserButton/>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            }
         </div>
       </div>
     </header>
