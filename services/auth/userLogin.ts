@@ -95,7 +95,6 @@ export const userLogin = async (_currentState: any, formData: any): Promise<any>
             throw new Error(result?.message || 'Login failed')
         }
 
-
         // if (redirectTo) {
         //     const redirectPath = redirectTo.toString()
         //     if (isValidRedirectForRole(redirectPath, userRole)) {

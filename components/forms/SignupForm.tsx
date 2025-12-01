@@ -11,21 +11,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner"
 import { registerUser } from "@/services/auth/registerUser"
 import InputFieldError from "../InputFieldError"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { Textarea } from "../ui/textarea"
 import { getNames } from "country-list";
+import ProfileUploader from "../ProfileUploader"
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const countries = getNames()
-  console.log(countries[1])
   const [state, formAction, isPending] = useActionState(registerUser, null)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
 
   useEffect(() => {
     if (state && !state.success && state.message) {
@@ -33,56 +33,74 @@ export function SignupForm({
     }
   }, [state])
 
+
   const interests = [
-  "Hiking",
-  "Camping",
-  "Trekking",
-  "Mountain Climbing",
-  "Skiing",
-  "Surfing",
-  "Museum Visits",
-  "Historical Sites",
-  "Art Galleries",
-  "Cultural Festivals",
-  "Food Tours",
-  "Street Food Tasting",
-  "Cooking Classes",
-  "Bird Watching",
-  "Safari Tours",
-  "Beach Relaxation",
-  "City Tours",
-  "Photography",
-  "Videography",
-  "Yoga Retreats"
-]
+    "Hiking",
+    "Camping",
+    "Trekking",
+    "Mountain Climbing",
+    "Skiing",
+    "Surfing",
+    "Museum Visits",
+    "Historical Sites",
+    "Art Galleries",
+    "Cultural Festivals",
+    "Food Tours",
+    "Street Food Tasting",
+    "Cooking Classes",
+    "Bird Watching",
+    "Safari Tours",
+    "Beach Relaxation",
+    "City Tours",
+    "Photography",
+    "Videography",
+    "Yoga Retreats"
+  ]
 
   return (
     <form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
+
+      {/* hidden input file for profile image  */}
+      <input
+        type="file"
+        name="profileImage"
+        ref={(el) => {
+          if (el && profileImage) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(profileImage);
+            el.files = dataTransfer.files;
+          }
+        }}
+        hidden
+      />
+
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Create your account</h1>
         </div>
 
-        {/* name field  */}
-        <Field>
-          <FieldLabel htmlFor="name">
-            Full Name
-            <span className="text-red-500">*</span>
-          </FieldLabel>
-          <Input name="name" id="name" type="text" placeholder="Ex: Nabil Siddik" />
+        <div className="flex items-center gap-5 flex-col md:flex-row">
+          {/* name field  */}
+          <Field>
+            <FieldLabel htmlFor="name">
+              Full Name
+              <span className="text-red-500">*</span>
+            </FieldLabel>
+            <Input name="name" id="name" type="text" placeholder="Ex: Nabil Siddik" />
 
-          <InputFieldError field="name" state={state} />
+            <InputFieldError field="name" state={state} />
 
-        </Field>
+          </Field>
 
-        {/* email field  */}
-        <Field>
-          <FieldLabel htmlFor="email">Email <span className="text-red-500">*</span></FieldLabel>
-          <Input name="email" id="email" type="email" placeholder="example@gmail.com" />
+          {/* email field  */}
+          <Field>
+            <FieldLabel htmlFor="email">Email <span className="text-red-500">*</span></FieldLabel>
+            <Input name="email" id="email" type="email" placeholder="example@gmail.com" />
 
-          <InputFieldError field="email" state={state} />
+            <InputFieldError field="email" state={state} />
 
-        </Field>
+          </Field>
+        </div>
 
         {/* bio field  */}
         <Field>
@@ -147,6 +165,11 @@ export function SignupForm({
 
             <InputFieldError field="confirmPassword" state={state} />
           </Field>
+        </div>
+
+
+        <div>
+          <ProfileUploader setProfileImage={setProfileImage} />
         </div>
 
 

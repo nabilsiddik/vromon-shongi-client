@@ -17,6 +17,20 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from "next/link";
+import { deleteCookie } from "@/utils/tokenHandler";
+import LogoutUserButton from "@/components/LogoutUserButton";
+
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "#", label: "Home" },
@@ -66,6 +80,7 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
+
   return (
     <header className="border-b px-4 md:px-6">
       <div className="container mx-auto px-5 flex h-16 items-center justify-between gap-4">
@@ -218,7 +233,7 @@ export default function Navbar() {
 
                                   {/* Display label with description if present */}
                                   {link.type === "description" &&
-                                  "description" in item ? (
+                                    "description" in item ? (
                                     <div className="space-y-1">
                                       <div className="font-medium">
                                         {item.label}
@@ -257,12 +272,24 @@ export default function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild className="text-sm" size="sm" variant="ghost">
-            <a href="#">Sign In</a>
-          </Button>
-          <Button asChild className="text-sm" size="sm">
-            <a href="#">Get Started</a>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar className="cursor-pointer">
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href={'/profile'} className="cursor-pointer">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>
+                <LogoutUserButton/>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

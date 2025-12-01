@@ -16,7 +16,6 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
             currentLocation: formData.get("currentLocation"),
         };
 
-        // Validate with zod
         if (zodValidator(payload, registerUserZodSchema).success === false) {
             return zodValidator(payload, registerUserZodSchema);
         }
@@ -35,8 +34,8 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
         const newFormData = new FormData()
         newFormData.append('data', JSON.stringify(registerData))
 
-        if (formData.get('file')) {
-            newFormData.append('file', formData.get('file') as Blob)
+        if (formData.get('profileImage')) {
+            newFormData.append('file', formData.get('profileImage') as Blob)
         }
 
         const res = await serverFetch.post('/user/create-user', {

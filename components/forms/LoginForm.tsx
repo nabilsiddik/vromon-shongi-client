@@ -28,8 +28,6 @@ export function LoginForm({
   useEffect(() => {
     if (state && !state.success && state.message) {
       toast.error(state.message)
-    }else{
-      toast.success('Successfully Loged in')
     }
   }, [state])
 
