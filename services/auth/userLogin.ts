@@ -2,19 +2,20 @@
 import { redirect } from 'next/navigation'
 import { JwtPayload } from 'jsonwebtoken'
 import jwt from 'jsonwebtoken'
-// import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from '@/utils/authUtils'
 import { zodValidator } from '@/lib/zodValidator'
 import { loginValidationZodSchema } from '@/zod/auth.zodSchema'
 import { parse } from "cookie";
 import { setCookie } from '@/utils/tokenHandler'
 import { UserRole } from '@/types/user.interface'
 import { serverFetch } from '@/lib/serverFetch'
+import { getDefaultDashboardRoute, isValidRedirectForRole } from '@/lib/authUtils'
 
 export const userLogin = async (_currentState: any, formData: any): Promise<any> => {
     try {
         const redirectTo = formData.get('redirect') || null
         let accessTokenObj: null | any = null
         let refreshTokenObj: null | any = null
+
 
         const payload = {
             email: formData.get('email'),
@@ -95,19 +96,16 @@ export const userLogin = async (_currentState: any, formData: any): Promise<any>
             throw new Error(result?.message || 'Login failed')
         }
 
-        // if (redirectTo) {
-        //     const redirectPath = redirectTo.toString()
-        //     if (isValidRedirectForRole(redirectPath, userRole)) {
-        //         redirect(`${redirectPath}?login=true`)
-        //     } else {
-        //         redirect(`${getDefaultDashboardRoute(userRole)}?login=true`)
-        //     }
-        // } else {
-        //     redirect(`${getDefaultDashboardRoute(userRole)}?login=true`)
-        // }
-
-
-        redirect('/')
+        if (redirectTo) {
+            const redirectPath = redirectTo.toString()
+            if (isValidRedirectForRole(redirectPath, userRole)) {
+                redirect(`${redirectPath}?login=true`)
+            } else {
+                redirect(`${getDefaultDashboardRoute(userRole)}?login=true`)
+            }
+        } else {
+            redirect(`${getDefaultDashboardRoute(userRole)}?login=true`)
+        }
 
     } catch (err: any) {
         if (err?.digest?.startsWith('NEXT_REDIRECT')) {
