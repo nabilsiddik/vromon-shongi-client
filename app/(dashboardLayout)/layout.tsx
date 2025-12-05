@@ -5,7 +5,7 @@ import { IUserInfo } from "@/types/user.interface"
 import getLogedInUser from "@/utils/getLogedInUser"
 
 const CommonDashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const userInfo = await getLogedInUser() as IUserInfo | null
+  const userInfo = await getLogedInUser() as IUserInfo
   return (
     <SidebarProvider>
       {/* sidebar  */}

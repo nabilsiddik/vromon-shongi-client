@@ -16,10 +16,8 @@ export async function createTravelPlan(
             budgetRange: formData.get("budgetRange") as string,
             travelType: formData.get("travelType") as string,
             description: formData.get("description") as string,
-            visibility: (formData.get("visibility") === 'true'),
+            visibility:  (formData.get("visibility") === 'false' ? false : true)
         };
-
-        console.log(payload, 'my payload')
 
         if (zodValidator(payload, travelPlanZodSchema).success === false) {
             return zodValidator(payload, travelPlanZodSchema);
@@ -34,10 +32,13 @@ export async function createTravelPlan(
             budgetRange: validatedPayload.budgetRange ?? undefined,
             travelType: validatedPayload.travelType,
             description: validatedPayload.description ?? undefined,
-            visibility: validatedPayload.visibility ?? true,
+            visibility: validatedPayload.visibility ?? true
         };
 
         const res = await serverFetch.post('/travel-plan', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(travelPlanData)
         })
 

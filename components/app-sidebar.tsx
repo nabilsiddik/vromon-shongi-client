@@ -11,11 +11,6 @@ import { BaggageClaim, PersonStanding, PlaneTakeoff, User } from "lucide-react";
 import { IUserInfo } from "@/types/user.interface";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   adminNavItems: [
     {
       title: "User Management",
@@ -59,7 +54,7 @@ const data = {
 }
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  userInfo: IUserInfo | null
+  userInfo: IUserInfo
 }
 
 export function AppSidebar({ userInfo, ...props }: AppSidebarProps) {
@@ -69,7 +64,7 @@ export function AppSidebar({ userInfo, ...props }: AppSidebarProps) {
         <NavMain adminNavItems={data.adminNavItems} userNavItems={data.userNavItems}  userInfo={userInfo} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userInfo} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

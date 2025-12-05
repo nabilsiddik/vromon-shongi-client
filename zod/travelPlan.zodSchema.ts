@@ -7,5 +7,5 @@ export const travelPlanZodSchema = z.object({
   budgetRange: z.string().optional().nullable(),
   travelType: z.string().min(1, "Travel type is required"),
   description: z.string().optional().nullable(),
-  visibility: z.string().optional(),
+  visibility: z.boolean().optional(),
 });

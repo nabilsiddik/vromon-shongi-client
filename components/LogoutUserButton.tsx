@@ -1,13 +1,12 @@
 'use client'
+import { userLogout } from '@/services/auth/userLogout'
 import { Button } from './ui/button'
-import { deleteCookie } from '@/utils/tokenHandler'
 
 const LogoutUserButton = () => {
 
   // handle user logout
-  const handleUserLogout = async () => {
-    await deleteCookie('accessToken')
-    await deleteCookie('refreshToken')
+  const handleUserLogout = async() => {
+    await userLogout()
   }
 
   return (
