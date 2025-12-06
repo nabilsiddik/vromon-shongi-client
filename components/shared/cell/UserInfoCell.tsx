@@ -1,7 +1,6 @@
 "use client";
 
 import { Avatar } from "@/components/ui/avatar";
-import { Gender } from "@/types/user.interface";
 import Image from "next/image";
 
 interface UserInfoCellProps {
@@ -13,7 +12,7 @@ interface UserInfoCellProps {
 
 export function UserInfoCell({ name, email, photo, gender }: UserInfoCellProps) {
 
-    let userPlaceholderImage = gender.toUpperCase() === 'MALE' ? '/images/man.png' : '/images/woman.png' 
+    let userPlaceholderImage = gender?.toUpperCase() === 'MALE' ? '/images/man.png' : '/images/woman.png' 
 
   return (
     <div className="flex items-center gap-3">

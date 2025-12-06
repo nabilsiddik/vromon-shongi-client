@@ -25,7 +25,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { IUserInfo } from "@/types/user.interface"
-import LogoutUserButton from "./LogoutUserButton"
 import { userLogout } from "@/services/auth/userLogout"
 
 export function NavUser({ user }: { user: IUserInfo }) {

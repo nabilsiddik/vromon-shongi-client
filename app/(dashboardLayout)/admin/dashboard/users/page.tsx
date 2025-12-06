@@ -1,5 +1,4 @@
 import UsersTable from "@/components/modules/admin/userManagement/UsersTable"
-import ManagementTable from "@/components/shared/tables/ManagementTable"
 import TablePagination from "@/components/shared/tables/TablePagination"
 import { queryStringFormatter } from "@/lib/formatter"
 import { getAllUsers } from "@/services/admin/userManagement"
