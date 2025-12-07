@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import TravelPlansTable from "@/components/modules/admin/travelPlanManagement/TravelPlansTable"
 import TablePagination from "@/components/shared/tables/TablePagination"
 import { queryStringFormatter } from "@/lib/formatter"

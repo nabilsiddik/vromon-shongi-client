@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { TravelPlanForm } from "@/components/forms/TravelPlanForm"
 
 const TravelPlan = () => {

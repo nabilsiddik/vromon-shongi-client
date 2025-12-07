@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 const AdminDashboard = () => {
   return (
     <div>
