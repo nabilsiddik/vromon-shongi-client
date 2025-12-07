@@ -45,8 +45,6 @@ function ManagementTable<T>({
 
   const hasActions = onView || onEdit || onDelete;
 
-
-
   return (
     <>
       <div className="rounded-lg border relative">

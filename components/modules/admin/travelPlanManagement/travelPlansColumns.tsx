@@ -9,15 +9,12 @@ import { BadgeCell } from "@/components/shared/cell/BadgeCell";
 
 export const travelPlansColumns: Column<any>[] = [
   {
-    header: "User",
+    header: "Added By",
     accessor: (travelPlan) => (
-      // <UserInfoCell
-      //   name={user?.name}
-      //   email={user?.email}
-      //   photo={user?.profileImage as string}
-      //   gender={user?.gender}
-      // />
-      'Nabil'
+      <UserInfoCell
+        name={travelPlan?.user?.name}
+        photo={travelPlan?.user?.profileImage as string}
+      />
     ),
     sortKey: "name",
   },

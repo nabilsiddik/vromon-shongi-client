@@ -22,3 +22,11 @@ export function queryStringFormatter(searchParamsObj: { [key: string]: string | 
     queryString = queryArray.filter((q) => q !== "").join("&")
     return queryString
 }
+
+export function toDateInputValue(dateString?: string | null) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return ""; // fallback if invalid
+
+    return date.toISOString().split("T")[0]; // => "2025-02-12"
+}

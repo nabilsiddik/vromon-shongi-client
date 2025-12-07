@@ -1,15 +1,11 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react";
-
-import Logo from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
   Popover,
@@ -28,62 +24,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link";
-import { deleteCookie } from "@/utils/tokenHandler";
 import LogoutUserButton from "@/components/LogoutUserButton";
 import getLogedInUser from "@/utils/getLogedInUser";
-
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: "#", label: "Home" },
-  {
-    items: [
-      {
-        description: "Browse all components in the library.",
-        href: "#",
-        label: "Components",
-      },
-      {
-        description: "Learn how to use the library.",
-        href: "#",
-        label: "Documentation",
-      },
-      {
-        description: "Pre-built layouts for common use cases.",
-        href: "#",
-        label: "Templates",
-      },
-    ],
-    label: "Features",
-    submenu: true,
-    type: "description",
-  },
-  {
-    items: [
-      { href: "#", label: "Product A" },
-      { href: "#", label: "Product B" },
-      { href: "#", label: "Product C" },
-      { href: "#", label: "Product D" },
-    ],
-    label: "Pricing",
-    submenu: true,
-    type: "simple",
-  },
-  {
-    items: [
-      { href: "#", icon: "BookOpenIcon", label: "Getting Started" },
-      { href: "#", icon: "LifeBuoyIcon", label: "Tutorials" },
-      { href: "#", icon: "InfoIcon", label: "About Us" },
-    ],
-    label: "About",
-    submenu: true,
-    type: "icon",
-  },
-];
+import Logo from "@/components/logo";
 
 export default async function Navbar() {
 
   const user = await getLogedInUser()
-  console.log(user, 'my user')
+
+  const navigationLinks = [
+    { href: "/", label: "Home" },
+    { href: "/explore-travelers", label: "Explore Travelers" },
+    !user?.email && { href: "/find-travel-buddy", label: "Find Travel Buddy" },
+    user?.email && { href: "/my-travel-plans", label: "My Travel Plans" },
+
+    user?.email && user?.role === 'ADMIN' && { href: "/admin/dashboard", label: "Admin Dashboard" },
+  ];
+
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -129,49 +86,10 @@ export default async function Navbar() {
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem className="w-full" key={link.label}>
-                      {link.submenu ? (
-                        <>
-                          <div className="px-2 py-1.5 font-medium text-muted-foreground text-xs">
-                            {link.label}
-                          </div>
-                          <ul>
-                            {link.items.map((item, _itemIndex) => (
-                              <li key={item.label}>
-                                <NavigationMenuLink
-                                  className="py-1.5"
-                                  href={item.href}
-                                >
-                                  {item.label}
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </>
-                      ) : (
-                        <NavigationMenuLink className="py-1.5" href={link.href}>
-                          {link.label}
-                        </NavigationMenuLink>
-                      )}
-                      {/* Add separator between different types of items */}
-                      {index < navigationLinks.length - 1 &&
-                        // Show separator if:
-                        // 1. One is submenu and one is simple link OR
-                        // 2. Both are submenus but with different types
-                        ((!link.submenu &&
-                          navigationLinks[index + 1].submenu) ||
-                          (link.submenu &&
-                            !navigationLinks[index + 1].submenu) ||
-                          (link.submenu &&
-                            navigationLinks[index + 1].submenu &&
-                            link.type !== navigationLinks[index + 1].type)) && (
-                          <div
-                            aria-orientation="horizontal"
-                            className="-mx-1 my-1 h-px w-full bg-border"
-                            role="separator"
-                            tabIndex={-1}
-                          />
-                        )}
+                    <NavigationMenuItem key={index} className="w-full">
+                      <NavigationMenuLink className="py-1.5" href={link?.href}>
+                        {link?.label}
+                      </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
                 </NavigationMenuList>
@@ -180,94 +98,18 @@ export default async function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a className="text-primary hover:text-primary/90" href="#">
-              <Logo />
-            </a>
+            <Logo />
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden" viewport={false}>
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link) => (
-                  <NavigationMenuItem key={link.label}>
-                    {link.submenu ? (
-                      <>
-                        <NavigationMenuTrigger className="*:[svg]:-me-0.5 bg-transparent px-2 py-1.5 font-medium text-muted-foreground hover:text-primary *:[svg]:size-3.5">
-                          {link.label}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent className="data-[motion=from-end]:slide-in-from-right-16! data-[motion=from-start]:slide-in-from-left-16! data-[motion=to-end]:slide-out-to-right-16! data-[motion=to-start]:slide-out-to-left-16! z-50 p-1">
-                          <ul
-                            className={cn(
-                              link.type === "description"
-                                ? "min-w-64"
-                                : "min-w-48",
-                            )}
-                          >
-                            {link.items.map((item) => (
-                              <li key={item.label}>
-                                <NavigationMenuLink
-                                  className="py-1.5"
-                                  href={item.href}
-                                >
-                                  {/* Display icon if present */}
-                                  {link.type === "icon" && "icon" in item && (
-                                    <div className="flex items-center gap-2">
-                                      {item.icon === "BookOpenIcon" && (
-                                        <BookOpenIcon
-                                          aria-hidden="true"
-                                          className="text-foreground opacity-60"
-                                          size={16}
-                                        />
-                                      )}
-                                      {item.icon === "LifeBuoyIcon" && (
-                                        <LifeBuoyIcon
-                                          aria-hidden="true"
-                                          className="text-foreground opacity-60"
-                                          size={16}
-                                        />
-                                      )}
-                                      {item.icon === "InfoIcon" && (
-                                        <InfoIcon
-                                          aria-hidden="true"
-                                          className="text-foreground opacity-60"
-                                          size={16}
-                                        />
-                                      )}
-                                      <span>{item.label}</span>
-                                    </div>
-                                  )}
-
-                                  {/* Display label with description if present */}
-                                  {link.type === "description" &&
-                                    "description" in item ? (
-                                    <div className="space-y-1">
-                                      <div className="font-medium">
-                                        {item.label}
-                                      </div>
-                                      <p className="line-clamp-2 text-muted-foreground text-xs">
-                                        {item.description}
-                                      </p>
-                                    </div>
-                                  ) : (
-                                    // Display simple label if not icon or description type
-                                    !link.type ||
-                                    (link.type !== "icon" &&
-                                      link.type !== "description" && (
-                                        <span>{item.label}</span>
-                                      ))
-                                  )}
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <NavigationMenuLink
-                        className="py-1.5 font-medium text-muted-foreground hover:text-primary"
-                        href={link.href}
-                      >
-                        {link.label}
-                      </NavigationMenuLink>
-                    )}
+                  <NavigationMenuItem key={link?.label}>
+                    <NavigationMenuLink
+                      className="py-1.5 font-medium text-muted-foreground hover:text-primary"
+                      href={link?.href}
+                    >
+                      {link?.label}
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
@@ -291,19 +133,37 @@ export default async function Navbar() {
                 <Link href={'/profile'} className="cursor-pointer">
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                 </Link>
+
+                {user?.email && user?.role === 'ADMIN' &&
+
+                  <>
+                    <Link href={'/admin/dashboard'} className="cursor-pointer">
+                      <DropdownMenuItem>Admin Dashboard</DropdownMenuItem>
+                    </Link>
+
+                    <Link href={'/admin/dashboard/users'} className="cursor-pointer">
+                      <DropdownMenuItem>Manage Users</DropdownMenuItem>
+                    </Link>
+
+                    <Link href={'/admin/dashboard/travel-plans'} className="cursor-pointer">
+                      <DropdownMenuItem>Manage Travel Plans</DropdownMenuItem>
+                    </Link>
+                  </>
+
+                }
                 <DropdownMenuItem>
                   <LogoutUserButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            : 
-              <Link href={'/login'}>
-                <Button className="cursor-pointer">Login</Button>
-              </Link>
-            }
+            :
+            <Link href={'/login'}>
+              <Button className="cursor-pointer">Login</Button>
+            </Link>
+          }
         </div>
       </div>
-    </header>
+    </header >
   );
 }

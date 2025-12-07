@@ -14,7 +14,7 @@ import InputFieldError from "../InputFieldError";
 import { toast } from "sonner";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { IInputErrorState } from "@/utils/getInputFieldError";
-import { createTravelPlan } from "@/services/travel-plan/createTravelPlan";
+import { createTravelPlan } from "@/services/travelPlan/travelPlanManagement";
 
 export function TravelPlanForm({
   className,
@@ -28,6 +28,8 @@ export function TravelPlanForm({
     'FAMILY',
     'FRIENDS'
   ]
+
+  console.log(state, 'travel state')
 
   useEffect(() => {
     if (state && !state.success && state.message) {

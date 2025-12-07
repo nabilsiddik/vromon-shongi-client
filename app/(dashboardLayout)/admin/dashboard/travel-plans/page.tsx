@@ -1,7 +1,7 @@
 import TravelPlansTable from "@/components/modules/admin/travelPlanManagement/TravelPlansTable"
 import TablePagination from "@/components/shared/tables/TablePagination"
 import { queryStringFormatter } from "@/lib/formatter"
-import { getAllTravelPlans } from "@/services/admin/travelPlanManagement"
+import { getAllTravelPlans } from "@/services/travelPlan/travelPlanManagement"
 
 const TravelPlans = async ({searchParams}: {
   searchParams: Promise<{[key: string]: string | string[] | undefined}>
@@ -9,9 +9,8 @@ const TravelPlans = async ({searchParams}: {
 
   const searchParamsObj = await searchParams
   const queryString = queryStringFormatter(searchParamsObj)
-
   const travelPlans = await getAllTravelPlans(queryString)
-
+  
   const totalPages = Math.ceil(
     (travelPlans?.meta?.total || 1) / (travelPlans?.meta?.limit || 1)
   );

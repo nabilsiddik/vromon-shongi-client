@@ -7,6 +7,7 @@ export const serverFetchHelper = async (endPoint: string, options: RequestInit) 
     const accessToken = await getCookie('accessToken')
 
     const response = await fetch(`${NEXT_PUBLIC_SERVER_URL}${endPoint}`, {
+        credentials: 'include',
         headers: {
             Cookie: accessToken ? `accessToken=${accessToken}` : '',
             ...headers
