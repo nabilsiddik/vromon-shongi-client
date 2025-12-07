@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import PageHeader from "@/components/shared/PageHeader"
 import TravelPlanCard from "@/components/shared/TravelPlanCard"
 import { queryStringFormatter } from "@/lib/formatter"
