@@ -1,16 +1,19 @@
+import DisplayTravelers from "@/components/shared/DisplayTravelers";
 import PageHeader from "@/components/shared/PageHeader"
 import { getAllUsers } from "@/services/admin/userManagement"
+import { createTravelPlan } from '@/services/travelPlan/travelPlanManagement';
 
 const ExploreTravelers = async() => {
 
     const usersData = await getAllUsers()
-    const users = usersData?.data
+    const travelers = usersData?.data?.length > 0 && usersData?.data?.filter((user: any) => user?.createdTravelPlans?.length > 0) || []
 
-    console.log(users, 'jdkfldkfjkld')
 
   return (
     <div>
       <PageHeader title="Explore Travelers" description="Explore all the travellers" backgroundImage="/images/bg-banner/explore-traveler.jpg"/>
+
+      <DisplayTravelers travelers = {travelers}/>
     </div>
   )
 }

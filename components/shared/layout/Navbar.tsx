@@ -38,6 +38,8 @@ export default async function Navbar() {
     !user?.email && { href: "/find-travel-buddy", label: "Find Travel Buddy" },
     user?.email && { href: "/my-travel-plans", label: "My Travel Plans" },
 
+    user?.email && { href: "/travel-plans", label: "Travel Plans" },
+
     user?.email && user?.role === 'ADMIN' && { href: "/admin/dashboard", label: "Admin Dashboard" },
   ];
 
@@ -102,8 +104,8 @@ export default async function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden" viewport={false}>
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link) => (
-                  <NavigationMenuItem key={link?.label}>
+                {navigationLinks.map((link,index) => (
+                  <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       className="py-1.5 font-medium text-muted-foreground hover:text-primary"
                       href={link?.href}

@@ -34,6 +34,7 @@ export interface IUser {
   currentLocation?: string | null;
   gender: Gender;
 
+  travelPlansCount: string[];
   interests: string[];
   visitedCountries: string[];
 
