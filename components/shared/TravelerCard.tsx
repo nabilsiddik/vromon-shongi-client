@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { IUser } from "@/types/user.interface";
 import Image from "next/image";
 import { Verified } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 const TravelerCard = ({ traveler }: {
   traveler: IUser
@@ -20,7 +22,7 @@ const TravelerCard = ({ traveler }: {
           className="relative rounded-lg">
           <Image src={traveler?.profileImage || '/images/man.png'} width={100} height={100} alt={traveler?.name} />
         </div>
-        <CardContent>
+        <CardContent className="flex flex-col gap-2">
           {/* Traveler Name and Location */}
           <div className="flex items-center gap-2 mb-2">
             <h3 className="text-md font-semibold text-gray-800 flex items-center gap-2">{traveler?.name} {traveler?.verifiedBadge && <Verified width={20} height={20} />}</h3>
@@ -29,29 +31,43 @@ const TravelerCard = ({ traveler }: {
 
           {/* Traveler Interests */}
           <div className="text-sm text-gray-600 mb-2">
-            <h4 className="font-semibold">Interests:</h4>
+            <h4 className="font-semibold mb-2">Interests: {traveler?.interests?.length === 0 && 'No Interest'}</h4>
             <ul className="flex flex-wrap gap-2 mt-1">
-              {traveler?.interests.map((interest, index) => (
-                <li
-                  key={index}
-                  className="bg-blue-100 text-blue-800 py-1 px-3 rounded-full text-xs"
-                >
-                  {interest}
-                </li>
-              ))}
+              {traveler?.interests?.length > 0 ? traveler?.interests.map((interest, index) => {
+                if (index + 1 < 4) {
+                  return <li
+                    key={index}
+                    className="bg-blue-100 text-blue-800 py-1 px-3 rounded-full text-xs"
+                  >
+                    {interest}
+                  </li>
+                }
+              }): <></>}
+            </ul>
+          </div>
+
+          {/* Traveler visited countries */}
+          <div className="text-sm text-gray-600 mb-2">
+            <h4 className="font-semibold mb-2">Visited Countries: {traveler?.visitedCountries?.length === 0 && 'No Country'}</h4>
+            <ul className="flex flex-wrap gap-2 mt-1">
+              {traveler?.visitedCountries?.length > 0 ? traveler?.visitedCountries.map((country, index) => {
+                if (index + 1 < 4) {
+                  return <li
+                    key={index}
+                    className="bg-blue-100 text-blue-800 py-1 px-3 rounded-full text-xs"
+                  >
+                    {country}
+                  </li>
+                }
+              }): <></>}
             </ul>
           </div>
 
           {/* Travel Plans */}
           <CardDescription>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-500">
-                Travel Plans: {traveler?.travelPlansCount}
-              </span>
-              <button className="text-blue-500 hover:underline text-sm">
-                View Plans
-              </button>
-            </div>
+            <Link href={`/traveler-profile/${traveler?.id}`}>
+              <Button className="w-full cursor-pointer mt-2">View Profile</Button>
+            </Link>
           </CardDescription>
         </CardContent>
       </Card>

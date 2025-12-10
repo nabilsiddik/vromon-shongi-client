@@ -16,6 +16,7 @@ import { BadgeCheck, Check, Edit } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { updateUserProfile } from "@/services/user/userProfileManagement";
 import ProfileUploader from "@/components/ProfileUploader";
+import { usePathname } from "next/navigation";
 
 export default function ProfileClient({ user }: { user: any }) {
     const [edit, setEdit] = useState(false);
@@ -23,7 +24,7 @@ export default function ProfileClient({ user }: { user: any }) {
     const [profileState, profileAction, isProfileUpdating] =
         useActionState(updateUserProfile, null);
 
-    console.log(profileState, 'sate')
+    const path = usePathname()
 
     useEffect(() => {
         if (profileState?.message && !profileState.success) {
@@ -38,10 +39,16 @@ export default function ProfileClient({ user }: { user: any }) {
         <div className="space-y-10">
 
             <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold">My Profile</h2>
-                <Button variant="ghost" onClick={() => setEdit(!edit)}>
-                    {edit ? "Cancel" : "Edit Profile"}
-                </Button>
+                <h2 className="text-3xl font-bold">
+                    {path.startsWith('/traveler-profile') ? 'Traveler Profile' : 'My Profile'}
+                </h2>
+
+                {!path.startsWith('/traveler-profile') &&
+                    <Button variant="ghost" onClick={() => setEdit(!edit)}>
+                        {edit ? "Cancel" : "Edit Profile"}
+                    </Button>
+                }
+
             </div>
 
             <div className="flex flex-col md:flex-row gap-10 border rounded-xl p-6 bg-white shadow-sm">
@@ -122,9 +129,8 @@ export default function ProfileClient({ user }: { user: any }) {
                 </div>
             }
 
-
             {/* edit profile form */}
-            {edit && (
+            {edit && !path.startsWith('/traveler-profile') && (
                 <div className="border rounded-xl p-6 shadow-sm bg-white">
                     <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">Edit Profile <Edit /> </h3>
 
