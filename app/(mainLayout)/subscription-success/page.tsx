@@ -55,6 +55,8 @@ const SubscriptionSuccess = () => {
                 );
                 const userData = await res.json();
 
+                console.log(userData, 'user data')
+
                 if (userData?.data?.verifiedBadge) {
                     setIsPremium(true);
                     clearInterval(interval);
@@ -67,7 +69,8 @@ const SubscriptionSuccess = () => {
         return () => clearInterval(interval);
     }, [verifiedSession]);
 
-    console.log(verifiedSession)
+    console.log(verifiedSession, 'verified session')
+    console.log(isPremium, 'is premium user')
 
     if (loading) {
         return (

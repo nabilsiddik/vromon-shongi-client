@@ -34,7 +34,6 @@ export default async function Navbar() {
     { href: "/", label: "Home" },
     { href: "/explore-travelers", label: "Explore Travelers" },
     !user?.email && { href: "/find-travel-buddy", label: "Find Travel Buddy" },
-    user?.email && { href: "/my-travel-plans", label: "My Travel Plans" },
 
     user?.email && { href: "/travel-plans", label: "Travel Plans" },
 
@@ -131,23 +130,26 @@ export default async function Navbar() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <Link href={'/profile'} className="cursor-pointer">
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                </Link>
 
                 {user?.email && user?.role === 'ADMIN' &&
 
                   <>
+
+
+                    <Link href={'/admin/dashboard/profile'} className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                    </Link>
+
                     <Link href={'/admin/dashboard'} className="cursor-pointer">
-                      <DropdownMenuItem>Admin Dashboard</DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">Admin Dashboard</DropdownMenuItem>
                     </Link>
 
                     <Link href={'/admin/dashboard/users'} className="cursor-pointer">
-                      <DropdownMenuItem>Manage Users</DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">Manage Users</DropdownMenuItem>
                     </Link>
 
                     <Link href={'/admin/dashboard/travel-plans'} className="cursor-pointer">
-                      <DropdownMenuItem>Manage Travel Plans</DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">Manage Travel Plans</DropdownMenuItem>
                     </Link>
                   </>
 
@@ -156,15 +158,24 @@ export default async function Navbar() {
                 {user?.email && user?.role === 'USER' &&
 
                   <>
+
+                    <Link href={'/user/dashboard/profile'} className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                    </Link>
+
                     <Link href={'/user/dashboard'} className="cursor-pointer">
-                      <DropdownMenuItem>User Dashboard</DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">User Dashboard</DropdownMenuItem>
+                    </Link>
+
+                    <Link href={'/user/dashboard/my-travel-plans'} className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer">My Plans</DropdownMenuItem>
                     </Link>
                   </>
 
                 }
                 <Link href={'/subscription'} className="cursor-pointer">
-                      <DropdownMenuItem>Plans</DropdownMenuItem>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer">Subscriptions</DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>
                   <LogoutUserButton />
                 </DropdownMenuItem>

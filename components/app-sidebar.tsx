@@ -44,8 +44,13 @@ const data = {
       isActive: false,
       items: [
         {
-          title: "Create Plans",
-          url: "/user/dashboard/travel-plans",
+          title: "Create Plan",
+          url: "/user/dashboard/create-plan",
+          icon: <BaggageClaim />
+        },
+        {
+          title: "My Plans",
+          url: "/user/dashboard/my-travel-plans",
           icon: <BaggageClaim />
         }
       ],

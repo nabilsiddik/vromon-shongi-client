@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 import { TravelPlanForm } from "@/components/forms/TravelPlanForm"
 
-const TravelPlan = () => {
+const FindTravelBuddy = () => {
   return (
     <div>
       <div className="max-w-6xl mx-auto">
@@ -11,4 +11,4 @@ const TravelPlan = () => {
   )
 }
 
-export default TravelPlan
+export default FindTravelBuddy

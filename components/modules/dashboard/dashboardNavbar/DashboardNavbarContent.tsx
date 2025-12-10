@@ -25,9 +25,9 @@ const DashboardNavbarContent = ({ userInfo }: DashbaordNavbarContentProps) => {
             <h2 className="font-bold text-2xl text-primary">Travel Buddy</h2>
           </Link>
         </div>
-        <div className="flex-4">
+        {/* <div className="flex-4">
           <DashboardNavbarSearch />
-        </div>
+        </div> */}
         <div className="flex-4 flex justify-end">
           <DashboardNavbarProfile/>
         </div>

@@ -18,6 +18,37 @@ export const getAllTravelPlans = async (queryString: string) => {
     }
 }
 
+// Get travel plan by id
+export const getTravelPlanById = async (id: string) => {
+    try {
+        const res = await serverFetch.get(`/travel-plan/${id}`)
+        const result = await res.json()
+        return result.data || null
+    } catch (error: any) {
+        console.log(error)
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        }
+    }
+}
+
+// Get my travel plan
+export const getMyTravelPlan = async () => {
+    try {
+        const res = await serverFetch.get(`/travel-plan/my-plans`)
+        const result = await res.json()
+        console.log(result)
+        return result.data || null
+    } catch (error: any) {
+        console.log(error)
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        }
+    }
+}
+
 // Create Travel Plans
 export async function createTravelPlan(
     prevState: any,
@@ -73,11 +104,7 @@ export async function createTravelPlan(
     }
 }
 
-
-
-
 // Update travel plan
-
 export async function updateTravelPlan(id: string, _prevState: any, formData: any) {
 
     const travelTypeRaw = formData.travelType as string;
