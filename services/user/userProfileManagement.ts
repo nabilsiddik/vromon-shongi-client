@@ -13,8 +13,8 @@ export const updateUserProfile = async (
             name: formData.get("name"),
             bio: formData.get("bio"),
             currentLocation: formData.get("currentLocation"),
-            interests: formData.get("interests"),
-            visitedCountries: formData.get("visitedCountries"),
+            interests: formData.get("interests") || '',
+            visitedCountries: formData.get("visitedCountries") || '',
         };
 
         // Validate payload

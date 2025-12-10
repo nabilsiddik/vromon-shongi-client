@@ -74,7 +74,7 @@ function ManagementTable<T>({
 
           {/* table body  */}
           <TableBody>
-            {data.length === 0 ? (
+            {data?.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length + (hasActions ? 1 : 0)}

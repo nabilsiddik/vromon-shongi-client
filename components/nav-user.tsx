@@ -3,6 +3,7 @@
 import {
   ChevronsUpDown,
   LogOut,
+  User2,
 } from "lucide-react"
 
 import {
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/sidebar"
 import { IUserInfo } from "@/types/user.interface"
 import { userLogout } from "@/services/auth/userLogout"
+import Link from "next/link"
 
 export function NavUser({ user }: { user: IUserInfo }) {
   const { isMobile } = useSidebar()
@@ -33,6 +35,14 @@ export function NavUser({ user }: { user: IUserInfo }) {
   // handle user logout
   const handleUserLogout = async () => {
     await userLogout()
+  }
+
+  let profileUrl
+
+  if(user?.role === 'ADMIN'){
+    profileUrl = '/admin/dashboard/profile'
+  }else if(user?.role === 'USER'){
+    profileUrl = '/user/dashboard/profile'
   }
 
   return (
@@ -74,28 +84,12 @@ export function NavUser({ user }: { user: IUserInfo }) {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
-            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem className="cursor-pointer">
+              <Link className="flex items-center gap-2" href={profileUrl || '/'}>
+                <User2 />
+                Profile
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={handleUserLogout} className="cursor-pointer">
               <LogOut />
               Log out

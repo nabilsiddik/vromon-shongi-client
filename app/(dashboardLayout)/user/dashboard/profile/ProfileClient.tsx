@@ -92,33 +92,36 @@ export default function ProfileClient({ user }: { user: any }) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="p-5 rounded-xl border shadow-sm bg-white">
-                    <p className="text-gray-500">Interests</p>
-                    <p className="font-semibold">{user.interests?.length || 0} items</p>
-                    <ul>
-                        {user.interests?.length > 0 && user?.interests?.map((item: any, index: number) => {
-                            return <li key={index} className="flex items-center gap-2"><Check width={15} /> {item}</li>
-                        })}
-                    </ul>
-                </div>
+            {user?.role === 'USER' &&
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="p-5 rounded-xl border shadow-sm bg-white">
+                        <p className="text-gray-500">Interests</p>
+                        <p className="font-semibold">{user.interests?.length || 0} items</p>
+                        <ul>
+                            {user.interests?.length > 0 && user?.interests?.map((item: any, index: number) => {
+                                return <li key={index} className="flex items-center gap-2"><Check width={15} /> {item}</li>
+                            })}
+                        </ul>
+                    </div>
 
-                <div className="p-5 rounded-xl border shadow-sm bg-white">
-                    <p className="text-gray-500">Visited Countries</p>
-                    <p className="font-semibold">{user.visitedCountries?.length || 0} countries</p>
+                    <div className="p-5 rounded-xl border shadow-sm bg-white">
+                        <p className="text-gray-500">Visited Countries</p>
+                        <p className="font-semibold">{user.visitedCountries?.length || 0} countries</p>
 
-                    <ul>
-                        {user.visitedCountries?.length > 0 && user?.visitedCountries?.map((item: any, index: number) => {
-                            return <li key={index} className="flex items-center gap-2"><Check width={15} /> {item}</li>
-                        })}
-                    </ul>
-                </div>
+                        <ul>
+                            {user.visitedCountries?.length > 0 && user?.visitedCountries?.map((item: any, index: number) => {
+                                return <li key={index} className="flex items-center gap-2"><Check width={15} /> {item}</li>
+                            })}
+                        </ul>
+                    </div>
 
-                <div className="p-5 rounded-xl border shadow-sm bg-white">
-                    <p className="text-gray-500">Created Travel Plans</p>
-                    <p className="font-semibold">{user.createdTravelPlans?.length || 0} plans</p>
+                    <div className="p-5 rounded-xl border shadow-sm bg-white">
+                        <p className="text-gray-500">Created Travel Plans</p>
+                        <p className="font-semibold">{user.createdTravelPlans?.length || 0} plans</p>
+                    </div>
                 </div>
-            </div>
+            }
+
 
             {/* edit profile form */}
             {edit && (
@@ -162,21 +165,25 @@ export default function ProfileClient({ user }: { user: any }) {
                             </Field>
 
 
-                            <Field>
-                                <FieldLabel>Interests (comma separated)</FieldLabel>
-                                <Input
-                                    name="interests"
-                                    defaultValue={user.interests?.join(", ")}
-                                />
-                            </Field>
+                            {user?.role === 'USER' &&
+                                <>
+                                    <Field>
+                                        <FieldLabel>Interests (comma separated)</FieldLabel>
+                                        <Input
+                                            name="interests"
+                                            defaultValue={user.interests?.join(", ")}
+                                        />
+                                    </Field>
 
-                            <Field>
-                                <FieldLabel>Visited Countries (comma separated)</FieldLabel>
-                                <Input
-                                    name="visitedCountries"
-                                    defaultValue={user.visitedCountries?.join(", ")}
-                                />
-                            </Field>
+                                    <Field>
+                                        <FieldLabel>Visited Countries (comma separated)</FieldLabel>
+                                        <Input
+                                            name="visitedCountries"
+                                            defaultValue={user.visitedCountries?.join(", ")}
+                                        />
+                                    </Field>
+                                </>
+                            }
 
                             <Button type="submit" disabled={isProfileUpdating}>
                                 {isProfileUpdating ? "Saving..." : "Save Changes"}

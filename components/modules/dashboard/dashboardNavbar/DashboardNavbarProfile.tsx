@@ -31,13 +31,8 @@ const DashboardNavbarProfile = async() => {
     const dropdownMenuList = [
         {
             title: 'Profile',
-            link: '/profile',
+            link: '/user/dashboard/profile',
             icon: <FaRegUserCircle />
-        },
-        {
-            title: 'Change Password',
-            link: '/change-password',
-            icon: <MdOutlinePassword />
         }
     ]
 
