@@ -33,11 +33,7 @@ export default async function Navbar() {
   const navigationLinks = [
     { href: "/", label: "Home" },
     { href: "/explore-travelers", label: "Explore Travelers" },
-    !user?.email && { href: "/find-travel-buddy", label: "Find Travel Buddy" },
-
-    user?.email && { href: "/travel-plans", label: "Travel Plans" },
-
-    user?.email && user?.role === 'ADMIN' && { href: "/admin/dashboard", label: "Admin Dashboard" },
+    user?.email && { href: "/travel-plans", label: "Find Buddy" },
     { href: "/subscription", label: "Subscriptions" },
   ];
 
