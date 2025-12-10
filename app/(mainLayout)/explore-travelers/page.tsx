@@ -7,7 +7,7 @@ import { createTravelPlan } from '@/services/travelPlan/travelPlanManagement';
 const ExploreTravelers = async() => {
 
     const usersData = await getAllUsers()
-    const travelers = usersData?.data?.length > 0 && usersData?.data?.filter((user: any) => user?.createdTravelPlans?.length > 0) || []
+    const travelers = usersData?.data?.length > 0 && usersData?.data?.filter((user: any) => user?.createdTravelPlans?.length > 0 && user?.verifiedBadge) || []
 
 
   return (

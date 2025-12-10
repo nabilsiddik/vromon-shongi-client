@@ -32,7 +32,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-20 pb-20 px-6 md:px-12 bg-white">
+    <section className="py-20 px-6 md:px-12 bg-white">
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold">
           What Travelers <span className="text-blue-600">Say</span>
@@ -59,7 +59,7 @@ export default function Testimonials() {
       >
         {testimonials.map((item) => (
           <SwiperSlide key={item.id}>
-            <Card className="shadow-md border-none rounded-2xl p-6 h-full hover:shadow-xl transition">
+            <Card className="shadow-md border rounded-2xl p-6 h-full hover:shadow-xl transition">
               <CardContent className="space-y-5">
                 {/* Avatar */}
                 <div className="flex items-center gap-4">

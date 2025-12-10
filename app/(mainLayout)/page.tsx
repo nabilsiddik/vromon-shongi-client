@@ -3,6 +3,7 @@ import Hero from "@/components/modules/Home/Hero";
 import HowItWorks from "@/components/modules/Home/HowItWorks";
 import Testimonials from "@/components/modules/Home/Testimonials";
 import TopDestinations from "@/components/modules/Home/TopDestination";
+import TopRatedTravelers from "@/components/modules/Home/TopRatedTravelers";
 
 export const dynamic = "force-dynamic";
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero/>
       <TopDestinations/>
       <FindBuddyCTA/>
+      <TopRatedTravelers/>
       <HowItWorks/>
       <Testimonials/>
     </div>

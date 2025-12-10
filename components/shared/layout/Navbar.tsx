@@ -1,5 +1,3 @@
-import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -41,6 +39,7 @@ export default async function Navbar() {
     user?.email && { href: "/travel-plans", label: "Travel Plans" },
 
     user?.email && user?.role === 'ADMIN' && { href: "/admin/dashboard", label: "Admin Dashboard" },
+    { href: "/subscription", label: "Subscriptions" },
   ];
 
 
@@ -104,7 +103,7 @@ export default async function Navbar() {
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden" viewport={false}>
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link,index) => (
+                {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       className="py-1.5 font-medium text-muted-foreground hover:text-primary"
@@ -153,6 +152,19 @@ export default async function Navbar() {
                   </>
 
                 }
+
+                {user?.email && user?.role === 'USER' &&
+
+                  <>
+                    <Link href={'/user/dashboard'} className="cursor-pointer">
+                      <DropdownMenuItem>User Dashboard</DropdownMenuItem>
+                    </Link>
+                  </>
+
+                }
+                <Link href={'/subscription'} className="cursor-pointer">
+                      <DropdownMenuItem>Plans</DropdownMenuItem>
+                    </Link>
                 <DropdownMenuItem>
                   <LogoutUserButton />
                 </DropdownMenuItem>

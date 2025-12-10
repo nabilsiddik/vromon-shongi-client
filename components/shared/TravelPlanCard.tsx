@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { Verified } from "lucide-react";
 
 type TravelPlanCardProps = {
   travelPlan: {
@@ -19,6 +20,7 @@ type TravelPlanCardProps = {
       name: string;
       profileImage: string;
       currentLocation?: string;
+      verifiedBadge?: boolean
     };
   };
 };
@@ -32,7 +34,7 @@ const TravelPlanCard: React.FC<TravelPlanCardProps> = ({ travelPlan }) => {
       <div className="relative h-48 w-full">
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         <div className="absolute bottom-2 left-4 z-10 text-white">
-          <h3 className="text-xl font-semibold">{user.name}</h3>
+          <h3 className="text-xl font-semibold flex items-center gap-2">{user.name} {user?.verifiedBadge ? <Verified/> : ''}</h3>
           {user.currentLocation && <p className="text-sm">{user.currentLocation}</p>}
         </div>
       </div>

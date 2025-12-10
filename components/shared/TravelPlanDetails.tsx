@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, User, Wallet, Eye, EyeOff } from "lucide-react";
+import { Calendar, MapPin, User, Wallet, Eye, EyeOff, VerifiedIcon, Verified } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
@@ -47,7 +47,7 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                             {/* Host Section */}
                             <div className="md:col-span-1">
                                 <h2 className="text-lg font-semibold mb-4">Hosted By</h2>
-                                <Card className="p-4 text-center border rounded-xl shadow-sm gap-2">
+                                <Card className="p-4 text-center border rounded-xl shadow-sm gap-2 flex flex-col justify-center items-center">
                                     <div className="relative w-24 h-24 mx-auto">
                                         <Image
                                             src={user?.profileImage || "/default-avatar.png"}
@@ -57,12 +57,7 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                                         />
                                     </div>
 
-                                    <h3 className="font-semibold text-lg">{user?.name}</h3>
-
-                                    {user?.verifiedBadge && (
-                                        <Badge className="mt-2 bg-blue-600">Verified</Badge>
-                                    )}
-
+                                    <h3 className="font-semibold text-lg flex items-center gap-2">{user?.name} {user?.verifiedBadge ? <Verified/> : ''}</h3>
                                     <p className="text-sm text-gray-500">{user?.email}</p>
 
                                     <Link href={'/'}>

@@ -8,7 +8,7 @@ export const authRoutes = ['/login', '/signup']
 
 export const commonProtectedRoutes: RouteConfig = {
     exact: ['/my-profile'],
-    patterns: []
+    patterns: [/^\/subscription/]
 }
 
 export const adminProtectedRoutes: RouteConfig = {

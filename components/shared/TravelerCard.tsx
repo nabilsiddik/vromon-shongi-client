@@ -2,22 +2,28 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { IUser } from "@/types/user.interface";
 import Image from "next/image";
+import { Verified } from "lucide-react";
 
-const TravelerCard = ({traveler} : {
-    traveler: IUser
+const TravelerCard = ({ traveler }: {
+  traveler: IUser
 }) => {
   return (
     <div className="p-4 sm:p-6 max-w-sm w-full bg-white shadow-lg rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
-      <Card>
-        <div className="relative">
-          {/* Background Image */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-30 rounded-lg"></div>
-          <Image src={traveler?.profileImage || '/images/man.png'} width={100} height={100} alt={traveler?.name}/>
+      <Card className="pt-0">
+        <div
+          style={{
+            backgroundImage: `url(${'/images/bg-banner/travel-plans.jpg'})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
+          }}
+          className="relative rounded-lg">
+          <Image src={traveler?.profileImage || '/images/man.png'} width={100} height={100} alt={traveler?.name} />
         </div>
         <CardContent>
           {/* Traveler Name and Location */}
           <div className="flex items-center gap-2 mb-2">
-            <h3 className="text-xl font-semibold text-gray-800">{traveler?.name}</h3>
+            <h3 className="text-md font-semibold text-gray-800 flex items-center gap-2">{traveler?.name} {traveler?.verifiedBadge && <Verified width={20} height={20} />}</h3>
             <span className="text-sm text-gray-500">({traveler?.currentLocation})</span>
           </div>
 
