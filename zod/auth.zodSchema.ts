@@ -47,6 +47,16 @@ export const registerUserZodSchema = z.object({
     path: ['confirmPassword']
 })
 
+
+export const updateUserProfileZodSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  bio: z.string().max(300, { message: "Bio must be under 300 characters." }).optional(),
+  currentLocation: z.string().max(100, { message: "Location must be under 100 characters." }).optional(),
+  interests: z.string().optional(),
+  visitedCountries: z.string().optional(),
+});
+
+
 export const loginValidationZodSchema = z.object({
     email: z.email({
         message: "Email is required",

@@ -44,3 +44,14 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+
+export interface IUpdateUserProfilePayload {
+  name: string;
+  bio?: string;
+  currentLocation?: string;
+  gender: "MALE" | "FEMALE" | "OTHER";
+  interests?: string[]; 
+  visitedCountries?: string[];
+  profileImage?: File;
+}
