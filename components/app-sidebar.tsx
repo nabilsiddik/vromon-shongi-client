@@ -61,8 +61,13 @@ const data = {
       isActive: false,
       items: [
         {
-          title: "Request",
-          url: "/user/dashboard/join-requests",
+          title: "Request Got",
+          url: "/user/dashboard/join-requests-got",
+          icon: <ListCheck />
+        },
+        {
+          title: "Request Sent",
+          url: "/user/dashboard/join-requests-sent",
           icon: <ListCheck />
         }
       ],
