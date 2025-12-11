@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import getLogedInUser from "@/utils/getLogedInUser";
 import ProfileClient from "./ProfileClient";
 
