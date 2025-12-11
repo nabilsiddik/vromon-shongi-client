@@ -7,11 +7,24 @@ import { Calendar, MapPin, User, Wallet, Eye, EyeOff, VerifiedIcon, Verified } f
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { serverFetch } from "@/lib/serverFetch";
 import { toast } from "sonner";
+import getLogedInUser from "@/utils/getLogedInUser";
 
 export default function TravelPlanDetails({ plan }: { plan: any }) {
+    const [currentUser, setCurrentUser] = useState<any | null>(null)
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        async function fetchUser() {
+            setLoading(true)
+            const loggedInUser = await getLogedInUser()
+            setCurrentUser(loggedInUser)
+            setLoading(false)
+        }
+        fetchUser()
+    }, [])
+
     const {
         id: planId,
         destination,
@@ -55,6 +68,9 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
             setIsJoining(false);
         }
     };
+
+    if (loading) return <p>Loading...</p>
+    if (!currentUser) return <p>No user logged in</p>
     return (
         <div className="pb-20">
             <div className="relative flex items-center justify-center h-[320px] w-full bg-black">
@@ -93,33 +109,43 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                                         />
                                     </div>
 
-                                    <h3 className="font-semibold text-lg flex items-center gap-2">{user?.name} {user?.verifiedBadge ? <Verified /> : ''}</h3>
+                                    <h3 className="font-semibold text-lg flex items-center gap-2">{user?.name} {currentUser?.verifiedBadge ? <Verified /> : ''}</h3>
                                     <p className="text-sm text-gray-500">{user?.email}</p>
 
-                                    <Link href={'/'}>
-                                        <Button variant={'outline'}>Visit Profile</Button>
+                                    <Link href={`/traveler-profile/${user?.id}`}>
+                                        <Button className="cursor-pointer" variant={'outline'}>Visit Profile</Button>
                                     </Link>
 
-                                    {/* join request confirm modal */}
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button className="w-full mt-3">Join With {user?.name}</Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Confirm Join</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    Are you sure you want to join <b>{user?.name}</b> for this trip to <b>{destination}</b>?
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={handleJoin} disabled={isJoining}>
-                                                    {isJoining ? "Joining..." : "Yes, Join"}
-                                                </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
+                                    {currentUser?.verifiedBadge ?
+
+                                        <>
+                                            {/* join request confirm modal */}
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button className="w-full mt-3">Join With {user?.name}</Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Confirm Join</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            Are you sure you want to join <b>{user?.name}</b> for this trip to <b>{destination}</b>?
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={handleJoin} disabled={isJoining}>
+                                                            {isJoining ? "Joining..." : "Yes, Join"}
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </>
+
+                                        :
+                                        <Link href={'/subscription'}>
+                                            <Button className="w-full mt-3 cursor-pointer">Subscribe To Join</Button>
+                                        </Link>
+                                    }
                                 </Card>
 
                             </div>
@@ -158,12 +184,12 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                                         label="Travel Type"
                                         value={travelType}
                                     />
-
+                                    {/* 
                                     <DetailItem
                                         icon={visibility ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                                         label="Visibility"
                                         value={visibility ? "Public" : "Private"}
-                                    />
+                                    /> */}
                                 </div>
 
                                 {/* Description */}
@@ -178,7 +204,7 @@ export default function TravelPlanDetails({ plan }: { plan: any }) {
                     </CardContent>
                 </Card>
             </div>
-        </div>
+        </div >
     );
 }
 

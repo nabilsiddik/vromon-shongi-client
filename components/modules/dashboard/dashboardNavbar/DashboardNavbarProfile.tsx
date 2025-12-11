@@ -38,10 +38,6 @@ const DashboardNavbarProfile = async() => {
 
     return (
         <div className="flex items-center gap-5">
-            <div className="relative">
-                <div className="absolute w-5 h-5 bg-red-600 text-white rounded-full flex items-center justify-center -top-3 -right-3 text-[12px] font-bold">10</div>
-                <IoMdNotifications className="text-2xl" />
-            </div>
             <div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

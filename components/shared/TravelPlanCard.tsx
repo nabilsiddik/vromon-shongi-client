@@ -32,7 +32,14 @@ const TravelPlanCard: React.FC<TravelPlanCardProps> = ({ travelPlan }) => {
     <Card className="hover:shadow-2xl transition-shadow duration-300 rounded-xl overflow-hidden p-0 pb-3">
       {/* Header Image */}
       <div className="relative h-48 w-full">
-        <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div
+          style={{
+            backgroundImage: `url(${'/images/bg-banner/explore-traveler.jpg'})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center'
+          }}
+        className="absolute inset-0 bg-opacity-30"></div>
         <div className="absolute bottom-2 left-4 z-10 text-white">
           <h3 className="text-xl font-semibold flex items-center gap-2">{user.name} {user?.verifiedBadge ? <Verified/> : ''}</h3>
           {user.currentLocation && <p className="text-sm">{user.currentLocation}</p>}

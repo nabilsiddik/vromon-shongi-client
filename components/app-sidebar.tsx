@@ -53,12 +53,6 @@ const data = {
           url: "/user/dashboard/my-travel-plans",
           icon: <List />
         }
-        ,
-        {
-          title: "Reviewable Plans",
-          url: "/user/dashboard/reviewable-plans",
-          icon: <List />
-        }
       ],
     },
     {

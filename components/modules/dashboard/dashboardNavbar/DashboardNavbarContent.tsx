@@ -4,6 +4,7 @@ import { IUserInfo } from "@/types/user.interface"
 import Link from "next/link"
 import DashboardNavbarSearch from "./DashboardNavbarSearch"
 import DashboardNavbarProfile from "./DashboardNavbarProfile"
+import Logo from "@/components/logo"
 
 interface DashbaordNavbarContentProps {
   userInfo: IUserInfo | null
@@ -22,7 +23,7 @@ const DashboardNavbarContent = ({ userInfo }: DashbaordNavbarContentProps) => {
       <div className="flex flex-11 items-center justify-between gap-10">
         <div className="flex-4 flex justify-start">
           <Link href={'/'}>
-            <h2 className="font-bold text-2xl text-primary">Travel Buddy</h2>
+            <Logo/>
           </Link>
         </div>
         {/* <div className="flex-4">

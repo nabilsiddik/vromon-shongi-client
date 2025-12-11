@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-white">
-      
+
       <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-300/30 rounded-full blur-[120px]" />
       <div className="absolute top-10 right-0 w-[400px] h-[400px] bg-purple-300/30 rounded-full blur-[100px]" />
 
@@ -23,26 +24,19 @@ export default function Hero() {
           </h1>
 
           <p className="text-gray-600 text-lg md:text-xl max-w-md">
-            Find like-minded travelers going to your next destination.  
+            Find like-minded travelers going to your next destination.
             Create memories, make friends, and share the journey.
           </p>
 
-          <div className="flex items-center gap-3 bg-white border rounded-xl shadow-md px-4 py-2 w-full max-w-md">
-            <Search size={20} className="text-gray-500" />
-            <Input
-              type="text"
-              placeholder="Search destination..."
-              className="border-none shadow-none focus-visible:ring-0"
-            />
-            <Button>Search</Button>
-          </div>
 
-          <Button
-            size="lg"
-            className="mt-4 rounded-xl px-8 py-6 text-lg shadow-lg"
-          >
-            Find Travel Buddies →
-          </Button>
+          <Link href={'/travel-plans'}>
+            <Button
+              size="lg"
+              className="mt-4 rounded-xl px-8 py-6 text-lg shadow-lg cursor-pointer"
+            >
+              Find Travel Buddies →
+            </Button>
+          </Link>
         </div>
 
         {/* Hero Illustration */}

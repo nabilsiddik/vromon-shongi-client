@@ -4,10 +4,11 @@ import { deleteCookie, getCookie } from './utils/tokenHandler';
 import { UserRole } from './types/user.interface';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute } from './lib/authUtils';
+import getLogedInUser from './utils/getLogedInUser';
 
 export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
-
+    const logedInUser = await getLogedInUser()
     const accessToken = await getCookie('accessToken') || null
 
     // If access token available verify it and store user role otherwise delete accesstoken and refresh token if they are already available
@@ -24,11 +25,22 @@ export async function proxy(request: NextRequest) {
         userRole = verifiedToken.role;
     }
 
+    // redirect admin to user management when visit /admin/dashboard
+    if(pathname === '/admin/dashboard'){
+        return NextResponse.redirect(new URL('/admin/dashboard/users', request.url))
+    }
+
+
     // Get current route owner
     const routerOwner = getRouteOwner(pathname);
 
     // check if it's an auth route
     const isAuth = isAuthRoute(pathname)
+
+    // user is not premium
+    if(!logedInUser?.verifiedBadge && (pathname.startsWith('/user') || pathname.startsWith('/admin'))){
+        return NextResponse.redirect(new URL('/subscription', request.url))
+    }
 
     // If already loged in and trying to visit auth page redirect to his own dashboard
     if (accessToken && isAuth) {
@@ -60,6 +72,7 @@ export async function proxy(request: NextRequest) {
             return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
         }
     }
+
     
 
     return NextResponse.next()

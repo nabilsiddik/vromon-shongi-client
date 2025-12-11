@@ -20,7 +20,7 @@ const TravelerCard = ({ traveler }: {
             backgroundRepeat: 'no-repeat'
           }}
           className="relative rounded-lg">
-          <Image src={traveler?.profileImage || '/images/man.png'} width={100} height={100} alt={traveler?.name} />
+          <Image className="rounded-full" src={traveler?.profileImage || '/images/man.png'} width={100} height={100} alt={traveler?.name} />
         </div>
         <CardContent className="flex flex-col gap-2">
           {/* Traveler Name and Location */}

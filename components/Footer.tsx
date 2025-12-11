@@ -1,4 +1,6 @@
 import Logo from "./logo";
+import FooterSocialIcons from "./shared/FooterSocialIcons";
+import SocialIcons from "./shared/FooterSocialIcons";
 
 interface MenuItem {
   title: string;
@@ -33,44 +35,44 @@ const Footer = ({
   },
   tagline = "Components made easy.",
   menuItems = [
-    {
-      title: "Product",
-      links: [
-        { text: "Overview", url: "#" },
-        { text: "Pricing", url: "#" },
-        { text: "Marketplace", url: "#" },
-        { text: "Features", url: "#" },
-        { text: "Integrations", url: "#" },
-        { text: "Pricing", url: "#" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { text: "About", url: "#" },
-        { text: "Team", url: "#" },
-        { text: "Blog", url: "#" },
-        { text: "Careers", url: "#" },
-        { text: "Contact", url: "#" },
-        { text: "Privacy", url: "#" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { text: "Help", url: "#" },
-        { text: "Sales", url: "#" },
-        { text: "Advertise", url: "#" },
-      ],
-    },
-    {
-      title: "Social",
-      links: [
-        { text: "Twitter", url: "#" },
-        { text: "Instagram", url: "#" },
-        { text: "LinkedIn", url: "#" },
-      ],
-    },
+    // {
+    //   title: "Product",
+    //   links: [
+    //     { text: "Overview", url: "#" },
+    //     { text: "Pricing", url: "#" },
+    //     { text: "Marketplace", url: "#" },
+    //     { text: "Features", url: "#" },
+    //     { text: "Integrations", url: "#" },
+    //     { text: "Pricing", url: "#" },
+    //   ],
+    // },
+    // {
+    //   title: "Company",
+    //   links: [
+    //     { text: "About", url: "#" },
+    //     { text: "Team", url: "#" },
+    //     { text: "Blog", url: "#" },
+    //     { text: "Careers", url: "#" },
+    //     { text: "Contact", url: "#" },
+    //     { text: "Privacy", url: "#" },
+    //   ],
+    // },
+    // {
+    //   title: "Resources",
+    //   links: [
+    //     { text: "Help", url: "#" },
+    //     { text: "Sales", url: "#" },
+    //     { text: "Advertise", url: "#" },
+    //   ],
+    // },
+    // {
+    //   title: "Social",
+    //   links: [
+    //     { text: "Twitter", url: "#" },
+    //     { text: "Instagram", url: "#" },
+    //     { text: "LinkedIn", url: "#" },
+    //   ],
+    // },
   ],
   copyright = "© 2026 TravelBuddy.com. All rights reserved.",
   bottomLinks = [
@@ -79,12 +81,18 @@ const Footer = ({
   ],
 }: Footer2Props) => {
   return (
-    <section className="py-10 border-t">
+    <section className="pt-20 border-t">
       <div className="container mx-auto px-5">
         <footer>
-          <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
+          <div className="flex items-center justify-center">
             <div className="col-span-2 mb-8 lg:mb-0">
-              <Logo />
+              <div className="flex items-center justify-center">
+                <Logo />
+              </div>
+              <p className="mt-3 text-center">Connect with like-minded travelers, plan trips together, and create unforgettable experiences. Your journey starts here!</p>
+              <div className="flex items-center justify-center">
+                <FooterSocialIcons/>
+              </div>
             </div>
             {menuItems.map((section, sectionIdx) => (
               <div key={sectionIdx}>
@@ -102,7 +110,7 @@ const Footer = ({
               </div>
             ))}
           </div>
-          <div className="text-muted-foreground mt-24 flex flex-col justify-center gap-4 border-t pt-8 text-sm font-medium md:flex-row md:items-center">
+          <div className="text-muted-foreground flex flex-col justify-center gap-4 border-t py-8 mt-20 text-sm font-medium md:flex-row md:items-center">
             <p>{copyright}</p>
           </div>
         </footer>
