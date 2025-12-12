@@ -29,7 +29,7 @@ const SubscriptionSuccess = () => {
             try {
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/verify-session?session_id=${sessionId}`,
-                    {credentials: 'include'}
+                    { credentials: 'include' }
                 )
                 const data = await res.json()
 
@@ -56,13 +56,10 @@ const SubscriptionSuccess = () => {
 
         const interval = setInterval(async () => {
             try {
-                const res = await serverFetch.get(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/me`,
-                    { credentials: "include" }
-                );
+                const res = await serverFetch.get("/auth/me");
                 const userData = await res.json();
 
-                console.log(userData, 'user data')
+                console.log(userData, "user data");
 
                 if (userData?.data?.verifiedBadge) {
                     setIsPremium(true);
@@ -75,6 +72,7 @@ const SubscriptionSuccess = () => {
 
         return () => clearInterval(interval);
     }, [verifiedSession]);
+
 
     console.log(verifiedSession, 'verified session')
     console.log(isPremium, 'is premium user')
