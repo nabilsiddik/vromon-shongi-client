@@ -2,6 +2,7 @@ import { serverFetch } from "@/lib/serverFetch"
 import { zodValidator } from "@/lib/zodValidator";
 import { ITravelPlan, TravelType } from "@/types/travelPlan.interface";
 import { travelPlanZodSchema, updateTravelPlanZodSchema } from "@/zod/travelPlan.zodSchema";
+import { getCookie } from "../auth/tokenHandler";
 
 // Get all Travel Plans
 export const getAllTravelPlans = async (queryString: string) => {
@@ -84,9 +85,12 @@ export async function createTravelPlan(
             visibility: validatedPayload.visibility,
         };
 
+        const accessToken = await getCookie("accessToken");
+
         const res = await serverFetch.post('/travel-plan', {
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify(travelPlanData)
         })
