@@ -5,6 +5,7 @@ export const revalidate = 0;
 
 import { Button } from '@/components/ui/button'
 import { serverFetch } from '@/lib/serverFetch';
+import { getCookie } from '@/services/auth/tokenHandler';
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +17,17 @@ const SubscriptionSuccess = () => {
     const [loading, setLoading] = useState(true)
     const [verifiedSession, setVerifiedSession] = useState<boolean>(false)
     const [isPremium, setIsPremium] = useState(false);
+    const [accessToken, setAccessToken] = useState<string>('')
+
+    useEffect(() => {
+        const getAccessToken = async () => {
+            const token = await getCookie('accessToken') || ''
+            setAccessToken(token)
+        }
+        getAccessToken()
+    }, [accessToken])
+
+    console.log(accessToken, 'access')
 
     useEffect(() => {
         if (!sessionId) {
@@ -29,14 +41,20 @@ const SubscriptionSuccess = () => {
             try {
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/verify-session?session_id=${sessionId}`,
-                    { credentials: 'include' }
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
                 )
                 const data = await res.json()
 
-                console.log(data)
+                console.log(data);
 
                 if (data?.success) {
-                    setVerifiedSession(true)
+                    setVerifiedSession(true);
                 }
 
             } catch (err) {
