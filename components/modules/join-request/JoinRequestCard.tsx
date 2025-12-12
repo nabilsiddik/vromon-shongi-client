@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { serverFetch } from "@/lib/serverFetch";
 import { usePathname } from "next/navigation";
-import ReviewModal from "../participant/ParticipentReviewModal";
+import ReviewModal from "@/components/shared/ReviewModal";
 
 interface JoinRequestCardProps {
     request: any;
