@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { serverFetch } from "@/lib/serverFetch";
 import { usePathname } from "next/navigation";
+import ReviewModal from "../participant/ParticipentReviewModal";
 
 interface JoinRequestCardProps {
     request: any;
@@ -17,8 +18,15 @@ interface JoinRequestCardProps {
 export default function JoinRequestCard({ request }: JoinRequestCardProps) {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(request.status);
-
+    const [selected, setSelected] = useState<any | null>(null)
+    const [open, setOpen] = useState<boolean>(false)
     const pathName = usePathname()
+
+
+    const handleModalOpen = () => {
+        setOpen(!open)
+        setSelected(request)
+    }
 
     // handle action
     const handleAction = async (endpoint: string, newStatus?: string) => {
@@ -62,16 +70,9 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
         try {
             setLoading(true);
 
-            const participantId = request?.participants?.[0]?.id;
-
-            if (!participantId) {
-                toast.error("No participant found for this request.");
-                return;
-            }
-
-            const res = await serverFetch.post("/participant/complete", {
-                body: JSON.stringify({ participantId }),
-                headers: { "Content-Type": "application/json" },
+            const res = await serverFetch.patch(`/join-request/complete/${request?.id}`, {
+                body: JSON.stringify({ status: 'COMPLETED' }),
+                headers: { "Content-Type": "application/json" }
             });
 
             const result = await res.json();
@@ -173,15 +174,37 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
                 )}
 
 
-                {!pathName.startsWith('/user/dashboard/join-requests-sent') &&
-                    <Link href={`/traveler-profile/${request?.requester?.id}`}>
-                        <Button variant="outline" className="w-full mt-1">
-                            View Profile
+
+
+
+                {status === 'COMPLETED' &&
+
+                    <>
+                        <ReviewModal
+                            open={open}
+                            onClose={setOpen}
+                            request={request}
+                        />
+                        <Button onClick={handleModalOpen} className="w-full mt-1">
+                            Give Review
                         </Button>
-                    </Link>
+                    </>
+
                 }
 
-                {pathName.startsWith('/user/dashboard/join-requests-sent') &&
+                {!pathName.startsWith('/user/dashboard/join-requests-sent') &&
+                    <>
+
+                        <Link href={`/traveler-profile/${request?.requester?.id}`}>
+                            <Button variant="outline" className="w-full mt-1">
+                                View Profile
+                            </Button>
+                        </Link>
+
+                    </>
+                }
+
+                {pathName.startsWith('/user/dashboard/join-requests-sent') && status !== 'COMPLETED' &&
                     <Button
                         className="w-full"
                         disabled={request?.status === 'CANCELLED'}

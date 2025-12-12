@@ -11,25 +11,33 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { serverFetch } from "@/lib/serverFetch";
+import { usePathname } from "next/navigation";
 
 interface ReviewModalProps {
   open: boolean;
-  onClose: () => void;
-  participantId: string; // the user being reviewed
-  planId: string;        // travel plan id
+  onClose: any;
+  request: any
 }
 
 export default function ReviewModal({
   open,
   onClose,
-  participantId,
-  planId
+  request
 }: ReviewModalProps) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+  const pathName = usePathname()
+  let targetUserId = ''
+
+  if(pathName === '/user/dashboard/join-requests-got'){
+    targetUserId = request?.requester?.id
+  }else if(pathName === '/user/dashboard/join-requests-sent'){
+    targetUserId = request?.plan?.userId
+  }
 
   const submitReview = async () => {
+      console.log({request, rating, comment})
     if (!rating) return toast.error("Please give a rating.");
     if (!comment.trim()) return toast.error("Please write a review.");
 
@@ -39,8 +47,8 @@ export default function ReviewModal({
       const response = await serverFetch.post("/review", {
         method: "POST",
         body: JSON.stringify({
-          targetUserId: participantId,
-          planId,
+          targetUserId,
+          planId: request?.plan?.id,
           rating,
           comment
         }),
