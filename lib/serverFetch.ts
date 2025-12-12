@@ -1,4 +1,4 @@
-import { getCookie } from "@/utils/tokenHandler"
+import { getCookie } from "@/services/auth/tokenHandler"
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL
 

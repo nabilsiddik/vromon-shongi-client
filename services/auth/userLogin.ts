@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { zodValidator } from '@/lib/zodValidator'
 import { loginValidationZodSchema } from '@/zod/auth.zodSchema'
 import { parse } from "cookie";
-import { setCookie } from '@/utils/tokenHandler'
+import { setCookie } from '@/services/auth/tokenHandler'
 import { UserRole } from '@/types/user.interface'
 import { serverFetch } from '@/lib/serverFetch'
 import { getDefaultDashboardRoute, isValidRedirectForRole } from '@/lib/authUtils'

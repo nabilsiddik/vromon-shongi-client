@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { serverFetch } from "@/lib/serverFetch";
 import { useState } from "react";
 
 type Plan = {
@@ -44,19 +43,13 @@ const Subscription = () => {
   const handleSubscription = async (planType: "monthly" | "yearly") => {
     try {
       setLoading(true);
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/create-session`, {
         method: 'POST',
-        credentials: 'include', // browser sends cookies automatically
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: 'monthly' })
       });
-
-      // const res = await serverFetch.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/create-session`, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     body: JSON.stringify({ plan: planType }),
-      //   },
-      // })
 
       const data = await res.json();
 

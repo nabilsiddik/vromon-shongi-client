@@ -1,5 +1,5 @@
 'use server'
-import { deleteCookie } from "@/utils/tokenHandler"
+import { deleteCookie } from "@/services/auth/tokenHandler"
 import { redirect } from "next/navigation"
 
   export const userLogout = async () => {
