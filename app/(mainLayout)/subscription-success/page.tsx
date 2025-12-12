@@ -27,7 +27,8 @@ const SubscriptionSuccess = () => {
         const verifyPayment = async () => {
             try {
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/verify-session?session_id=${sessionId}`
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/verify-session?session_id=${sessionId}`,
+                    {credentials: 'include'}
                 )
                 const data = await res.json()
 
