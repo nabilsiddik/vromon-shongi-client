@@ -1,20 +1,12 @@
-// Subscription.tsx (SERVER COMPONENT)
 import SubscriptionButton from "@/components/shared/SubscriptionButton";
-import { getCookie } from "@/services/auth/tokenHandler";
+import { serverFetch } from "@/lib/serverFetch";
 
 export async function handleSubscription(planType: "monthly" | "yearly") {
-  "use server";
-
-  const accessToken = await getCookie("accessToken");
-  console.log(planType)
-
-  const res = await fetch(
+  const res = await serverFetch.post(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/subscription/create-session`,
     {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ plan: planType }),
     }
@@ -22,7 +14,7 @@ export async function handleSubscription(planType: "monthly" | "yearly") {
 
   const data = await res.json();
 
-  console.log(data)
+  console.log(data);
 
   return data;
 }
