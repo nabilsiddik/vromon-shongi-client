@@ -26,10 +26,8 @@ export default function TravelPlanDetails({
   currentUser,
 }: {
   plan: any;
-  currentUser: JwtPayload;
+  currentUser: any;
 }) {
-  const [loading, setLoading] = useState(true);
-
   const {
     id: planId,
     destination,
@@ -43,37 +41,36 @@ export default function TravelPlanDetails({
 
   const [isJoining, setIsJoining] = useState(false);
 
-  const handleJoin = async () => {
-    setIsJoining(true);
-    try {
-      const res = await serverFetch.post(`/join-request/send`, {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId }),
-      });
+  // const handleJoin = async () => {
+  //   setIsJoining(true);
+  //   try {
+  //     const res = await serverFetch.post(`/join-request/send`, {
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ planId }),
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      console.log(data, "data");
-      if (data?.success && data?.data?.id) {
-        toast.success("Join request sent. Wait for confirm.");
-      } else if (!data?.success && data?.message === "Request already exists") {
-        toast.error(`${data?.message}. Please wait for accept.`);
-      } else if (
-        !data?.success &&
-        data?.message === "Cannot join your own plan"
-      ) {
-        toast.error(`${data?.message}`);
-      } else {
-        toast.error("Something went wrong!");
-      }
-    } catch (err: any) {
-      toast.error("Something went wrong!");
-    } finally {
-      setIsJoining(false);
-    }
-  };
+  //     console.log(data, "data");
+  //     if (data?.success && data?.data?.id) {
+  //       toast.success("Join request sent. Wait for confirm.");
+  //     } else if (!data?.success && data?.message === "Request already exists") {
+  //       toast.error(`${data?.message}. Please wait for accept.`);
+  //     } else if (
+  //       !data?.success &&
+  //       data?.message === "Cannot join your own plan"
+  //     ) {
+  //       toast.error(`${data?.message}`);
+  //     } else {
+  //       toast.error("Something went wrong!");
+  //     }
+  //   } catch (err: any) {
+  //     toast.error("Something went wrong!");
+  //   } finally {
+  //     setIsJoining(false);
+  //   }
+  // };
 
-  if (loading) return <p>Loading...</p>;
   if (!currentUser) return <p>No user logged in</p>;
   return (
     <div className="pb-20">
@@ -144,10 +141,7 @@ export default function TravelPlanDetails({
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={handleJoin}
-                              disabled={isJoining}
-                            >
+                            <AlertDialogAction disabled={isJoining}>
                               {isJoining ? "Joining..." : "Yes, Join"}
                             </AlertDialogAction>
                           </AlertDialogFooter>
