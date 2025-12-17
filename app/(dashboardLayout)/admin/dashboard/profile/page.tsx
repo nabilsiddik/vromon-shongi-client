@@ -1,5 +1,5 @@
 import ProfileClient from "@/app/(dashboardLayout)/user/dashboard/profile/ProfileClient";
-import getLogedInUser from "@/utils/getLogedInUser";
+import getLogedInUser from "@/services/user/userManagement";
 
 export default async function ProfilePage() {
   const user = await getLogedInUser();

@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import getLogedInUser from "@/utils/getLogedInUser";
+import getLogedInUser from "@/services/user/userManagement";
 import ProfileClient from "./ProfileClient";
 
 export default async function ProfilePage() {

@@ -1,26 +1,28 @@
 export const dynamic = "force-dynamic";
-import { AppSidebar } from "@/components/app-sidebar"
-import DashboardNavbar from "@/components/modules/dashboard/dashboardNavbar/DashboardNavbar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { IUserInfo } from "@/types/user.interface"
-import getLogedInUser from "@/utils/getLogedInUser"
+import { AppSidebar } from "@/components/app-sidebar";
+import DashboardNavbar from "@/components/modules/dashboard/dashboardNavbar/DashboardNavbar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import getLogedInUser from "@/services/user/userManagement";
+import { IUserInfo } from "@/types/user.interface";
 
-const CommonDashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const userInfo = await getLogedInUser() as IUserInfo
+const CommonDashboardLayout = async ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const userInfo = (await getLogedInUser()) as IUserInfo;
   return (
     <SidebarProvider>
       {/* sidebar  */}
-      <AppSidebar userInfo = {userInfo} />
+      <AppSidebar userInfo={userInfo} />
       <SidebarInset>
         {/* daahsboard navbar  */}
-        <DashboardNavbar/>
+        <DashboardNavbar />
         {/* main dynamic content  */}
-        <div className="p-10">
-          {children}
-        </div>
+        <div className="p-10">{children}</div>
       </SidebarInset>
     </SidebarProvider>
-  )
-}
+  );
+};
 
-export default CommonDashboardLayout
+export default CommonDashboardLayout;
