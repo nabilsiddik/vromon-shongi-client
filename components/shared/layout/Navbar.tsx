@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
   DropdownMenu,
@@ -20,15 +20,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import LogoutUserButton from "@/components/LogoutUserButton";
-import getLogedInUser from "@/utils/getLogedInUser";
 import Logo from "@/components/logo";
+import getLogedInUser from "@/services/user/userManagement";
 
 export default async function Navbar() {
-
-  const user = await getLogedInUser()
+  const user = await getLogedInUser();
 
   const navigationLinks = [
     { href: "/", label: "Home" },
@@ -36,7 +35,6 @@ export default async function Navbar() {
     user?.email && { href: "/travel-plans", label: "Find Buddy" },
     { href: "/subscription", label: "Subscriptions" },
   ];
-
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -114,8 +112,7 @@ export default async function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          {user?.email ?
-
+          {user?.email ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar className="cursor-pointer border border-black">
@@ -127,56 +124,69 @@ export default async function Navbar() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
 
-                {user?.email && user?.role === 'ADMIN' &&
-
+                {user?.email && user?.role === "ADMIN" && (
                   <>
-
-
-                    <Link href={'/admin/dashboard/profile'} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                    <Link
+                      href={"/admin/dashboard/profile"}
+                      className="cursor-pointer"
+                    >
+                      <DropdownMenuItem className="cursor-pointer">
+                        Profile
+                      </DropdownMenuItem>
                     </Link>
 
-                    <Link href={'/admin/dashboard'} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">Admin Dashboard</DropdownMenuItem>
+                    <Link href={"/admin/dashboard"} className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Admin Dashboard
+                      </DropdownMenuItem>
                     </Link>
                   </>
+                )}
 
-                }
-
-                {user?.email && user?.role === 'USER' &&
-
+                {user?.email && user?.role === "USER" && (
                   <>
-
-                    <Link href={'/user/dashboard/profile'} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+                    <Link
+                      href={"/user/dashboard/profile"}
+                      className="cursor-pointer"
+                    >
+                      <DropdownMenuItem className="cursor-pointer">
+                        Profile
+                      </DropdownMenuItem>
                     </Link>
 
-                    <Link href={'/user/dashboard'} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">User Dashboard</DropdownMenuItem>
+                    <Link href={"/user/dashboard"} className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer">
+                        User Dashboard
+                      </DropdownMenuItem>
                     </Link>
 
-                    <Link href={'/user/dashboard/my-travel-plans'} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">My Plans</DropdownMenuItem>
+                    <Link
+                      href={"/user/dashboard/my-travel-plans"}
+                      className="cursor-pointer"
+                    >
+                      <DropdownMenuItem className="cursor-pointer">
+                        My Plans
+                      </DropdownMenuItem>
                     </Link>
                   </>
-
-                }
-                <Link href={'/subscription'} className="cursor-pointer">
-                  <DropdownMenuItem className="cursor-pointer">Subscriptions</DropdownMenuItem>
+                )}
+                <Link href={"/subscription"} className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Subscriptions
+                  </DropdownMenuItem>
                 </Link>
                 <DropdownMenuItem>
                   <LogoutUserButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            :
-            <Link href={'/login'}>
+          ) : (
+            <Link href={"/login"}>
               <Button className="cursor-pointer">Login</Button>
             </Link>
-          }
+          )}
         </div>
       </div>
-    </header >
+    </header>
   );
 }

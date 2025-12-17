@@ -1,5 +1,6 @@
 import TravelPlanDetails from "@/components/shared/TravelPlanDetails";
 import { serverFetch } from "@/lib/serverFetch";
+import getLogedInUser from "@/services/user/userManagement";
 
 interface Props {
   params: { id: string };
@@ -8,9 +9,13 @@ interface Props {
 export default async function TravelPlanDetailsPage({ params }: Props) {
   const { id } = await params;
 
-  const res = await serverFetch.get(`/travel-plan/${id}`, { cache: "no-store" });
-  const response = await res.json();
+  const currentUser = await getLogedInUser();
+  console.log(currentUser, "hiii");
 
+  const res = await serverFetch.get(`/travel-plan/${id}`, {
+    cache: "no-store",
+  });
+  const response = await res.json();
 
   if (!response?.data) {
     return (
@@ -21,5 +26,5 @@ export default async function TravelPlanDetailsPage({ params }: Props) {
     );
   }
 
-  return <TravelPlanDetails plan={response.data} />;
+  return <TravelPlanDetails currentUser={currentUser} plan={response.data} />;
 }
