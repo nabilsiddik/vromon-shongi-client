@@ -48,12 +48,16 @@ const SubscriptionButton = ({
 }: {
   action: (plan: "monthly" | "yearly") => Promise<any>;
 }) => {
-  const [loadingPlan, setLoadingPlan] = useState<null | "monthly" | "yearly">(null);
+  const [loadingPlan, setLoadingPlan] = useState<null | "monthly" | "yearly">(
+    null
+  );
 
   const handleClick = async (planType: "monthly" | "yearly") => {
     try {
       setLoadingPlan(planType);
       const result = await action(planType);
+
+      console.log(result);
 
       if (result?.success) {
         window.location.href = result.data.url;
@@ -80,9 +84,7 @@ const SubscriptionButton = ({
             className="hover:shadow-xl transition-shadow duration-300"
           >
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold">
-                {plan.name}
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
               <CardDescription className="text-gray-700 mt-2">
                 {plan.price}
               </CardDescription>
@@ -91,10 +93,7 @@ const SubscriptionButton = ({
             <CardContent className="flex flex-col gap-6">
               <ul className="space-y-3">
                 {plan.features.map((feature, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center text-gray-700"
-                  >
+                  <li key={idx} className="flex items-center text-gray-700">
                     <svg
                       className="w-5 h-5 text-green-500 mr-2"
                       fill="none"
