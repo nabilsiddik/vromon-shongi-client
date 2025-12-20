@@ -5,59 +5,52 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { serverFetch } from "@/lib/serverFetch";
 import { usePathname } from "next/navigation";
+import { reviewTravelmate } from "@/services/reviews/reviewManagement";
 
 interface ReviewModalProps {
   open: boolean;
   onClose: any;
-  request: any
+  request: any;
 }
 
 export default function ReviewModal({
   open,
   onClose,
-  request
+  request,
 }: ReviewModalProps) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
-  const pathName = usePathname()
-  let targetUserId = ''
+  const pathName = usePathname();
+  let targetUserId = "";
 
-  if(pathName === '/user/dashboard/join-requests-got'){
-    targetUserId = request?.requester?.id
-  }else if(pathName === '/user/dashboard/join-requests-sent'){
-    targetUserId = request?.plan?.userId
+  if (pathName === "/user/dashboard/join-requests-got") {
+    targetUserId = request?.requester?.id;
+  } else if (pathName === "/user/dashboard/join-requests-sent") {
+    targetUserId = request?.plan?.userId;
   }
 
   const submitReview = async () => {
-      console.log({request, rating, comment})
+    console.log({ request, rating, comment });
     if (!rating) return toast.error("Please give a rating.");
     if (!comment.trim()) return toast.error("Please write a review.");
 
     try {
       setLoading(true);
 
-      const response = await serverFetch.post("/review", {
-        method: "POST",
-        body: JSON.stringify({
-          targetUserId,
-          planId: request?.plan?.id,
-          rating,
-          comment
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      const result = await response.json();
+      const result = await reviewTravelmate(
+        targetUserId,
+        request?.plan?.id,
+        rating,
+        comment
+      );
 
       if (result.success) {
         toast.success("Review submitted successfully!");
@@ -102,11 +95,7 @@ export default function ReviewModal({
             placeholder="Write your review..."
           />
 
-          <Button
-            disabled={loading}
-            onClick={submitReview}
-            className="w-full"
-          >
+          <Button disabled={loading} onClick={submitReview} className="w-full">
             {loading ? "Submitting..." : "Submit Review"}
           </Button>
         </div>
