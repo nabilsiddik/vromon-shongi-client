@@ -1,16 +1,13 @@
-"use client";
-
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, User, Wallet, Verified } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useState } from "react";
 import { serverFetch } from "@/lib/serverFetch";
 import { toast } from "sonner";
 import JoinRequestModalDialog from "../formDialogs/JoinRequestModalDialog";
 
-export default function TravelPlanDetails({
+export default async function TravelPlanDetails({
   plan,
   currentUser,
 }: {
@@ -28,10 +25,11 @@ export default function TravelPlanDetails({
     user,
   } = plan;
 
-  const [isJoining, setIsJoining] = useState(false);
+  let joining = false;
 
   const handleJoin = async () => {
-    setIsJoining(true);
+    "use server";
+    joining = true;
     try {
       const res = await serverFetch.post(`/join-request/send`, {
         headers: { "Content-Type": "application/json" },
@@ -56,7 +54,7 @@ export default function TravelPlanDetails({
     } catch (err: any) {
       toast.error("Something went wrong!");
     } finally {
-      setIsJoining(false);
+      joining = false;
     }
   };
 
@@ -115,7 +113,7 @@ export default function TravelPlanDetails({
                     currentUser={currentUser}
                     plan={plan}
                     handleJoin={handleJoin}
-                    isJoining={isJoining}
+                    isJoining={joining}
                   />
                 </Card>
               </div>
