@@ -3,8 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, User, Wallet, Verified } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { serverFetch } from "@/lib/serverFetch";
-import { toast } from "sonner";
 import JoinRequestModalDialog from "../formDialogs/JoinRequestModalDialog";
 
 export default async function TravelPlanDetails({
@@ -24,39 +22,6 @@ export default async function TravelPlanDetails({
     description,
     user,
   } = plan;
-
-  let joining = false;
-
-  const handleJoin = async () => {
-    "use server";
-    joining = true;
-    try {
-      const res = await serverFetch.post(`/join-request/send`, {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId }),
-      });
-
-      const data = await res.json();
-
-      console.log(data, "data");
-      if (data?.success && data?.data?.id) {
-        toast.success("Join request sent. Wait for confirm.");
-      } else if (!data?.success && data?.message === "Request already exists") {
-        toast.error(`${data?.message}. Please wait for accept.`);
-      } else if (
-        !data?.success &&
-        data?.message === "Cannot join your own plan"
-      ) {
-        toast.error(`${data?.message}`);
-      } else {
-        toast.error("Something went wrong!");
-      }
-    } catch (err: any) {
-      toast.error("Something went wrong!");
-    } finally {
-      joining = false;
-    }
-  };
 
   if (!currentUser) return <p>No user logged in</p>;
   return (
@@ -112,8 +77,6 @@ export default async function TravelPlanDetails({
                   <JoinRequestModalDialog
                     currentUser={currentUser}
                     plan={plan}
-                    handleJoin={handleJoin}
-                    isJoining={joining}
                   />
                 </Card>
               </div>

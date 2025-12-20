@@ -13,13 +13,31 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
+import { handleTravelersJoin } from "@/services/participant/participantManagement";
+import { toast } from "sonner";
 
-const JoinRequestModalDialog = ({
-  currentUser,
-  handleJoin,
-  plan,
-  isJoining,
-}: any) => {
+const JoinRequestModalDialog = ({ currentUser, plan }: any) => {
+  const handleJoin = async () => {
+    try {
+      const data = await handleTravelersJoin(plan?.id);
+
+      if (data?.success && data?.data?.id) {
+        toast.success("Join request sent. Wait for confirm.");
+      } else if (!data?.success && data?.message === "Request already exists") {
+        toast.error(`${data?.message}. Please wait for accept.`);
+      } else if (
+        !data?.success &&
+        data?.message === "Cannot join your own plan"
+      ) {
+        toast.error(`${data?.message}`);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } catch (err: any) {
+      toast.error("Something went wrong!");
+    }
+  };
+
   return (
     <div>
       {currentUser?.verifiedBadge ? (
@@ -41,8 +59,8 @@ const JoinRequestModalDialog = ({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleJoin} disabled={isJoining}>
-                  {isJoining ? "Joining..." : "Yes, Join"}
+                <AlertDialogAction onClick={handleJoin}>
+                  Yes, Join
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -65,8 +83,8 @@ const JoinRequestModalDialog = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleJoin} disabled={isJoining}>
-                {isJoining ? "Joining..." : "Yes, Join"}
+              <AlertDialogAction onClick={handleJoin}>
+                Yes, Join
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
