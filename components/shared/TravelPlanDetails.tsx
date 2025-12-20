@@ -5,21 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, User, Wallet, Verified } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
 import { useState } from "react";
 import { serverFetch } from "@/lib/serverFetch";
 import { toast } from "sonner";
-import { JwtPayload } from "jsonwebtoken";
+import JoinRequestModalDialog from "../formDialogs/JoinRequestModalDialog";
 
 export default function TravelPlanDetails({
   plan,
@@ -41,35 +30,35 @@ export default function TravelPlanDetails({
 
   const [isJoining, setIsJoining] = useState(false);
 
-  // const handleJoin = async () => {
-  //   setIsJoining(true);
-  //   try {
-  //     const res = await serverFetch.post(`/join-request/send`, {
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ planId }),
-  //     });
+  const handleJoin = async () => {
+    setIsJoining(true);
+    try {
+      const res = await serverFetch.post(`/join-request/send`, {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId }),
+      });
 
-  //     const data = await res.json();
+      const data = await res.json();
 
-  //     console.log(data, "data");
-  //     if (data?.success && data?.data?.id) {
-  //       toast.success("Join request sent. Wait for confirm.");
-  //     } else if (!data?.success && data?.message === "Request already exists") {
-  //       toast.error(`${data?.message}. Please wait for accept.`);
-  //     } else if (
-  //       !data?.success &&
-  //       data?.message === "Cannot join your own plan"
-  //     ) {
-  //       toast.error(`${data?.message}`);
-  //     } else {
-  //       toast.error("Something went wrong!");
-  //     }
-  //   } catch (err: any) {
-  //     toast.error("Something went wrong!");
-  //   } finally {
-  //     setIsJoining(false);
-  //   }
-  // };
+      console.log(data, "data");
+      if (data?.success && data?.data?.id) {
+        toast.success("Join request sent. Wait for confirm.");
+      } else if (!data?.success && data?.message === "Request already exists") {
+        toast.error(`${data?.message}. Please wait for accept.`);
+      } else if (
+        !data?.success &&
+        data?.message === "Cannot join your own plan"
+      ) {
+        toast.error(`${data?.message}`);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } catch (err: any) {
+      toast.error("Something went wrong!");
+    } finally {
+      setIsJoining(false);
+    }
+  };
 
   if (!currentUser) return <p>No user logged in</p>;
   return (
@@ -122,39 +111,12 @@ export default function TravelPlanDetails({
                     </Button>
                   </Link>
 
-                  {currentUser?.verifiedBadge ? (
-                    <>
-                      {/* join request confirm modal */}
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button className="w-full mt-3">
-                            Join With {user?.name}
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Confirm Join</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to join <b>{user?.name}</b>{" "}
-                              for this trip to <b>{destination}</b>?
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction disabled={isJoining}>
-                              {isJoining ? "Joining..." : "Yes, Join"}
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </>
-                  ) : (
-                    <Link href={"/subscription"}>
-                      <Button className="w-full mt-3 cursor-pointer">
-                        Subscribe To Join
-                      </Button>
-                    </Link>
-                  )}
+                  <JoinRequestModalDialog
+                    currentUser={currentUser}
+                    plan={plan}
+                    handleJoin={handleJoin}
+                    isJoining={isJoining}
+                  />
                 </Card>
               </div>
 
