@@ -5,8 +5,9 @@ import { UserInfoCell } from "@/components/shared/cell/UserInfoCell";
 import { Column } from "@/components/shared/tables/ManagementTable";
 import { IUser } from "@/types/user.interface";
 import { Star } from "lucide-react";
-import { StatusBadgeCell } from '@/components/shared/cell/StatusBadgeCell';
+import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { DateCell } from "@/components/shared/cell/DateCell";
+import { Badge } from "@/components/ui/badge";
 
 export const usersColumns: Column<IUser>[] = [
   {
@@ -33,7 +34,9 @@ export const usersColumns: Column<IUser>[] = [
     header: "Status",
     accessor: (user) => (
       <div className="flex flex-col">
-        <span className="text-sm">{user?.status}</span>
+        <Badge variant={user?.status === "DELETED" ? "destructive" : "default"}>
+          <span className="text-sm">{user?.status}</span>
+        </Badge>
       </div>
     ),
   },

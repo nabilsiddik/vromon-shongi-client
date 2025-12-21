@@ -55,3 +55,27 @@ export const getTopRatedUser = async () => {
     };
   }
 };
+
+// soft delete user
+export const softDeleteUser = async (userId: string) => {
+  try {
+    const res = await serverFetch.delete(`/user`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};

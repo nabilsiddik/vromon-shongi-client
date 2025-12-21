@@ -1,13 +1,24 @@
-"use client"
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
+"use client";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { BaggageClaim, GitPullRequestIcon, List, ListCheck, PersonStanding, PlaneTakeoff, Settings, User, User2, Users } from "lucide-react";
+} from "@/components/ui/sidebar";
+import {
+  BaggageClaim,
+  GitPullRequestIcon,
+  List,
+  ListCheck,
+  PersonStanding,
+  PlaneTakeoff,
+  Settings,
+  User,
+  User2,
+  Users,
+} from "lucide-react";
 import { IUserInfo } from "@/types/user.interface";
 
 const data = {
@@ -20,8 +31,8 @@ const data = {
         {
           title: "Users",
           url: "/admin/dashboard/users",
-          icon: <PersonStanding />
-        }
+          icon: <PersonStanding />,
+        },
       ],
     },
     {
@@ -32,10 +43,10 @@ const data = {
         {
           title: "Travel Plans",
           url: "/admin/dashboard/travel-plans",
-          icon: <BaggageClaim />
-        }
+          icon: <BaggageClaim />,
+        },
       ],
-    }
+    },
   ],
   userNavItems: [
     {
@@ -46,25 +57,13 @@ const data = {
         {
           title: "Create Plan",
           url: "/user/dashboard/create-plan",
-          icon: <BaggageClaim />
+          icon: <BaggageClaim />,
         },
         {
           title: "My Plans",
           url: "/user/dashboard/my-travel-plans",
-          icon: <List />
-        }
-      ],
-    },
-    {
-      title: "Participants",
-      icon: <Users />,
-      isActive: false,
-      items: [
-        {
-          title: "All Participants",
-          url: "/user/dashboard/participants",
-          icon: <BaggageClaim />
-        }
+          icon: <List />,
+        },
       ],
     },
     {
@@ -75,13 +74,13 @@ const data = {
         {
           title: "Request Got",
           url: "/user/dashboard/join-requests-got",
-          icon: <ListCheck />
+          icon: <ListCheck />,
         },
         {
           title: "Request Sent",
           url: "/user/dashboard/join-requests-sent",
-          icon: <ListCheck />
-        }
+          icon: <ListCheck />,
+        },
       ],
     },
     {
@@ -92,27 +91,31 @@ const data = {
         {
           title: "Profile",
           url: "/user/dashboard/profile",
-          icon: <User2 />
-        }
+          icon: <User2 />,
+        },
       ],
-    }
-  ]
-}
+    },
+  ],
+};
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  userInfo: IUserInfo
-}
+  userInfo: IUserInfo;
+};
 
 export function AppSidebar({ userInfo, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarContent>
-        <NavMain adminNavItems={data.adminNavItems} userNavItems={data.userNavItems}  userInfo={userInfo} />
+        <NavMain
+          adminNavItems={data.adminNavItems}
+          userNavItems={data.userNavItems}
+          userInfo={userInfo}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userInfo} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

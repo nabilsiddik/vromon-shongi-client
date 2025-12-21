@@ -15,6 +15,7 @@ export default async function TravelPlanDetails({
   const {
     id: planId,
     destination,
+    travelPlanImage,
     startDate,
     endDate,
     budgetRange,
@@ -28,7 +29,11 @@ export default async function TravelPlanDetails({
     <div className="pb-20">
       <div className="relative flex items-center justify-center h-[320px] w-full bg-black">
         <Image
-          src={"/images/bg-banner/travel-plans.jpg"}
+          src={
+            travelPlanImage
+              ? travelPlanImage
+              : "/images/bg-banner/travel-plans.jpg"
+          }
           alt="travel details image"
           fill
           className="object-cover opacity-70"
