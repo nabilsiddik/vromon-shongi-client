@@ -79,7 +79,6 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       budgetRange: formData.get("budgetRange") as string,
       travelType: formData.get("travelType") as string,
       description: formData.get("description") as string,
-      visibility: formData.get("visibility") === "false" ? false : true,
     };
 
     if (zodValidator(payload, travelPlanZodSchema).success === false) {
@@ -98,17 +97,19 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       budgetRange: validatedPayload.budgetRange ?? undefined,
       travelType: validatedPayload.travelType,
       description: validatedPayload.description ?? undefined,
-      visibility: validatedPayload.visibility,
     };
 
-    const accessToken = await getCookie("accessToken");
+    const newFormData = new FormData();
+    newFormData.append("data", JSON.stringify(travelPlanData));
+
+    if (formData.get("travelPlanImage")) {
+      newFormData.append("file", formData.get("travelPlanImage") as Blob);
+    }
+
+    console.log(newFormData);
 
     const res = await serverFetch.post("/travel-plan", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(travelPlanData),
+      body: newFormData,
     });
 
     const result = await res.json();
