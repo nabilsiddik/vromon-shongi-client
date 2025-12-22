@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export const travelPlansColumns: Column<any>[] = [
   {
-    header: "Added By",
+    header: "Image",
     accessor: (travelPlan) => (
       <Image
         className="rounded-lg"

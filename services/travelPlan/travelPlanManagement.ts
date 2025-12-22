@@ -50,9 +50,11 @@ export const getTravelPlanById = async (id: string) => {
 };
 
 // Get my travel plan
-export const getMyTravelPlan = async () => {
+export const getMyTravelPlan = async (queryString: string) => {
   try {
-    const res = await serverFetch.get(`/travel-plan/my-plans`);
+    const res = await serverFetch.get(
+      `/travel-plan/my-plans${queryString ? `?${queryString}` : ""}`
+    );
     const result = await res.json();
     console.log(result);
     return result.data || null;
@@ -193,3 +195,22 @@ export async function updateTravelPlan(
     };
   }
 }
+
+// Get my travel plan
+export const deleteTravelPlan = async (planId: string) => {
+  try {
+    const res = await serverFetch.delete(`/travel-plan/${planId}`);
+    const result = await res.json();
+    return result || null;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};

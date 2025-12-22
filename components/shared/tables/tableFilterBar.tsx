@@ -82,21 +82,33 @@ const TableFilterBar = () => {
     }
 
     // destination
-    if (destination && pathName === "/admin/dashboard/travel-plans") {
+    if (
+      destination &&
+      (pathName === "/admin/dashboard/travel-plans" ||
+        pathName === "/user/dashboard/my-travel-plans")
+    ) {
       params.set("searchTerm", destination);
     } else {
       params.delete("destination");
     }
 
     // start date
-    if (startDate && pathName === "/admin/dashboard/travel-plans") {
+    if (
+      startDate &&
+      (pathName === "/admin/dashboard/travel-plans" ||
+        pathName === "/user/dashboard/my-travel-plans")
+    ) {
       params.set("startDate", startDate.toISOString());
     } else {
       params.delete("startDate");
     }
 
     // end date
-    if (endDate && pathName === "/admin/dashboard/travel-plans") {
+    if (
+      endDate &&
+      (pathName === "/admin/dashboard/travel-plans" ||
+        pathName === "/user/dashboard/my-travel-plans")
+    ) {
       params.set("endDate", endDate.toISOString());
     } else {
       params.delete("endDate");
@@ -106,7 +118,8 @@ const TableFilterBar = () => {
     if (
       travelType &&
       travelType !== "ALL" &&
-      pathName === "/admin/dashboard/travel-plans"
+      (pathName === "/admin/dashboard/travel-plans" ||
+        pathName === "/user/dashboard/my-travel-plans")
     ) {
       params.set("travelType", travelType);
     } else {
@@ -205,7 +218,8 @@ const TableFilterBar = () => {
           </>
         )}
 
-        {pathName === "/admin/dashboard/travel-plans" && (
+        {(pathName === "/admin/dashboard/travel-plans" ||
+          pathName === "/user/dashboard/my-travel-plans") && (
           <>
             <Input
               onChange={(e) => setDestination(e.target.value)}

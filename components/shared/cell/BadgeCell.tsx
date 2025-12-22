@@ -2,20 +2,13 @@
 import { Badge } from "@/components/ui/badge";
 
 interface StatusBadgeCellProps {
-    badgeText?: boolean;
+  badgeText?: string;
 }
 
-export function BadgeCell({
-    badgeText
-}: StatusBadgeCellProps) {
-    return (
-        <>
-            <Badge
-                variant="outline"
-                className="bg-blue-500 text-white dark:bg-blue-600"
-            >
-                {badgeText}
-            </Badge>
-        </>
-    );
+export function BadgeCell({ badgeText }: StatusBadgeCellProps) {
+  return (
+    <>
+      <Badge variant={"default"}>{badgeText}</Badge>
+    </>
+  );
 }
