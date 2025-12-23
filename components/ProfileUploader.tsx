@@ -6,7 +6,7 @@ import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function ProfileUploader({setProfileImage}: any) {
+export default function ProfileUploader({ setProfileImage }: any) {
   const maxSizeMB = 1;
   const maxSize = maxSizeMB * 1024 * 1024;
 
@@ -28,15 +28,13 @@ export default function ProfileUploader({setProfileImage}: any) {
   const previewUrl = files[0]?.preview || null;
   const _fileName = files[0]?.file.name || null;
 
-  console.log(files[0]?.file)
-
   useEffect(() => {
-    if(files.length > 0){
-      setProfileImage(files[0]?.file)
-    }else{
-      setProfileImage(null)
+    if (files.length > 0) {
+      setProfileImage(files[0]?.file);
+    } else {
+      setProfileImage(null);
     }
-  })
+  });
 
   return (
     <div className="flex flex-col gap-2">
@@ -76,7 +74,7 @@ export default function ProfileUploader({setProfileImage}: any) {
                 SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
               </p>
               <Button
-                type='button'
+                type="button"
                 className="mt-4"
                 onClick={openFileDialog}
                 variant="outline"

@@ -11,8 +11,6 @@ export default async function Page({
 
   let verifiedSession = false;
 
-  console.log("verified sess 1", verifiedSession);
-
   if (sessionId) {
     const res = await serverFetch.get(
       `/subscription/verify-session?session_id=${sessionId}`

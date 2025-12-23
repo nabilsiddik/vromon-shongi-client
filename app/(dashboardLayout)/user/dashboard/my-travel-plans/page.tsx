@@ -17,8 +17,6 @@ const MyTravelPlans = async ({
   const queryString = queryStringFormatter(searchParamsObj);
   const myTravelPlans = await getAllTravelPlans(queryString);
 
-  console.log(myTravelPlans, "my");
-
   return (
     <div>
       <TableFilterBar />

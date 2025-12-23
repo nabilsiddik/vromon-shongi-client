@@ -39,6 +39,12 @@ export async function proxy(request: NextRequest) {
     );
   }
 
+  if (pathname === "/user/dashboard") {
+    return NextResponse.redirect(
+      new URL("/user/dashboard/create-plan", request.url)
+    );
+  }
+
   // Get current route owner
   const routerOwner = getRouteOwner(pathname);
 

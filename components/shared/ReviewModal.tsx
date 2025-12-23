@@ -38,7 +38,6 @@ export default function ReviewModal({
   }
 
   const submitReview = async () => {
-    console.log({ request, rating, comment });
     if (!rating) return toast.error("Please give a rating.");
     if (!comment.trim()) return toast.error("Please write a review.");
 

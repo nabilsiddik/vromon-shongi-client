@@ -24,7 +24,25 @@ export const getUserById = async (id?: string) => {
   try {
     const res = await serverFetch.get(`/user/${id}`);
     const result = await res.json();
-    return result.data || null;
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};
+
+export const getMyProfile = async () => {
+  try {
+    const res = await serverFetch.get(`/user/profile`);
+    const result = await res.json();
+    return result;
   } catch (error: any) {
     console.log(error);
     return {

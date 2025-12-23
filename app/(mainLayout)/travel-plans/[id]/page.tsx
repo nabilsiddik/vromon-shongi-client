@@ -10,7 +10,6 @@ export default async function TravelPlanDetailsPage({ params }: Props) {
   const { id } = await params;
 
   const currentUser = await getLogedInUser();
-  console.log(currentUser, "hiii");
 
   const res = await serverFetch.get(`/travel-plan/${id}`, {
     cache: "no-store",

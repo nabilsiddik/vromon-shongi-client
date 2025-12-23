@@ -1,14 +1,14 @@
 export const dynamic = "force-dynamic";
 
-import getLogedInUser from "@/services/user/userManagement";
+import { getMyProfile } from "@/services/user/userManagement";
 import ProfileClient from "./ProfileClient";
 
 export default async function ProfilePage() {
-  const user = await getLogedInUser();
+  const user = await getMyProfile();
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
-      <ProfileClient user={user} />
+      <ProfileClient user={user?.data} />
     </div>
   );
 }

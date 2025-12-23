@@ -114,16 +114,12 @@ const TravelPlansTable = ({ travelPlans }: any) => {
     //   console.error("Error deleting the travel plan:", error);
     //   toast.error('Something went wrong while Updating.');
     // }
-
-    console.log(formData, "my form");
   };
 
   // On travel plan view
   const handleTravelPlanDelete = async (travelPlan: ITravelPlan) => {
     try {
       const result = await deleteTravelPlan(travelPlan?.id);
-
-      console.log(result);
 
       if (result?.success) {
         toast.success("Travel plan deleted.");

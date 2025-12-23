@@ -57,8 +57,6 @@ const SubscriptionButton = ({
       setLoadingPlan(planType);
       const result = await action(planType);
 
-      console.log(result);
-
       if (result?.success) {
         window.location.href = result.data.url;
       }

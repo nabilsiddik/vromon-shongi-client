@@ -7,9 +7,7 @@ const ExploreTravelers = async () => {
   const usersData = await getAllUsers();
   const travelers =
     (usersData?.data?.length > 0 &&
-      usersData?.data?.filter(
-        (user: any) => user?.createdTravelPlans?.length > 0
-      )) ||
+      usersData?.data?.filter((user: any) => user?.travelPlans?.length > 0)) ||
     [];
 
   return (

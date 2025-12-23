@@ -38,8 +38,6 @@ const TableFilterBar = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
-  console.log(destination);
-
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     // search
@@ -128,18 +126,6 @@ const TableFilterBar = () => {
 
     startTransition(() => {
       router.push(`?${params.toString()}`);
-    });
-
-    console.log({
-      searchText,
-      role,
-      status,
-      gender,
-      verifiedBadge,
-      destination,
-      startDate,
-      endDate,
-      travelType,
     });
   }, [
     searchText,

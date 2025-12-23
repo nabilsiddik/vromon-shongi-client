@@ -10,7 +10,6 @@ const SubscriptionSuccessClient = ({
   verifiedSession: boolean;
 }) => {
   const [isPremium, setIsPremium] = useState(false);
-  console.log(verifiedSession, "verfied sss 2");
 
   useEffect(() => {
     if (!verifiedSession) return;

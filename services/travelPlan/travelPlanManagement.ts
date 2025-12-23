@@ -56,7 +56,6 @@ export const getMyTravelPlan = async (queryString: string) => {
       `/travel-plan/my-plans${queryString ? `?${queryString}` : ""}`
     );
     const result = await res.json();
-    console.log(result);
     return result.data || null;
   } catch (error: any) {
     console.log(error);
@@ -107,8 +106,6 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
     if (formData.get("travelPlanImage")) {
       newFormData.append("file", formData.get("travelPlanImage") as Blob);
     }
-
-    console.log(newFormData);
 
     const res = await serverFetch.post("/travel-plan", {
       body: newFormData,

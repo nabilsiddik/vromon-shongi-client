@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { serverFetch } from "@/lib/serverFetch";
@@ -26,8 +26,6 @@ export default function LeaveReview() {
     //   setLoading(false);
     // }
     // console.log('review')
-
-    console.log({rating, comment}, 'hi')
   };
 
   return (
@@ -38,7 +36,9 @@ export default function LeaveReview() {
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            className={`w-6 h-6 cursor-pointer ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
+            className={`w-6 h-6 cursor-pointer ${
+              i < rating ? "text-yellow-400" : "text-gray-300"
+            }`}
             onClick={() => setRating(i + 1)}
           />
         ))}

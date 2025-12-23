@@ -7,7 +7,7 @@ export default async function TravelerProfile({ params }: { params: any }) {
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
-      <ProfileClient user={user} />
+      <ProfileClient user={user?.data} />
     </div>
   );
 }
