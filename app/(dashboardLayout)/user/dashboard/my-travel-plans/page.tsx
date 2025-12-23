@@ -15,7 +15,7 @@ const MyTravelPlans = async ({
 }) => {
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
-  const myTravelPlans = await getAllTravelPlans(queryString);
+  const myTravelPlans = await getMyTravelPlan(queryString);
 
   return (
     <div>

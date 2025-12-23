@@ -1,6 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { updateReview } from "@/services/reviews/reviewManagement";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 // import { updateReview } from "@/services/review/updateReview";
 import { toast } from "sonner";
@@ -14,6 +17,7 @@ export default function GivenReviewsClient({
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleEdit = (review: any) => {
     setEditingId(review.id);
@@ -21,16 +25,22 @@ export default function GivenReviewsClient({
     setRating(review.rating);
   };
 
-  const handleUpdate = () => {
-    // startTransition(async () => {
-    //   const res = await updateReview(editingId!, { comment, rating });
-    //   if (res.success) {
-    //     toast.success("Review updated");
-    //     setEditingId(null);
-    //   } else {
-    //     toast.error(res.message || "Failed to update review");
-    //   }
-    // });
+  const handleUpdate = async () => {
+    try {
+      const res = await updateReview(editingId!, { comment, rating });
+      if (res.success) {
+        toast.success("Review updated");
+        setEditingId(null);
+        startTransition(async () => {
+          router.refresh();
+        });
+      } else {
+        toast.error("Failed to update review");
+      }
+    } catch (err) {
+      console.log("Something went wrong while updating review", err);
+      toast.error("Something went wrong.");
+    }
   };
 
   if (!givenReviews.length) {
@@ -77,13 +87,22 @@ export default function GivenReviewsClient({
                   className="mt-2 w-full border rounded-md p-1"
                 />
 
-                <button
-                  onClick={handleUpdate}
-                  disabled={pending}
-                  className="mt-3 w-full bg-black text-white py-2 rounded-md"
-                >
-                  {pending ? "Updating..." : "Update"}
-                </button>
+                <div className="flex items-center gap-3">
+                  <Button
+                    onClick={handleUpdate}
+                    disabled={pending}
+                    className="mt-3 cursor-pointer"
+                  >
+                    {pending ? "Updating..." : "Update"}
+                  </Button>
+
+                  <Button
+                    onClick={() => setEditingId(null)}
+                    className="mt-3 cursor-pointer"
+                  >
+                    Cancle
+                  </Button>
+                </div>
               </>
             ) : (
               <>
@@ -92,12 +111,12 @@ export default function GivenReviewsClient({
                   ⭐ {review.rating} / 5
                 </p>
 
-                <button
+                <Button
                   onClick={() => handleEdit(review)}
-                  className="mt-3 text-sm text-blue-600"
+                  className="mt-3 cursor-pointer"
                 >
                   Edit review
-                </button>
+                </Button>
               </>
             )}
           </div>

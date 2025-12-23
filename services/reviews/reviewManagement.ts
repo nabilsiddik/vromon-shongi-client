@@ -65,3 +65,26 @@ export const submitReview = async (payload: any) => {
   });
   return await res.json();
 };
+
+// update review
+export const updateReview = async (reviewId: string, payload: any) => {
+  try {
+    const res = await serverFetch.patch(`/review/${reviewId}`, {
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};
