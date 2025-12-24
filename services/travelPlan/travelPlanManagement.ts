@@ -136,46 +136,40 @@ export async function updateTravelPlan(
   _prevState: any,
   formData: any
 ) {
-  const travelTypeRaw = formData.travelType as string;
-  const visibilityRaw = formData.visibility as string;
-
-  const validationPayload: Partial<ITravelPlan> = {
-    description: formData.description,
-    destination: formData.destination,
-    startDate: formData.startDate,
-    endDate: formData.endDate,
-    budgetRange: formData.budget,
-    travelType: travelTypeRaw ? (travelTypeRaw as TravelType) : undefined,
-    visibility: visibilityRaw === "true",
+  const payload = {
+    destination: formData.get("destination"),
+    startDate: formData.get("startDate"),
+    endDate: formData.get("endDate"),
+    budgetRange: formData.get("budgetRange"),
+    travelType: formData.get("travelType"),
+    description: formData.get("description"),
   };
 
-  const validated = zodValidator(validationPayload, updateTravelPlanZodSchema);
-
-  if (!validated.success && validated.errors) {
-    return {
-      success: false,
-      message: "Travel Plan Validation failed",
-      errors: validated.errors,
-      formData: validationPayload,
-    };
+  if (zodValidator(payload, travelPlanZodSchema).success === false) {
+    return zodValidator(payload, travelPlanZodSchema);
   }
 
-  if (!validated.data) {
-    return {
-      success: false,
-      message: "Validation failed",
-      formData: validationPayload,
-    };
-  }
+  const validatedPayload: any = zodValidator(payload, travelPlanZodSchema).data;
 
-  console.log(validated.data, "my date val");
+  const updatedTravelPlanData = {
+    destination: validatedPayload.destination,
+    startDate: new Date(validatedPayload.startDate),
+    endDate: new Date(validatedPayload.endDate),
+    budgetRange: validatedPayload.budgetRange ?? undefined,
+    travelType: validatedPayload.travelType,
+    description: validatedPayload.description ?? undefined,
+  };
+
+  const newFormData = new FormData();
+  newFormData.append("data", JSON.stringify(updatedTravelPlanData));
+
+  if (formData.get("travelPlanImage")) {
+    newFormData.append("file", formData.get("travelPlanImage") as Blob);
+  }
 
   try {
     const response = await serverFetch.patch(`/travel-plan/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(validated.data),
+      body: newFormData,
     });
 
     const result = await response.json();
@@ -188,7 +182,7 @@ export async function updateTravelPlan(
         process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong",
-      formData: validationPayload,
+      formData: payload,
     };
   }
 }
