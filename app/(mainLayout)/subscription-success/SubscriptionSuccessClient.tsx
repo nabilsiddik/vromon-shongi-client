@@ -2,30 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-const SubscriptionSuccessClient = ({
-  verifiedSession,
-}: {
-  verifiedSession: boolean;
-}) => {
-  const [isPremium, setIsPremium] = useState(false);
-
-  useEffect(() => {
-    if (!verifiedSession) return;
-
-    const interval = setInterval(async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/me`);
-      const data = await res.json();
-
-      if (data.verifiedBadge) {
-        setIsPremium(true);
-        clearInterval(interval);
-      }
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [verifiedSession]);
+const SubscriptionSuccessClient = ({ isPremium }: { isPremium: boolean }) => {
+  if (!isPremium) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h1>Processing your subscription...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-blue-50 px-6">

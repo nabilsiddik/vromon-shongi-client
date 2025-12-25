@@ -9,6 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { handleSubscription } from "@/services/subscription/subscriptionManagement";
+import { toast } from "sonner";
 
 type Plan = {
   name: string;
@@ -43,11 +45,7 @@ const plans: Plan[] = [
   },
 ];
 
-const SubscriptionButton = ({
-  action,
-}: {
-  action: (plan: "monthly" | "yearly") => Promise<any>;
-}) => {
+const SubscriptionButton = () => {
   const [loadingPlan, setLoadingPlan] = useState<null | "monthly" | "yearly">(
     null
   );
@@ -55,11 +53,17 @@ const SubscriptionButton = ({
   const handleClick = async (planType: "monthly" | "yearly") => {
     try {
       setLoadingPlan(planType);
-      const result = await action(planType);
+      const result = await handleSubscription(planType);
 
       if (result?.success) {
+        console.log(result.data.url);
         window.location.href = result.data.url;
+      } else {
+        toast.error("Something went wrong.");
       }
+    } catch (error) {
+      console.log("Something went wrong while subscribe.", error);
+      toast.error("Something went wrong.");
     } finally {
       setLoadingPlan(null);
     }
