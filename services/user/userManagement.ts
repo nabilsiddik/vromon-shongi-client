@@ -56,9 +56,29 @@ export const getMyProfile = async () => {
   }
 };
 
+// Get top rated travelers
 export const getTopRatedUser = async () => {
   try {
     const res = await serverFetch.get(`/user/top-rated`);
+    const result = await res.json();
+    return result.data || [];
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};
+
+// Get all travelers
+export const getAllTravelers = async () => {
+  try {
+    const res = await serverFetch.get(`/user/travelers`);
     const result = await res.json();
     return result.data || [];
   } catch (error: any) {

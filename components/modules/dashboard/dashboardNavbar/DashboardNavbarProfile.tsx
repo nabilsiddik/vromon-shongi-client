@@ -41,7 +41,9 @@ const DashboardNavbarProfile = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Image
-              src={user?.profileImage || ""}
+              src={
+                user?.profileImage || "https://i.ibb.co.com/2YHLD9xh/user.png"
+              }
               className="rounded-full cursor-pointer"
               width={30}
               height={30}

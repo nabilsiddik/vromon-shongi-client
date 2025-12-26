@@ -8,7 +8,11 @@ export default function ReceivedReviewsClient({
   receivedReviews: any[];
 }) {
   if (!receivedReviews.length) {
-    return <p className="text-gray-500">No reviews received yet.</p>;
+    return (
+      <div className="flex items-center justify-center mt-30">
+        <p className="text-gray-500">No reviews received yet.</p>
+      </div>
+    );
   }
 
   return (

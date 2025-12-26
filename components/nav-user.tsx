@@ -1,16 +1,8 @@
-"use client"
+"use client";
 
-import {
-  ChevronsUpDown,
-  LogOut,
-  User2,
-} from "lucide-react"
+import { ChevronsUpDown, LogOut, User2 } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,31 +10,31 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { IUserInfo } from "@/types/user.interface"
-import { userLogout } from "@/services/auth/userLogout"
-import Link from "next/link"
+} from "@/components/ui/sidebar";
+import { IUserInfo } from "@/types/user.interface";
+import { userLogout } from "@/services/auth/userLogout";
+import Link from "next/link";
 
 export function NavUser({ user }: { user: IUserInfo }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   // handle user logout
   const handleUserLogout = async () => {
-    await userLogout()
-  }
+    await userLogout();
+  };
 
-  let profileUrl
+  let profileUrl;
 
-  if(user?.role === 'ADMIN'){
-    profileUrl = '/admin/dashboard/profile'
-  }else if(user?.role === 'USER'){
-    profileUrl = '/user/dashboard/profile'
+  if (user?.role === "ADMIN") {
+    profileUrl = "/admin/dashboard/profile";
+  } else if (user?.role === "USER") {
+    profileUrl = "/user/dashboard/profile";
   }
 
   return (
@@ -55,7 +47,7 @@ export function NavUser({ user }: { user: IUserInfo }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.profileImage || ''} alt={user?.name} />
+                <AvatarImage src={user?.profileImage || ""} alt={user?.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -74,7 +66,13 @@ export function NavUser({ user }: { user: IUserInfo }) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.profileImage || ''} alt={user?.name} />
+                  <AvatarImage
+                    src={
+                      user?.profileImage ||
+                      "https://i.ibb.co.com/2YHLD9xh/user.png"
+                    }
+                    alt={user?.name}
+                  />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -85,12 +83,18 @@ export function NavUser({ user }: { user: IUserInfo }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              <Link className="flex items-center gap-2" href={profileUrl || '/'}>
+              <Link
+                className="flex items-center gap-2"
+                href={profileUrl || "/"}
+              >
                 <User2 />
                 Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleUserLogout} className="cursor-pointer">
+            <DropdownMenuItem
+              onClick={handleUserLogout}
+              className="cursor-pointer"
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>
@@ -98,5 +102,5 @@ export function NavUser({ user }: { user: IUserInfo }) {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

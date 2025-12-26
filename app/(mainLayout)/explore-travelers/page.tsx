@@ -2,13 +2,12 @@ export const dynamic = "force-dynamic";
 import DisplayTravelers from "@/components/shared/DisplayTravelers";
 import PageHeader from "@/components/shared/PageHeader";
 import { getAllUsers } from "@/services/admin/userManagement";
+import { getAllTravelers } from "@/services/user/userManagement";
 
 const ExploreTravelers = async () => {
-  const usersData = await getAllUsers();
-  const travelers =
-    (usersData?.data?.length > 0 &&
-      usersData?.data?.filter((user: any) => user?.travelPlans?.length > 0)) ||
-    [];
+  const travelers = await getAllTravelers();
+
+  console.log(travelers);
 
   return (
     <div>

@@ -13,7 +13,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateUserProfile } from "@/services/user/userProfileManagement";
 import ProfileUploader from "@/components/ProfileUploader";
 import { usePathname, useRouter } from "next/navigation";
-import LeaveReview from "@/components/shared/review/LeaveReview";
 import Link from "next/link";
 
 export default function ProfileClient({ user }: { user: any }) {
@@ -29,6 +28,8 @@ export default function ProfileClient({ user }: { user: any }) {
   const [pending, startTransition] = useTransition();
 
   const path = usePathname();
+
+  console.log(user);
 
   useEffect(() => {
     if (profileState?.message && !profileState.success) {
@@ -85,7 +86,9 @@ export default function ProfileClient({ user }: { user: any }) {
         <div className="flex flex-col items-center gap-4">
           <div className="relative w-40 h-40 rounded-full overflow-hidden border shadow">
             <Image
-              src={user.profileImage || "/placeholder-user.jpg"}
+              src={
+                user.profileImage || "https://i.ibb.co.com/2YHLD9xh/user.png"
+              }
               alt="Profile"
               fill
               className="object-cover"
@@ -103,7 +106,9 @@ export default function ProfileClient({ user }: { user: any }) {
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p className="text-gray-500">Name</p>
-            <p className="font-semibold">{user.name}</p>
+            <p className="font-semibold flex items-center gap-2">
+              {user.name} {user?.verifiedBadge && <Verified width={17} />}
+            </p>
           </div>
 
           <div>
@@ -274,9 +279,10 @@ export default function ProfileClient({ user }: { user: any }) {
         ) : (
           <>
             <p className="mb-4">
-              Average Rating:{" "}
+              Average Rating:
               <span className="font-bold">
-                {reviewsData?.averageRating?.toFixed(1) || 0} ⭐
+                {" "}
+                {user?.averageRating || 0} ⭐
               </span>{" "}
               ({user?.receivedReviews?.length || 0} reviews)
             </p>

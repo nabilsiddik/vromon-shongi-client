@@ -44,7 +44,11 @@ export default function GivenReviewsClient({
   };
 
   if (!givenReviews.length) {
-    return <p className="text-gray-500">No reviews given yet.</p>;
+    return (
+      <div className="flex items-center justify-center mt-30">
+        <p className="text-gray-500">No reviews given yet.</p>
+      </div>
+    );
   }
 
   return (

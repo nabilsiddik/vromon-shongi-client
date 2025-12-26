@@ -13,10 +13,10 @@ import getLogedInUser from "./services/user/userManagement";
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const accessToken = (await getCookie("accessToken")) || null;
-  const logedInUser = accessToken ? await getLogedInUser() : null;
 
   // If access token available verify it and store user role otherwise delete accesstoken and refresh token if they are already available
   let userRole: UserRole | null = null;
+  let isVerified: Boolean = false;
   if (accessToken) {
     const verifiedToken: JwtPayload | string = jwt.verify(
       accessToken,
@@ -30,6 +30,7 @@ export async function proxy(request: NextRequest) {
     }
 
     userRole = verifiedToken.role;
+    isVerified = verifiedToken.verifiedBadge;
   }
 
   // redirect admin to user management when visit /admin/dashboard
@@ -63,13 +64,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // If access token not available set a redirect searchparams with /login
-  if (!accessToken) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
   // Allow user if they want to visit common protected routes
   if (routerOwner === "COMMON") {
     return NextResponse.next();
@@ -82,6 +76,13 @@ export async function proxy(request: NextRequest) {
         new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
       );
     }
+  }
+
+  // If access token not available set a redirect searchparams with /login
+  if (!accessToken) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

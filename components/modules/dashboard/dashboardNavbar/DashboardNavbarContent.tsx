@@ -1,13 +1,13 @@
-import { Separator } from "@/components/ui/separator"
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import { IUserInfo } from "@/types/user.interface"
-import Link from "next/link"
-import DashboardNavbarSearch from "./DashboardNavbarSearch"
-import DashboardNavbarProfile from "./DashboardNavbarProfile"
-import Logo from "@/components/logo"
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { IUserInfo } from "@/types/user.interface";
+import Link from "next/link";
+import DashboardNavbarSearch from "./DashboardNavbarSearch";
+import DashboardNavbarProfile from "./DashboardNavbarProfile";
+import Logo from "@/components/logo";
 
 interface DashbaordNavbarContentProps {
-  userInfo: IUserInfo | null
+  userInfo: IUserInfo | null;
 }
 
 const DashboardNavbarContent = ({ userInfo }: DashbaordNavbarContentProps) => {
@@ -22,19 +22,17 @@ const DashboardNavbarContent = ({ userInfo }: DashbaordNavbarContentProps) => {
       </div>
       <div className="flex flex-11 items-center justify-between gap-10">
         <div className="flex-4 flex justify-start">
-          <Link href={'/'}>
-            <Logo/>
-          </Link>
+          <Logo />
         </div>
         {/* <div className="flex-4">
           <DashboardNavbarSearch />
         </div> */}
         <div className="flex-4 flex justify-end">
-          <DashboardNavbarProfile/>
+          <DashboardNavbarProfile />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardNavbarContent
+export default DashboardNavbarContent;

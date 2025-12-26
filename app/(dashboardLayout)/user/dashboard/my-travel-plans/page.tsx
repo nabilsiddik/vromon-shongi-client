@@ -19,7 +19,9 @@ const MyTravelPlans = async ({
 
   return (
     <div>
-      <TableFilterBar />
+      <div className="mb-5">
+        <TableFilterBar />
+      </div>
       <TravelPlansTable travelPlans={myTravelPlans?.data} />
       <div className="mt-4 flex justify-start">
         {/* <TablePagination currentPage={travelPlans?.meta?.page || 1} totalPages={totalPages || 1} /> */}

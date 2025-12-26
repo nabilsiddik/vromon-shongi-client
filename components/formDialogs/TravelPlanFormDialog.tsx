@@ -65,6 +65,7 @@ export default function TravelPlanFormDialog({
     }
     if (state?.success) {
       toast.success("Travel plan updated successfully.");
+      setOpen(false);
       startTransition(() => {
         router.refresh();
       });
