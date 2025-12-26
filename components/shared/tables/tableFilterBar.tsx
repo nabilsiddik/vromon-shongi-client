@@ -138,12 +138,31 @@ const TableFilterBar = () => {
     endDate,
     travelType,
   ]);
+
+  const handleReset = () => {
+    setSearchText("");
+    setRole("");
+    setStatus("");
+    setGender("");
+    setVerifiedBadge("");
+    setDestination("");
+    setTravelType("");
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setStartOpen(false);
+    setEndOpen(false);
+
+    startTransition(() => {
+      router.push(pathName);
+    });
+  };
   return (
-    <div>
-      <div className="flex items-center gap-3">
+    <div className="flex items-center justify-between flex-col md:flex-row">
+      <div className="flex items-center gap-3 flex-col md:flex-row w-full">
         {pathName === "/admin/dashboard/users" && (
           <>
             <Input
+              className="w-full"
               onChange={(e) => setSearchText(e.target.value)}
               type="text"
               placeholder="Search Name or Email"
@@ -208,17 +227,19 @@ const TableFilterBar = () => {
           pathName === "/user/dashboard/my-travel-plans") && (
           <>
             <Input
+              value={destination}
               onChange={(e) => setDestination(e.target.value)}
               type="text"
               placeholder="Search destination"
+              className="w-full md:w-48"
             />
 
             <Popover open={startOpen} onOpenChange={setStartOpen}>
-              <PopoverTrigger asChild>
+              <PopoverTrigger asChild className="w-full md:w-48">
                 <Button
                   variant="outline"
                   id="date"
-                  className="w-48 justify-between font-normal"
+                  className=" justify-between font-normal"
                 >
                   {startDate
                     ? startDate.toLocaleDateString()
@@ -243,11 +264,11 @@ const TableFilterBar = () => {
             </Popover>
 
             <Popover open={endOpen} onOpenChange={setEndOpen}>
-              <PopoverTrigger asChild>
+              <PopoverTrigger asChild className="w-full md:w-48">
                 <Button
                   variant="outline"
                   id="date"
-                  className="w-48 justify-between font-normal"
+                  className="justify-between font-normal"
                 >
                   {endDate ? endDate.toLocaleDateString() : "Select end date"}
                   <ChevronDownIcon />
@@ -270,7 +291,7 @@ const TableFilterBar = () => {
             </Popover>
 
             <Select value={travelType} onValueChange={setTravelType}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full md:w-48">
                 <SelectValue placeholder="Select travel type" />
               </SelectTrigger>
               <SelectContent>
@@ -285,6 +306,12 @@ const TableFilterBar = () => {
           </>
         )}
       </div>
+      <Button
+        onClick={handleReset}
+        className="mt-3 md:mt-0 w-full md:w-auto bg-blue-800 cursor-pointer"
+      >
+        Reset
+      </Button>
     </div>
   );
 };

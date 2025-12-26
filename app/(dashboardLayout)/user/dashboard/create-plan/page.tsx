@@ -1,14 +1,14 @@
 export const dynamic = "force-dynamic";
-import { TravelPlanForm } from "@/components/forms/TravelPlanForm"
+import { TravelPlanForm } from "@/components/forms/TravelPlanForm";
 
 const CreatePlan = () => {
   return (
     <div>
-      <div className="max-w-6xl mx-auto">
-        <TravelPlanForm/>
+      <div className="lg:max-w-6xl max-w-12/12 mx-auto">
+        <TravelPlanForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreatePlan
+export default CreatePlan;

@@ -38,27 +38,27 @@ export default async function Navbar() {
 
   return (
     <header className="border-b px-4 md:px-6">
-      <div className="container mx-auto px-5 flex h-16 items-center justify-between gap-4">
+      <div className="container mx-auto px-5 flex h-26 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="group size-8 md:hidden"
+                className="group size-12 lg:hidden"
                 size="icon"
                 variant="ghost"
               >
                 <svg
                   className="pointer-events-none"
                   fill="none"
-                  height={16}
+                  height={50}
                   stroke="currentColor"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   viewBox="0 0 24 24"
-                  width={16}
+                  width={50}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -76,12 +76,15 @@ export default async function Navbar() {
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="w-64 p-1 md:hidden">
+            <PopoverContent align="start" className="w-64 p-3">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink className="py-1.5" href={link?.href}>
+                      <NavigationMenuLink
+                        className="py-1.5 text-lg"
+                        href={link?.href}
+                      >
                         {link?.label}
                       </NavigationMenuLink>
                     </NavigationMenuItem>
@@ -94,12 +97,12 @@ export default async function Navbar() {
           <div className="flex items-center gap-6">
             <Logo />
             {/* Navigation menu */}
-            <NavigationMenu className="max-md:hidden" viewport={false}>
+            <NavigationMenu className="max-lg:hidden" viewport={false}>
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
-                      className="py-1.5 font-medium text-muted-foreground hover:text-primary"
+                      className="py-1.5 font-medium text-muted-foreground hover:text-primary text-lg"
                       href={link?.href}
                     >
                       {link?.label}

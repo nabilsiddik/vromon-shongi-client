@@ -86,7 +86,7 @@ const TravelPlansTable = ({ travelPlans }: any) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
+              This action cannot be undone. This will permanently delete this
               travel plan.
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -1,15 +1,19 @@
-import { PlaneTakeoff } from 'lucide-react'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 
-const Logo = () => {
-    return (
-        <Link href={'/'}>
-            <div className="flex items-center gap-3">
-                <PlaneTakeoff />
-                <h3 className='text-lg font-bold'>Travel Buddy</h3>
-            </div>
-        </Link>
-    )
-}
+const Logo = ({ width, height }: { width?: number; height?: number }) => {
+  return (
+    <Link href={"/"}>
+      <div className="flex items-center gap-3">
+        <Image
+          src={"/images/logo/travel-buddy-logo.png"}
+          width={width ? width : 130}
+          height={height ? height : 130}
+          alt="logo"
+        />
+      </div>
+    </Link>
+  );
+};
 
-export default Logo
+export default Logo;

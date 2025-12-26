@@ -22,7 +22,7 @@ const DashboardNavbarContent = ({ userInfo }: DashbaordNavbarContentProps) => {
       </div>
       <div className="flex flex-11 items-center justify-between gap-10">
         <div className="flex-4 flex justify-start">
-          <Logo />
+          <Logo width={100} height={100} />
         </div>
         {/* <div className="flex-4">
           <DashboardNavbarSearch />

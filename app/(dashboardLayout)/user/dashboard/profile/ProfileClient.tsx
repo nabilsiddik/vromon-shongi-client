@@ -271,66 +271,68 @@ export default function ProfileClient({ user }: { user: any }) {
       )}
 
       {/* Reviews & Average Rating */}
-      <div className="mt-10 p-6 bg-white border rounded-xl shadow-sm">
-        <h3 className="text-2xl font-semibold mb-4">Reviews & Ratings</h3>
+      {user?.role === "USER" && (
+        <div className="mt-10 p-6 bg-white border rounded-xl shadow-sm">
+          <h3 className="text-2xl font-semibold mb-4">Reviews & Ratings</h3>
 
-        {loadingReviews ? (
-          <p>Loading reviews...</p>
-        ) : (
-          <>
-            <p className="mb-4">
-              Average Rating:
-              <span className="font-bold">
-                {" "}
-                {user?.averageRating || 0} ⭐
-              </span>{" "}
-              ({user?.receivedReviews?.length || 0} reviews)
-            </p>
+          {loadingReviews ? (
+            <p>Loading reviews...</p>
+          ) : (
+            <>
+              <p className="mb-4">
+                Average Rating:
+                <span className="font-bold">
+                  {" "}
+                  {user?.averageRating || 0} ⭐
+                </span>{" "}
+                ({user?.receivedReviews?.length || 0} reviews)
+              </p>
 
-            {user?.receivedReviews?.length ? (
-              <ul className="space-y-4">
-                {user?.receivedReviews.map((review: any) => (
-                  <li
-                    key={review.id}
-                    className="border p-4 rounded-md shadow-sm"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-full overflow-hidden relative">
-                        <Image
-                          src={
-                            review.reviewer.profileImage ||
-                            "/placeholder-user.jpg"
-                          }
-                          alt={review.reviewer.name}
-                          fill
-                          className="object-cover"
-                        />
+              {user?.receivedReviews?.length ? (
+                <ul className="space-y-4">
+                  {user?.receivedReviews.map((review: any) => (
+                    <li
+                      key={review.id}
+                      className="border p-4 rounded-md shadow-sm"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-full overflow-hidden relative">
+                          <Image
+                            src={
+                              review.reviewer.profileImage ||
+                              "/placeholder-user.jpg"
+                            }
+                            alt={review.reviewer.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <p className="font-semibold flex items-center gap-2">
+                          {review.reviewer.name}{" "}
+                          {review?.reviewer?.verifiedBadge && (
+                            <Verified width={15} />
+                          )}
+                        </p>
+                        <span className="ml-auto font-medium">
+                          {review.rating} ⭐
+                        </span>
                       </div>
-                      <p className="font-semibold flex items-center gap-2">
-                        {review.reviewer.name}{" "}
-                        {review?.reviewer?.verifiedBadge && (
-                          <Verified width={15} />
-                        )}
+                      {review.comment && (
+                        <p className="text-gray-600">{review.comment}</p>
+                      )}
+                      <p className="text-xs text-gray-400 mt-1">
+                        {new Date(review.createdAt).toLocaleDateString()}
                       </p>
-                      <span className="ml-auto font-medium">
-                        {review.rating} ⭐
-                      </span>
-                    </div>
-                    {review.comment && (
-                      <p className="text-gray-600">{review.comment}</p>
-                    )}
-                    <p className="text-xs text-gray-400 mt-1">
-                      {new Date(review.createdAt).toLocaleDateString()}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No reviews yet.</p>
-            )}
-          </>
-        )}
-      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No reviews yet.</p>
+              )}
+            </>
+          )}
+        </div>
+      )}
 
       {/* {path.startsWith('/traveler-profile') && 
                 <LeaveReview/>
