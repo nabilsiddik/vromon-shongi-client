@@ -15,14 +15,26 @@ import {
 import { Button } from "../ui/button";
 import { handleTravelersJoin } from "@/services/participant/participantManagement";
 import { toast } from "sonner";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 
-const JoinRequestModalDialog = ({ currentUser, plan }: any) => {
+const JoinRequestModalDialog = ({
+  currentUser,
+  plan,
+  isAlreadyRequested,
+}: any) => {
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
+
   const handleJoin = async () => {
     try {
       const data = await handleTravelersJoin(plan?.id);
 
       if (data?.success && data?.data?.id) {
         toast.success("Join request sent. Wait for confirm.");
+        startTransition(() => {
+          router.refresh();
+        });
       } else if (!data?.success && data?.message === "Request already exists") {
         toast.error(`${data?.message}. Please wait for accept.`);
       } else if (
@@ -45,8 +57,10 @@ const JoinRequestModalDialog = ({ currentUser, plan }: any) => {
           {/* join request confirm modal */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button className="w-full mt-3">
-                Join With {plan?.user?.name}
+              <Button disabled={isAlreadyRequested} className="w-full mt-3">
+                {isAlreadyRequested
+                  ? "Requested"
+                  : `Join With ${plan?.user?.name}`}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -67,28 +81,11 @@ const JoinRequestModalDialog = ({ currentUser, plan }: any) => {
           </AlertDialog>
         </>
       ) : (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button className="w-full mt-3">
-              Join With {plan?.user?.name}
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Confirm Join</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to join <b>{currentUser?.name}</b> for
-                this trip to <b>{plan?.destination}</b>?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleJoin}>
-                Yes, Join
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <Link href={"/subscription"}>
+          <Button className="w-full mt-3 cursor-pointer">
+            Join With {plan?.user?.name}
+          </Button>
+        </Link>
       )}
     </div>
   );

@@ -53,6 +53,8 @@ export default function ReviewModal({
 
       if (result.success) {
         toast.success("Review submitted successfully!");
+        setComment("");
+        setRating(5);
         onClose();
       } else {
         toast.error(result.message || "Failed to submit review.");

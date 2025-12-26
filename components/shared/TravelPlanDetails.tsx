@@ -22,9 +22,24 @@ export default async function TravelPlanDetails({
     travelType,
     description,
     user,
+    joinRequests,
   } = plan;
 
+  let isAlreadyRequested = false;
+  joinRequests?.length &&
+    joinRequests.find((request: any) => {
+      if (
+        request?.planId === planId &&
+        request?.requesterId === currentUser?.id
+      ) {
+        isAlreadyRequested = true;
+      }
+    });
+
   if (!currentUser) return <p>No user logged in</p>;
+  console.log({
+    isAlreadyRequested,
+  });
   return (
     <div className="pb-20">
       <div className="relative flex items-center justify-center h-[320px] w-full bg-black">
@@ -82,6 +97,7 @@ export default async function TravelPlanDetails({
                   <JoinRequestModalDialog
                     currentUser={currentUser}
                     plan={plan}
+                    isAlreadyRequested={isAlreadyRequested}
                   />
                 </Card>
               </div>

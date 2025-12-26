@@ -69,6 +69,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // If access token not available set a redirect searchparams with /login
+  if (!accessToken && routerOwner === "USER") {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // User is tring to access role based protected routes
   if (routerOwner === "ADMIN" || routerOwner === "USER") {
     if (userRole !== routerOwner) {
@@ -76,13 +83,6 @@ export async function proxy(request: NextRequest) {
         new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
       );
     }
-  }
-
-  // If access token not available set a redirect searchparams with /login
-  if (!accessToken) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

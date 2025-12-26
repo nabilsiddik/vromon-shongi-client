@@ -29,7 +29,7 @@ export default function ProfileClient({ user }: { user: any }) {
 
   const path = usePathname();
 
-  console.log(user);
+  console.log(user, "user");
 
   useEffect(() => {
     if (profileState?.message && !profileState.success) {
@@ -66,6 +66,14 @@ export default function ProfileClient({ user }: { user: any }) {
     fetchReviews();
   }, [user?.id]);
 
+  if (!user) {
+    return (
+      <div className="py-20 flex items-center justify-center">
+        <h3>User is not available. May be deleted.</h3>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
@@ -87,7 +95,7 @@ export default function ProfileClient({ user }: { user: any }) {
           <div className="relative w-40 h-40 rounded-full overflow-hidden border shadow">
             <Image
               src={
-                user.profileImage || "https://i.ibb.co.com/2YHLD9xh/user.png"
+                user?.profileImage || "https://i.ibb.co.com/2YHLD9xh/user.png"
               }
               alt="Profile"
               fill
@@ -95,7 +103,7 @@ export default function ProfileClient({ user }: { user: any }) {
             />
           </div>
 
-          {user.verifiedBadge && (
+          {user?.verifiedBadge && (
             <span className="flex items-center gap-1 text-blue-600 font-medium">
               <BadgeCheck className="w-5 h-5" />
               Verified User
@@ -107,28 +115,28 @@ export default function ProfileClient({ user }: { user: any }) {
           <div>
             <p className="text-gray-500">Name</p>
             <p className="font-semibold flex items-center gap-2">
-              {user.name} {user?.verifiedBadge && <Verified width={17} />}
+              {user?.name} {user?.verifiedBadge && <Verified width={17} />}
             </p>
           </div>
 
           <div>
             <p className="text-gray-500">Email</p>
-            <p className="font-semibold">{user.email}</p>
+            <p className="font-semibold">{user?.email}</p>
           </div>
 
           <div>
             <p className="text-gray-500">Gender</p>
-            <p className="font-semibold capitalize">{user.gender || "N/A"}</p>
+            <p className="font-semibold capitalize">{user?.gender || "N/A"}</p>
           </div>
 
           <div>
             <p className="text-gray-500">Current Location</p>
-            <p className="font-semibold">{user.currentLocation || "N/A"}</p>
+            <p className="font-semibold">{user?.currentLocation || "N/A"}</p>
           </div>
 
           <div className="md:col-span-2">
             <p className="text-gray-500">Bio</p>
-            <p className="font-semibold">{user.bio || "No bio added"}</p>
+            <p className="font-semibold">{user?.bio || "No bio added"}</p>
           </div>
         </div>
       </div>
@@ -137,9 +145,11 @@ export default function ProfileClient({ user }: { user: any }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-5 rounded-xl border shadow-sm bg-white">
             <p className="text-gray-500">Interests</p>
-            <p className="font-semibold">{user.interests?.length || 0} items</p>
+            <p className="font-semibold">
+              {user?.interests?.length || 0} items
+            </p>
             <ul>
-              {user.interests?.length > 0 &&
+              {user?.interests?.length > 0 &&
                 user?.interests?.map((item: any, index: number) => {
                   return (
                     <li key={index} className="flex items-center gap-2">
@@ -153,11 +163,11 @@ export default function ProfileClient({ user }: { user: any }) {
           <div className="p-5 rounded-xl border shadow-sm bg-white">
             <p className="text-gray-500">Visited Countries</p>
             <p className="font-semibold">
-              {user.visitedCountries?.length || 0} countries
+              {user?.visitedCountries?.length || 0} countries
             </p>
 
             <ul>
-              {user.visitedCountries?.length > 0 &&
+              {user?.visitedCountries?.length > 0 &&
                 user?.visitedCountries?.map((item: any, index: number) => {
                   return (
                     <li
@@ -174,9 +184,9 @@ export default function ProfileClient({ user }: { user: any }) {
           <div className="p-5 rounded-xl border shadow-sm bg-white">
             <p className="text-gray-500">Created Travel Plans</p>
             <p className="font-semibold">
-              {user.travelPlans?.length || 0} plans
-              {user.travelPlans?.length &&
-                user.travelPlans?.map((plan: any, index: number) => {
+              {user?.travelPlans?.length || 0} plans
+              {user?.travelPlans?.length &&
+                user?.travelPlans?.map((plan: any, index: number) => {
                   return (
                     <p key={index} className="flex items-center gap-3 text-md">
                       <span className="flex items-center gap-2">

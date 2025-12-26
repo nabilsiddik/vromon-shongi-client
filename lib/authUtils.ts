@@ -17,8 +17,8 @@ export const adminProtectedRoutes: RouteConfig = {
 };
 
 export const userProtectedRoutes: RouteConfig = {
-  exact: [],
-  patterns: [/^\/user/],
+  exact: ["/travel-plans"],
+  patterns: [/^\/user/, /^\/travel-plans/],
 };
 
 // check if it's an auth route
