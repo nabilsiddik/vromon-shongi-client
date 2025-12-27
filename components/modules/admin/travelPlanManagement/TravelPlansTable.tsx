@@ -29,7 +29,7 @@ const TravelPlansTable = ({ travelPlans }: any) => {
 
   // On travel plan view
   const handleTravelPlanView = (travelPlan: ITravelPlan) => {
-    router.push(`/admin/dashboard/travel-plans/${travelPlan?.id}`);
+    router.push(`/travel-plans/${travelPlan?.id}`);
   };
 
   const handleEditTravelPlan = async (travelPlan: ITravelPlan) => {
