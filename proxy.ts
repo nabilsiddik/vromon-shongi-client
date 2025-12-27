@@ -30,8 +30,12 @@ export async function proxy(request: NextRequest) {
     }
 
     userRole = verifiedToken?.role;
-    isVerified = verifiedToken?.verifiedBadge === true;
+
+    const logedInUser = await getLogedInUser();
+    isVerified = logedInUser?.verifiedBadge;
   }
+
+  console.log(isVerified);
 
   if (
     accessToken &&
