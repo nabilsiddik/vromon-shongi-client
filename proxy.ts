@@ -39,6 +39,16 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  if (
+    !accessToken &&
+    userRole === "USER" &&
+    pathname.startsWith("/travel-plans")
+  ) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // redirect admin to user management when visit /admin/dashboard
   if (pathname === "/admin/dashboard") {
     return NextResponse.redirect(
