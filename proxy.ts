@@ -16,7 +16,7 @@ export async function proxy(request: NextRequest) {
 
   // If access token available verify it and store user role otherwise delete accesstoken and refresh token if they are already available
   let userRole: UserRole | null = null;
-  let isVerified: Boolean = false;
+  let isVerified = false;
   if (accessToken) {
     const verifiedToken: JwtPayload | string = jwt.verify(
       accessToken,
@@ -29,14 +29,18 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    userRole = verifiedToken.role;
-    isVerified = verifiedToken.verifiedBadge;
+    userRole = verifiedToken?.role;
+    isVerified = verifiedToken?.verifiedBadge === true;
+  }
 
-    if (!isVerified && pathname !== "/user/dashboard/profile") {
-      if (!isVerified && pathname.startsWith("/user/dashboard")) {
-        return NextResponse.redirect(new URL("/subscription", request.url));
-      }
-    }
+  if (
+    accessToken &&
+    userRole === "USER" &&
+    !isVerified &&
+    pathname.startsWith("/user/dashboard") &&
+    pathname !== "/user/dashboard/profile"
+  ) {
+    return NextResponse.redirect(new URL("/subscription", request.url));
   }
 
   if (!accessToken && pathname.startsWith("/travel-plans")) {
