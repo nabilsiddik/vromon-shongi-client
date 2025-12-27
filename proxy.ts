@@ -31,6 +31,12 @@ export async function proxy(request: NextRequest) {
 
     userRole = verifiedToken.role;
     isVerified = verifiedToken.verifiedBadge;
+
+    if (!isVerified && pathname !== "/user/dashboard/profile") {
+      if (pathname.startsWith("/user/dashboard")) {
+        return NextResponse.redirect(new URL("/subscription", request.url));
+      }
+    }
   }
 
   // redirect admin to user management when visit /admin/dashboard
