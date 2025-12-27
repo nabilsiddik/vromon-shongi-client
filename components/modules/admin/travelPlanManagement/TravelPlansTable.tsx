@@ -6,7 +6,7 @@ import { ITravelPlan } from "@/types/travelPlan.interface";
 import TravelPlanFormDialog from "@/components/formDialogs/TravelPlanFormDialog";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { deleteTravelPlan } from "@/services/travelPlan/travelPlanManagement";
 
 import {
@@ -18,7 +18,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 const TravelPlansTable = ({ travelPlans }: any) => {
@@ -30,7 +29,7 @@ const TravelPlansTable = ({ travelPlans }: any) => {
 
   // On travel plan view
   const handleTravelPlanView = (travelPlan: ITravelPlan) => {
-    redirect(`/travel-plans/${travelPlan?.id}`);
+    router.push(`/admin/dashboard/travel-plans/${travelPlan?.id}`);
   };
 
   const handleEditTravelPlan = async (travelPlan: ITravelPlan) => {
