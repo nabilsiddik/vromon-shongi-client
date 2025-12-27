@@ -33,7 +33,7 @@ export async function proxy(request: NextRequest) {
     isVerified = verifiedToken.verifiedBadge;
 
     if (!isVerified && pathname !== "/user/dashboard/profile") {
-      if (pathname.startsWith("/user/dashboard")) {
+      if (!isVerified && pathname.startsWith("/user/dashboard")) {
         return NextResponse.redirect(new URL("/subscription", request.url));
       }
     }
