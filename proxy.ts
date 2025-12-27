@@ -39,11 +39,7 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (
-    !accessToken &&
-    userRole === "USER" &&
-    pathname.startsWith("/travel-plans")
-  ) {
+  if (!accessToken && pathname.startsWith("/travel-plans")) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(loginUrl);
