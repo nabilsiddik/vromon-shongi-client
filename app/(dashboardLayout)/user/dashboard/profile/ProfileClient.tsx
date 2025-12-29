@@ -182,9 +182,9 @@ export default function ProfileClient({ user }: { user: any }) {
           </div>
 
           <div className="p-5 rounded-xl border shadow-sm bg-white">
-            <p className="text-gray-500">Created Travel Plans</p>
+            <p className="text-gray-500">Upcoming Travel Plans</p>
             <p className="font-semibold">
-              {user?.travelPlans?.length || 0} plans
+              Total created {user?.travelPlans?.length || 0} plans
               {user?.travelPlans?.length &&
                 user?.travelPlans?.map((plan: any, index: number) => {
                   if (new Date(plan?.startDate) > new Date()) {
