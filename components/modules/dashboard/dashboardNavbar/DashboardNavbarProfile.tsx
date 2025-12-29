@@ -30,7 +30,10 @@ const DashboardNavbarProfile = async () => {
   const dropdownMenuList = [
     {
       title: "Profile",
-      link: "/user/dashboard/profile",
+      link:
+        user?.role === "ADMIN"
+          ? "/admin/dashboard/profile"
+          : "/user/dashboard/profile",
       icon: <FaRegUserCircle />,
     },
   ];

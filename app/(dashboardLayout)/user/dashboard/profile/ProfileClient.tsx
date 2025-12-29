@@ -187,19 +187,24 @@ export default function ProfileClient({ user }: { user: any }) {
               {user?.travelPlans?.length || 0} plans
               {user?.travelPlans?.length &&
                 user?.travelPlans?.map((plan: any, index: number) => {
-                  return (
-                    <p key={index} className="flex items-center gap-3 text-md">
-                      <span className="flex items-center gap-2">
-                        <Check width={15} /> {plan?.destination}
-                      </span>
-                      <Link
-                        className="cursor-pointer"
-                        href={`/travel-plans/${plan?.id}`}
+                  if (new Date(plan?.startDate) > new Date()) {
+                    return (
+                      <p
+                        key={index}
+                        className="flex items-center gap-3 text-md"
                       >
-                        <ArrowRight />
-                      </Link>
-                    </p>
-                  );
+                        <span className="flex items-center gap-2">
+                          <Check width={15} /> {plan?.destination}
+                        </span>
+                        <Link
+                          className="cursor-pointer"
+                          href={`/travel-plans/${plan?.id}`}
+                        >
+                          <ArrowRight />
+                        </Link>
+                      </p>
+                    );
+                  }
                 })}
             </p>
           </div>

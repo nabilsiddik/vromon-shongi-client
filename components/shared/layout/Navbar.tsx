@@ -126,20 +126,24 @@ export default async function Navbar() {
               <DropdownMenuContent className="w-60">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-
+                <DropdownMenuItem className="flex flex-col gap-1 items-start">
+                  <h3 className="font-bold text-lg">Hi, {user?.name}</h3>
+                  <p className="text-lg">{user?.email}</p>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 {user?.email && user?.role === "ADMIN" && (
                   <>
                     <Link
                       href={"/admin/dashboard/profile"}
                       className="cursor-pointer"
                     >
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer text-lg">
                         Profile
                       </DropdownMenuItem>
                     </Link>
 
                     <Link href={"/admin/dashboard"} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer text-lg">
                         Admin Dashboard
                       </DropdownMenuItem>
                     </Link>
@@ -152,13 +156,13 @@ export default async function Navbar() {
                       href={"/user/dashboard/profile"}
                       className="cursor-pointer"
                     >
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer text-lg">
                         Profile
                       </DropdownMenuItem>
                     </Link>
 
                     <Link href={"/user/dashboard"} className="cursor-pointer">
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer text-lg">
                         User Dashboard
                       </DropdownMenuItem>
                     </Link>
@@ -167,14 +171,14 @@ export default async function Navbar() {
                       href={"/user/dashboard/my-travel-plans"}
                       className="cursor-pointer"
                     >
-                      <DropdownMenuItem className="cursor-pointer">
+                      <DropdownMenuItem className="cursor-pointer text-lg">
                         My Plans
                       </DropdownMenuItem>
                     </Link>
                   </>
                 )}
                 <Link href={"/subscription"} className="cursor-pointer">
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer text-lg">
                     Subscriptions
                   </DropdownMenuItem>
                 </Link>

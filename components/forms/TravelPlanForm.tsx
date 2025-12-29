@@ -33,8 +33,9 @@ export function TravelPlanForm({
     }
     if (state?.success) {
       toast.success("Travel plan created successfully!");
+      setTravelPlanImage(null);
     }
-  }, [state]);
+  }, [state, travelPlanImage]);
 
   return (
     <form
@@ -145,7 +146,10 @@ export function TravelPlanForm({
         </Field>
 
         <div>
-          <TravelPlanImageUploader setTravelPlanImage={setTravelPlanImage} />
+          <TravelPlanImageUploader
+            travelPlanImage={travelPlanImage}
+            setTravelPlanImage={setTravelPlanImage}
+          />
         </div>
 
         <Field>

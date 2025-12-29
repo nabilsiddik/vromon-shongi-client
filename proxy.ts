@@ -35,8 +35,6 @@ export async function proxy(request: NextRequest) {
     isVerified = logedInUser?.verifiedBadge;
   }
 
-  console.log(isVerified);
-
   if (
     accessToken &&
     userRole === "USER" &&
