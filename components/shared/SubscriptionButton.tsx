@@ -11,6 +11,9 @@ import {
 } from "@/components/ui/card";
 import { handleSubscription } from "@/services/subscription/subscriptionManagement";
 import { toast } from "sonner";
+import { IUser } from "@/types/user.interface";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Plan = {
   name: string;
@@ -45,7 +48,8 @@ const plans: Plan[] = [
   },
 ];
 
-const SubscriptionButton = () => {
+const SubscriptionButton = ({ user }: { user: IUser }) => {
+  const pathName = usePathname();
   const [loadingPlan, setLoadingPlan] = useState<null | "monthly" | "yearly">(
     null
   );
@@ -114,15 +118,23 @@ const SubscriptionButton = () => {
                 ))}
               </ul>
 
-              <Button
-                className="mt-4 w-full"
-                disabled={loadingPlan === plan.type}
-                onClick={() => handleClick(plan.type)}
-              >
-                {loadingPlan === plan.type
-                  ? "Processing..."
-                  : `Subscribe to ${plan.name}`}
-              </Button>
+              {user ? (
+                <Button
+                  className="mt-4 w-full"
+                  disabled={loadingPlan === plan.type}
+                  onClick={() => handleClick(plan.type)}
+                >
+                  {loadingPlan === plan.type
+                    ? "Processing..."
+                    : `Subscribe to ${plan.name}`}
+                </Button>
+              ) : (
+                <Link href={`/login?redirect=${pathName.slice(1)}`}>
+                  <Button className="mt-4 w-full cursor-pointer">
+                    {`Subscribe to ${plan.name}`}
+                  </Button>
+                </Link>
+              )}
             </CardContent>
           </Card>
         ))}
