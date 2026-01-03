@@ -129,7 +129,7 @@ const SubscriptionButton = ({ user }: { user: IUser }) => {
                     : `Subscribe to ${plan.name}`}
                 </Button>
               ) : (
-                <Link href={`/login?redirect=${pathName.slice(1)}`}>
+                <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
                   <Button className="mt-4 w-full cursor-pointer">
                     {`Subscribe to ${plan.name}`}
                   </Button>

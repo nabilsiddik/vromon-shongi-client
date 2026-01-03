@@ -108,8 +108,12 @@ export const userLogin = async (
 
     if (redirectTo) {
       const redirectPath = redirectTo.toString();
+      const safeRedirect = redirectPath.startsWith("/")
+        ? redirectPath
+        : `/${redirectPath}`;
+
       if (isValidRedirectForRole(redirectPath, userRole)) {
-        redirect(`${redirectPath}?login=true`);
+        redirect(`${safeRedirect}?login=true`);
       } else {
         redirect(`${getDefaultDashboardRoute(userRole)}?login=true`);
       }
