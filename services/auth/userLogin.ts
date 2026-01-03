@@ -12,6 +12,7 @@ import {
   getDefaultDashboardRoute,
   isValidRedirectForRole,
 } from "@/lib/authUtils";
+import { toast } from "sonner";
 
 export const userLogin = async (
   _currentState: any,
@@ -113,7 +114,8 @@ export const userLogin = async (
         redirect(`${getDefaultDashboardRoute(userRole)}?login=true`);
       }
     } else {
-      redirect(`${getDefaultDashboardRoute(userRole)}?login=true`);
+      redirect(`/?login=true`);
+      // redirect(`${getDefaultDashboardRoute(userRole)}?login=true`);
     }
   } catch (err: any) {
     if (err?.digest?.startsWith("NEXT_REDIRECT")) {

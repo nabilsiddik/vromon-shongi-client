@@ -16,6 +16,7 @@ import { userLogin } from "@/services/auth/userLogin";
 import InputFieldError from "../InputFieldError";
 import { IInputErrorState } from "@/utils/getInputFieldError";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
@@ -23,10 +24,11 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"form"> & { redirect?: string }) {
   const [state, formAction, isPending] = useActionState(userLogin, null);
+  const router = useRouter();
 
   useEffect(() => {
-    if (state && !state.success && state.message) {
-      toast.error(state.message);
+    if (state && !state?.success && state?.message) {
+      toast.error(state?.message);
     }
   }, [state]);
 
