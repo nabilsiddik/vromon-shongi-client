@@ -58,6 +58,7 @@ export const reviewTravelmate = async (
   }
 };
 
+// Submit review
 export const submitReview = async (payload: any) => {
   const res = await serverFetch.post("/review/", {
     body: JSON.stringify(payload),
@@ -74,6 +75,25 @@ export const updateReview = async (reviewId: string, payload: any) => {
       headers: { "Content-Type": "application/json" },
     });
 
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};
+
+// update review
+export const deleteReview = async (reviewId: string) => {
+  try {
+    const res = await serverFetch.delete(`/review/${reviewId}`);
     const result = await res.json();
     return result;
   } catch (error: any) {

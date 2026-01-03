@@ -46,7 +46,7 @@ export default async function TopRatedTravelers() {
                   <div className="flex justify-center items-center mt-2">
                     <StarIcon className="w-5 h-5 text-yellow-400" />
                     <span className="ml-1 font-medium text-gray-700">
-                      {traveler?.averageRating} (Avg Rating)
+                      {traveler?.averageRating.toFixed(2)} (Avg Rating)
                     </span>
                   </div>
                 </div>
