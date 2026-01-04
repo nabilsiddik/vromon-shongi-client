@@ -6,10 +6,7 @@ import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function TravelPlanImageUploader({
-  travelPlanImage,
-  setTravelPlanImage,
-}: any) {
+export default function TravelPlanImageUploader({ setTravelPlanImage }: any) {
   const maxSizeMB = 1;
   const maxSize = maxSizeMB * 1024 * 1024;
 
@@ -37,7 +34,7 @@ export default function TravelPlanImageUploader({
     } else {
       setTravelPlanImage(null);
     }
-  }, []);
+  }, [files]);
 
   return (
     <div className="flex flex-col gap-2">

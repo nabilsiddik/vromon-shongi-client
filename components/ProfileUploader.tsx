@@ -34,7 +34,7 @@ export default function ProfileUploader({ setProfileImage }: any) {
     } else {
       setProfileImage(null);
     }
-  });
+  }, [files]);
 
   return (
     <div className="flex flex-col gap-2">

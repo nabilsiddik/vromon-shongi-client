@@ -152,7 +152,10 @@ export default function ProfileClient({ user }: { user: any }) {
               {user?.interests?.length > 0 &&
                 user?.interests?.map((item: any, index: number) => {
                   return (
-                    <li key={index} className="flex items-center gap-2">
+                    <li
+                      key={index}
+                      className="flex items-center gap-2 capitalize"
+                    >
                       <Check width={15} /> {item}
                     </li>
                   );
@@ -172,7 +175,7 @@ export default function ProfileClient({ user }: { user: any }) {
                   return (
                     <li
                       key={index}
-                      className="flex items-center gap-2 font-semibold"
+                      className="flex items-center gap-2 font-semibold capitalize"
                     >
                       <Check width={15} /> {item}
                     </li>

@@ -27,6 +27,8 @@ export function TravelPlanForm({
   const [travelPlanImage, setTravelPlanImage] = useState<File | null>(null);
   const travelTypes = ["SOLO", "FAMILY", "FRIENDS"];
 
+  console.log(travelPlanImage);
+
   useEffect(() => {
     if (state && !state.success && state.message) {
       toast.error(state.message);
@@ -41,7 +43,7 @@ export function TravelPlanForm({
     <form
       noValidate
       action={formAction}
-      className={cn("flex flex-col gap-6", className)}
+      className={cn("flex flex-col gap-6 px-5 lg:px-0", className)}
       {...props}
     >
       {/* hidden input file for travel plan  */}
