@@ -169,7 +169,7 @@ const TableFilterBar = () => {
             />
 
             <Select value={role} onValueChange={setRole}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
               <SelectContent>
@@ -182,7 +182,7 @@ const TableFilterBar = () => {
             </Select>
 
             <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Select a status" />
               </SelectTrigger>
               <SelectContent>
@@ -195,7 +195,7 @@ const TableFilterBar = () => {
             </Select>
 
             <Select value={gender} onValueChange={setGender}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Select a gender" />
               </SelectTrigger>
               <SelectContent>
@@ -209,7 +209,7 @@ const TableFilterBar = () => {
             </Select>
 
             <Select value={verifiedBadge} onValueChange={setVerifiedBadge}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Select verified status" />
               </SelectTrigger>
               <SelectContent>

@@ -82,7 +82,10 @@ export default function TravelPlanFormDialog({
         </DialogHeader>
 
         {travelPlan && (
-          <form action={formAction} className="space-y-4">
+          <form
+            action={formAction}
+            className="space-y-4 h-full overflow-y-auto"
+          >
             {/* hidden input file for travel plan  */}
             <input
               type="file"
