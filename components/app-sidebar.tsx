@@ -66,6 +66,11 @@ const data = {
           url: "/user/dashboard/my-travel-plans",
           icon: <List />,
         },
+        {
+          title: "Matched Travelers",
+          url: "/user/dashboard/matched-travelers",
+          icon: <Users />,
+        },
       ],
     },
     {

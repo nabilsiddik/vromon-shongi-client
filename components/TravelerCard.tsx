@@ -19,41 +19,41 @@ export default function TravelerCard({ traveler }: { traveler: Traveler }) {
       {/* Header */}
       <div className="flex items-start gap-4">
         <img
-          src={traveler.profileImage || "/avatar.png"}
-          alt={traveler.name}
+          src={traveler?.profileImage || "/avatar.png"}
+          alt={traveler?.name}
           className="h-16 w-16 rounded-full object-cover ring-2 ring-muted"
         />
 
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="text-xl font-semibold leading-none">
-              {traveler.name}
+            <h3 className="text-lg font-semibold leading-none">
+              {traveler?.name}
             </h3>
 
-            {traveler.verifiedBadge && (
+            {traveler?.verifiedBadge && (
               <Verified width={15} className="text-blue-500 mt-1" />
             )}
           </div>
 
-          {traveler.currentLocation && (
-            <div className="mt-1 flex items-center gap-1 text-md text-muted-foreground">
+          {traveler?.currentLocation && (
+            <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              {traveler.currentLocation}
+              {traveler?.currentLocation}
             </div>
           )}
         </div>
       </div>
 
       {/* Bio */}
-      {traveler.bio && (
+      {traveler?.bio && (
         <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
-          {traveler.bio}
+          {traveler?.bio}
         </p>
       )}
 
       {/* Interests */}
       <div className="mt-4 flex flex-wrap gap-2">
-        {traveler.interests.slice(0, 5).map((interest) => (
+        {traveler?.interests.slice(0, 5).map((interest) => (
           <Badge
             key={interest}
             variant="secondary"
@@ -69,7 +69,7 @@ export default function TravelerCard({ traveler }: { traveler: Traveler }) {
         <span className="text-md text-muted-foreground">Matched with you</span>
 
         <Link href={`/traveler-profile/${traveler?.id}`}>
-          <Button size="lg" className="rounded-full cursor-pointer">
+          <Button size="sm" className="rounded-full cursor-pointer">
             View Profile
           </Button>
         </Link>
