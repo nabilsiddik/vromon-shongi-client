@@ -41,7 +41,7 @@ export function SignupForm({
   return (
     <form
       action={formAction}
-      className={cn("flex flex-col gap-6 px-5 lg:px-0", className)}
+      className={cn("flex flex-col gap-6 px-5", className)}
       {...props}
     >
       {/* hidden input file for profile image  */}

@@ -30,7 +30,7 @@ const data = {
     {
       title: "Activity Management",
       icon: <Activity />,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Activities",
@@ -42,7 +42,7 @@ const data = {
     {
       title: "User Management",
       icon: <User />,
-      isActive: false,
+      isActive: true,
       items: [
         {
           title: "Users",

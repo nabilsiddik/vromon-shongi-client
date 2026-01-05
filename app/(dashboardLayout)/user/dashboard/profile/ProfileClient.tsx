@@ -29,8 +29,6 @@ export default function ProfileClient({ user }: { user: any }) {
 
   const path = usePathname();
 
-  console.log(user, "user");
-
   useEffect(() => {
     if (profileState?.message && !profileState.success) {
       toast.error(profileState.message);

@@ -37,9 +37,6 @@ export default async function TravelPlanDetails({
     });
 
   if (!currentUser) return <p>No user logged in</p>;
-  console.log({
-    isAlreadyRequested,
-  });
   return (
     <div className="pb-20">
       <div className="relative flex items-center justify-center h-[320px] w-full bg-black">

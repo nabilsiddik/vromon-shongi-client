@@ -16,12 +16,12 @@ const Activity = async () => {
     <div>
       <div className="grid gap-5 lg:gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
         <ActivityCard
-          number={users?.data?.length}
+          number={users?.meta?.total || 0}
           text="User"
           className="bg-red-500 hover:bg-red-600 text-white"
         />
         <ActivityCard
-          number={travelPlans?.data?.length}
+          number={travelPlans?.meta?.total || 0}
           text="Plans"
           className="bg-green-500 hover:bg-green-600 text-white"
         />
@@ -31,7 +31,7 @@ const Activity = async () => {
           className="bg-blue-500 hover:bg-blue-600 text-white"
         />
         <ActivityCard
-          number={joinRequests?.length}
+          number={joinRequests?.length || 0}
           text="Join Request"
           className="bg-yellow-500 hover:bg-yellow-600"
         />

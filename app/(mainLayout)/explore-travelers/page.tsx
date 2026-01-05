@@ -7,8 +7,6 @@ import { getAllTravelers } from "@/services/user/userManagement";
 const ExploreTravelers = async () => {
   const travelers = await getAllTravelers();
 
-  console.log(travelers);
-
   return (
     <div>
       <PageHeader

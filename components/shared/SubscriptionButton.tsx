@@ -60,7 +60,6 @@ const SubscriptionButton = ({ user }: { user: IUser }) => {
       const result = await handleSubscription(planType);
 
       if (result?.success) {
-        console.log(result.data.url);
         window.location.href = result.data.url;
       } else {
         toast.error("Something went wrong.");

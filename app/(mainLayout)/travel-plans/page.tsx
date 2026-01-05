@@ -15,8 +15,6 @@ const TravelPlans = async ({
   const travelPlanData = await getAllTravelPlans(queryString);
   const travelPlans = travelPlanData?.data || [];
 
-  console.log(travelPlans);
-
   return (
     <div>
       <PageHeader

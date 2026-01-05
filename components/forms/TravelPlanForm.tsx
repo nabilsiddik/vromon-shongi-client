@@ -27,8 +27,6 @@ export function TravelPlanForm({
   const [travelPlanImage, setTravelPlanImage] = useState<File | null>(null);
   const travelTypes = ["SOLO", "FAMILY", "FRIENDS"];
 
-  console.log(travelPlanImage);
-
   useEffect(() => {
     if (state && !state.success && state.message) {
       toast.error(state.message);

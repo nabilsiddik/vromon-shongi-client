@@ -16,8 +16,6 @@ type Traveler = {
 export default async function MatchedTravelersSection() {
   const matchedTravelers = await getMatchedTravelers();
 
-  console.log(matchedTravelers, "matched");
-
   if (!matchedTravelers.length) {
     return <NoMatchingTravelerFound />;
   }
