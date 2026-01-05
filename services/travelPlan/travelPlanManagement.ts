@@ -2,15 +2,10 @@
 
 import { serverFetch } from "@/lib/serverFetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { ITravelPlan, TravelType } from "@/types/travelPlan.interface";
-import {
-  travelPlanZodSchema,
-  updateTravelPlanZodSchema,
-} from "@/zod/travelPlan.zodSchema";
-import { getCookie } from "../auth/tokenHandler";
+import { travelPlanZodSchema } from "@/zod/travelPlan.zodSchema";
 
 // Get all Travel Plans
-export const getAllTravelPlans = async (queryString: string) => {
+export const getAllTravelPlans = async (queryString?: string) => {
   try {
     const res = await serverFetch.get(
       `/travel-plan${queryString ? `?${queryString}` : ""}`

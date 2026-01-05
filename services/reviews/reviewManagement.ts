@@ -2,6 +2,26 @@
 
 import { serverFetch } from "@/lib/serverFetch";
 
+// Get all reviews
+export const getAllReviews = async () => {
+  try {
+    const res = await serverFetch.get(`/review`);
+
+    const result = await res.json();
+    return result.data || [];
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+      }`,
+    };
+  }
+};
+
 // Get all my Travel Plan requests
 export const fetchReviewablePlans = async () => {
   try {

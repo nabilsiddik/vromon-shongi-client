@@ -8,6 +8,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
+  Activity,
+  ActivityIcon,
   BaggageClaim,
   GitPullRequestIcon,
   List,
@@ -26,9 +28,21 @@ import { IUserInfo } from "@/types/user.interface";
 const data = {
   adminNavItems: [
     {
+      title: "Activity Management",
+      icon: <Activity />,
+      isActive: true,
+      items: [
+        {
+          title: "Activities",
+          url: "/admin/dashboard/activity",
+          icon: <ActivityIcon />,
+        },
+      ],
+    },
+    {
       title: "User Management",
       icon: <User />,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Users",
