@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import InputFieldError from "../InputFieldError";
@@ -26,16 +26,22 @@ export function TravelPlanForm({
   const [state, formAction, isPending] = useActionState(createTravelPlan, null);
   const [travelPlanImage, setTravelPlanImage] = useState<File | null>(null);
   const travelTypes = ["SOLO", "FAMILY", "FRIENDS"];
+  const [resetImage, setResetImage] = useState(false);
+  const prevSuccessRef = useRef<boolean | null>(null);
 
-  useEffect(() => {
-    if (state && !state.success && state.message) {
-      toast.error(state.message);
-    }
-    if (state?.success) {
-      toast.success("Travel plan created successfully!");
-      setTravelPlanImage(null);
-    }
-  }, [state, travelPlanImage]);
+useEffect(() => {
+  if (state?.success && prevSuccessRef.current !== true) {
+    toast.success("Travel plan created successfully!");
+    setTravelPlanImage(null);
+    setResetImage((prev) => !prev);
+  }
+
+  if (state && !state.success && state.message) {
+    toast.error(state.message);
+  }
+
+  prevSuccessRef.current = state?.success ?? null;
+}, [state]);
 
   return (
     <form
@@ -149,6 +155,7 @@ export function TravelPlanForm({
           <TravelPlanImageUploader
             travelPlanImage={travelPlanImage}
             setTravelPlanImage={setTravelPlanImage}
+            resetTrigger={resetImage}
           />
         </div>
 

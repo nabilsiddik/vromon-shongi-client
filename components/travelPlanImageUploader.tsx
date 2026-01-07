@@ -6,7 +6,7 @@ import { useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function TravelPlanImageUploader({ setTravelPlanImage }: any) {
+export default function TravelPlanImageUploader({ setTravelPlanImage, resetTrigger  }: any) {
   const maxSizeMB = 1;
   const maxSize = maxSizeMB * 1024 * 1024;
 
@@ -27,6 +27,12 @@ export default function TravelPlanImageUploader({ setTravelPlanImage }: any) {
   });
   const previewUrl = files[0]?.preview || null;
   const _fileName = files[0]?.file.name || null;
+
+  useEffect(() => {
+    if (resetTrigger) {
+      files.forEach((file) => removeFile(file.id));
+    }
+  }, [resetTrigger]);
 
   useEffect(() => {
     if (files.length > 0) {
