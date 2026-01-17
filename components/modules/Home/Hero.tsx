@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from 'motion/react'
-import { slideUp } from "@/animations/slide";
-import { fadeIn } from "@/animations/fade";
+import SlideUp from "@/animations/Slide/SlideUp";
+import FadeIn from "@/animations/Fade/FadeIn";
 
 export default function Hero() {
   return (
@@ -14,32 +14,21 @@ export default function Hero() {
       <div className="absolute top-10 right-0 w-[400px] h-[400px] bg-purple-300/30 rounded-full blur-[100px]" />
 
       <div className="container mx-auto px-5 grid lg:grid-cols-2 items-center py-16 md:py-22 relative z-10">
-        <div className="space-y-6">
-          <motion.h1
-            variants={slideUp}
-            initial='hidden'
-            animate='show'
-            className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Explore The World <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Together, Not Alone.
-            </span>
-          </motion.h1>
+        <SlideUp>
+          <div className="space-y-6">
+            <h1
+              className="text-4xl md:text-6xl font-extrabold leading-tight">
+              Explore The World <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                Together, Not Alone.
+              </span>
+            </h1>
+            <p
+              className="text-gray-600 text-lg md:text-xl max-w-md">
+              Find like-minded travelers going to your next destination. Create
+              memories, make friends, and share the journey.
+            </p>
 
-          <motion.p
-            variants={slideUp}
-            initial='hidden'
-            animate='show'
-            className="text-gray-600 text-lg md:text-xl max-w-md">
-            Find like-minded travelers going to your next destination. Create
-            memories, make friends, and share the journey.
-          </motion.p>
-
-          <motion.div
-            variants={slideUp}
-            initial='hidden'
-            animate='show'
-          >
             <Link href={"/travel-plans"}>
               <Button
                 size="lg"
@@ -48,17 +37,12 @@ export default function Hero() {
                 Find Travel Buddies →
               </Button>
             </Link>
-          </motion.div>
-
-        </div>
+          </div>
+        </SlideUp>
 
         {/* Hero Illustration */}
         <div className="relative mt-10 lg:mt-0">
-          <motion.div
-            variants={fadeIn}
-            initial='hidden'
-            animate='show'
-          >
+          <FadeIn>
             <Image
               src="/images/home/tour-mate-2.jpg"
               alt="Travel Illustration"
@@ -66,7 +50,7 @@ export default function Hero() {
               height={700}
               className="w-full drop-shadow-2xl animate-float rounded-lg"
             />
-          </motion.div>
+          </FadeIn>
         </div>
       </div>
     </section>

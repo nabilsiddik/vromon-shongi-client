@@ -1,3 +1,4 @@
+import FeaturedTrips from "@/components/modules/Home/FeaturedTrips";
 import FindBuddyCTA from "@/components/modules/Home/FindBuddyCTA";
 import Hero from "@/components/modules/Home/Hero";
 import HowItWorks from "@/components/modules/Home/HowItWorks";
@@ -16,6 +17,7 @@ export default async function Home() {
     <div>
       <Hero />
       <TopDestinations />
+      <FeaturedTrips/>
       <FindBuddyCTA />
       {user && <MatchedTravelersSection />}
       <TopRatedTravelers />

@@ -69,13 +69,22 @@ export const getMyTravelPlan = async (queryString: string) => {
 export async function createTravelPlan(prevState: any, formData: FormData) {
   try {
     const payload = {
+      title: formData.get("title") as string,
       destination: formData.get("destination") as string,
       startDate: formData.get("startDate") as string,
       endDate: formData.get("endDate") as string,
-      budgetRange: formData.get("budgetRange") as string,
+      budgetFrom: formData.get("budgetFrom") as string,
+      budgetTo: formData.get("budgetTo") as string,
+      minMates: formData.get("minMates") as string,
+      maxMates: formData.get("maxMates") as string,
+      videoUrl: formData.get("videoUrl") as string,
+      includes: formData.get("includes") as string,
       travelType: formData.get("travelType") as string,
       description: formData.get("description") as string,
+      visibility: formData.get("visibility") as string,
     };
+
+    console.log(payload);
 
     if (zodValidator(payload, travelPlanZodSchema).success === false) {
       return zodValidator(payload, travelPlanZodSchema);
@@ -86,14 +95,29 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       travelPlanZodSchema
     ).data;
 
+    const includesArray = validatedPayload?.includes.split('\r\n').map((item: string) => item.trim()) || []
+
+    const parsedStartDate = new Date(validatedPayload.startDate).toISOString()
+    const parsedEndDate = new Date(validatedPayload.endDate).toISOString()
+
+
     const travelPlanData = {
+      title: validatedPayload.title,
       destination: validatedPayload.destination,
-      startDate: new Date(validatedPayload.startDate),
-      endDate: new Date(validatedPayload.endDate),
-      budgetRange: validatedPayload.budgetRange ?? undefined,
+      startDate: parsedStartDate,
+      endDate: parsedEndDate,
+      budgetFrom: validatedPayload.budgetFrom,
+      budgetTo: validatedPayload.budgetTo,
+      minMates: validatedPayload.minMates,
+      maxMates: validatedPayload.maxMates,
       travelType: validatedPayload.travelType,
       description: validatedPayload.description ?? undefined,
+      videoUrl: validatedPayload.videoUrl ?? undefined,
+      visibility: validatedPayload.visibility,
+      includes: includesArray
     };
+
+    console.log(travelPlanData, 'includes');
 
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(travelPlanData));
