@@ -47,7 +47,7 @@ useEffect(() => {
     <form
       noValidate
       action={formAction}
-      className={cn("flex flex-col gap-6 px-5 lg:px-0", className)}
+      className={cn("flex flex-col bg-white py-10 px-10 rounded-md max-w-4xl", className)}
       {...props}
     >
       {/* hidden input file for travel plan  */}
@@ -65,18 +65,31 @@ useEffect(() => {
       />
 
       <FieldGroup>
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Create Travel Plan</h1>
-        </div>
+        {/* title  */}
+        <Field>
+          <FieldLabel htmlFor="title">Title <span className="text-red-500">*</span></FieldLabel>
+          <Input
+            className="font-medium bg-gray-50"
+            name="title"
+            id="title"
+            type="text"
+            placeholder="Title of your plan"
+          />
+          <InputFieldError
+            field="destination"
+            state={state as IInputErrorState}
+          />
+        </Field>
+
 
         {/* Destination */}
         <Field>
-          <FieldLabel htmlFor="destination">Destination</FieldLabel>
+          <FieldLabel htmlFor="destination">Destination <span className="text-red-500">*</span></FieldLabel>
           <Input
             name="destination"
             id="destination"
             type="text"
-            placeholder="e.g. Cox’s Bazar"
+            placeholder="Destination Location"
           />
           <InputFieldError
             field="destination"

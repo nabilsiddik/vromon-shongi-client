@@ -22,7 +22,7 @@ export default function ProfileUploader({ setProfileImage }: any) {
       getInputProps,
     },
   ] = useFileUpload({
-    accept: "image/svg+xml,image/png,image/jpeg,image/jpg,image/gif",
+    accept: "image/png,image/jpeg,image/jpg",
     maxSize,
   });
   const previewUrl = files[0]?.preview || null;
@@ -71,7 +71,7 @@ export default function ProfileUploader({ setProfileImage }: any) {
               </div>
               <p className="mb-1.5 font-medium text-sm">Drop your image here</p>
               <p className="text-muted-foreground text-xs">
-                SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
+                PNG, JPG, JPEG (max. {maxSizeMB}MB)
               </p>
               <Button
                 type="button"
@@ -83,7 +83,7 @@ export default function ProfileUploader({ setProfileImage }: any) {
                   aria-hidden="true"
                   className="-ms-1 size-4 opacity-60"
                 />
-                Select image
+                Select Profile Photo
               </Button>
             </div>
           )}

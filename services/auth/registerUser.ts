@@ -7,13 +7,12 @@ import { serverFetch } from '@/lib/serverFetch';
 export const registerUser = async (_currentState: any, formData: any): Promise<any> => {
     try {
         const payload = {
-            name: formData.get("name"),
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            birthDate: formData.get('birthDate'),
             email: formData.get("email"),
-            gender: formData.get("gender"),
             password: formData.get("password"),
             confirmPassword: formData.get("confirmPassword"),
-            bio: formData.get("bio"),
-            currentLocation: formData.get("currentLocation"),
         };
 
         if (zodValidator(payload, registerUserZodSchema).success === false) {
@@ -22,13 +21,15 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
 
         const validatedPayload: any = zodValidator(payload, registerUserZodSchema).data;
 
+        const date = new Date(validatedPayload.birthDate)
+        const formattedBirthDate = date.toISOString()
+
         const registerData = {
-            name: validatedPayload.name,
+            firstName: validatedPayload.firstName,
+            lastName: validatedPayload.lastName,
             email: validatedPayload.email,
+            birthDate: formattedBirthDate,
             password: validatedPayload.password,
-            gender: validatedPayload.gender,
-            bio: validatedPayload.bio,
-            currentLocation: validatedPayload.currentLocation
         }
 
         const newFormData = new FormData()

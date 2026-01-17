@@ -19,7 +19,7 @@ const CommonDashboardLayout = async ({
         {/* daahsboard navbar  */}
         <DashboardNavbar />
         {/* main dynamic content  */}
-        <div className="p-3 md:p-10">{children}</div>
+        <div className="p-3 md:p-10 bg-gray-100">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

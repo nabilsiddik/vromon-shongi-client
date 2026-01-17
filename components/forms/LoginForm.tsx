@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
@@ -17,6 +16,7 @@ import InputFieldError from "../InputFieldError";
 import { IInputErrorState } from "@/utils/getInputFieldError";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 export function LoginForm({
   className,
@@ -42,9 +42,6 @@ export function LoginForm({
       {redirect && <input type="hidden" name="redirect" value={redirect} />}
 
       <FieldGroup>
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
-        </div>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input
@@ -58,12 +55,12 @@ export function LoginForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="password">Password</FieldLabel>
-          <Input name="password" id="password" type="password" />
+          <Input name="password" id="password" type="password" placeholder="Secure Password" />
 
           <InputFieldError field="password" state={state as IInputErrorState} />
         </Field>
         <Field>
-          <Button type="submit" disabled={isPending}>
+          <Button type='submit' disabled={isPending} className="w-full py-2 cursor-pointer">
             {isPending ? "Proccessing" : "Login"}
           </Button>
         </Field>

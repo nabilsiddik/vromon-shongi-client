@@ -8,13 +8,19 @@ export const Gender = z.enum(["MALE", "FEMALE", "OTHERS"]);
 
 // patient creation input zod schema
 export const registerUserZodSchema = z.object({
-    name: z
+    firstName: z
         .string()
-        .min(2, "Name must be at least 2 characters"),
+        .min(2, "First Name must be at least 2 characters"),
+
+    lastName: z
+        .string()
+        .min(2, "Last Name must be at least 2 characters"),
 
     email: z
         .string()
         .email("Invalid email format"),
+
+    birthDate: z.string('Date is required'),
 
     password: z
         .string()
@@ -22,26 +28,6 @@ export const registerUserZodSchema = z.object({
     confirmPassword: z
         .string()
         .min(6, "Confirm Password must be at least 6 characters"),
-
-    bio: z.string().optional(),
-    profileImage: z.string().optional(),
-    currentLocation: z.string().optional(),
-    gender: Gender,
-
-    interests: z
-        .array(z.string())
-        .optional()
-        .default([]),
-
-    visitedCountries: z
-        .array(z.string())
-        .optional()
-        .default([]),
-
-    role: UserRoleEnum.default("USER"),
-    subscriptionStatus: SubscriptionStatusEnum.default("NONE"),
-    verifiedBadge: z.boolean().optional().default(false),
-    status: UserStatusEnum.default("ACTIVE"),
 }).refine((data) => data.password === data.confirmPassword, {
     message: 'Confirm Password did not match',
     path: ['confirmPassword']
@@ -49,11 +35,11 @@ export const registerUserZodSchema = z.object({
 
 
 export const updateUserProfileZodSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  bio: z.string().max(300, { message: "Bio must be under 300 characters." }).optional(),
-  currentLocation: z.string().max(100, { message: "Location must be under 100 characters." }).optional(),
-  interests: z.string().optional(),
-  visitedCountries: z.string().optional(),
+    name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+    bio: z.string().max(300, { message: "Bio must be under 300 characters." }).optional(),
+    currentLocation: z.string().max(100, { message: "Location must be under 100 characters." }).optional(),
+    interests: z.string().optional(),
+    visitedCountries: z.string().optional(),
 });
 
 

@@ -11,12 +11,7 @@ const Logo = ({
   return (
     <Link href={"/"}>
       <div className="flex items-center gap-3">
-        <Image
-          src={"/images/logo/travel-buddy-logo.png"}
-          width={width}
-          height={height}
-          alt="logo"
-        />
+        <h2 className="text-blue-500 font-bold text-3xl">Travel Mate</h2>
       </div>
     </Link>
   );
