@@ -16,7 +16,7 @@ const MyTravelPlans = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const myTravelPlans = await getMyTravelPlan(queryString);
-
+ console.log(myTravelPlans?.data, 'test');
   return (
     <div>
       <div className="mb-5">

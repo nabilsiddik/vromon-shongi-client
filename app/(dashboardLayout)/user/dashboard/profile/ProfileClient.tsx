@@ -46,11 +46,13 @@ export default function ProfileClient({ user }: { user: any }) {
       if (!user?.id) return;
 
       try {
-        const res = await fetch(`/user/${user.id}/reviews`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${user.id}/reviews`);
         const data = await res.json();
 
+        console.log(data, 'data');
+
         if (data?.success) {
-          setReviewsData(data.data);
+          setReviewsData(data?.data);
         } else {
           console.error(data?.message || "Failed to fetch reviews");
         }
