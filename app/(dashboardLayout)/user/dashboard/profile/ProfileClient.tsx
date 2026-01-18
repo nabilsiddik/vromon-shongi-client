@@ -49,7 +49,7 @@ export default function ProfileClient({ user }: { user: any }) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${user.id}/reviews`);
         const data = await res.json();
 
-        console.log(data, 'data');
+        console.log(data?.data, 'data');
 
         if (data?.success) {
           setReviewsData(data?.data);

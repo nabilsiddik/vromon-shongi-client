@@ -7,7 +7,7 @@ export const getAllUsers = async (queryString?: string) => {
       `/user${queryString ? `?${queryString}` : ""}`
     );
     const result = await res.json();
-    return result.data || null;
+    return result?.data || null;
   } catch (error: any) {
     return {
       success: false,

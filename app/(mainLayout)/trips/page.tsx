@@ -11,7 +11,7 @@ const AllTrips = async ({
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
 
-    const allTrips = await getAllTravelPlans().then(data => data.data)
+    const allTrips = await getAllTravelPlans().then(data => data?.data)
     const searchParamsObj = await searchParams;
     const queryString = queryStringFormatter(searchParamsObj);
     const travelPlanData = await getAllTravelPlans(queryString);

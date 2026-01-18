@@ -11,7 +11,7 @@ export const getAllTravelPlans = async (queryString?: string) => {
       `/travel-plan${queryString ? `?${queryString}` : ""}`
     );
     const result = await res.json();
-    return result.data || null;
+    return result?.data || null;
   } catch (error: any) {
     console.log(error);
     return {
@@ -30,7 +30,7 @@ export const getTravelPlanById = async (id: string) => {
   try {
     const res = await serverFetch.get(`/travel-plan/${id}`);
     const result = await res.json();
-    return result.data || null;
+    return result?.data || null;
   } catch (error: any) {
     console.log(error);
     return {
@@ -51,7 +51,7 @@ export const getMyTravelPlan = async (queryString: string) => {
       `/travel-plan/my-plans${queryString ? `?${queryString}` : ""}`
     );
     const result = await res.json();
-    return result.data || null;
+    return result?.data || null;
   } catch (error: any) {
     console.log(error);
     return {
@@ -93,7 +93,7 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
     const validatedPayload: any = zodValidator(
       payload,
       travelPlanZodSchema
-    ).data;
+    )?.data;
 
     const includesArray = validatedPayload?.includes.split('\r\n').map((item: string) => item.trim()) || []
 
@@ -168,7 +168,7 @@ export async function updateTravelPlan(
     return zodValidator(payload, travelPlanZodSchema);
   }
 
-  const validatedPayload: any = zodValidator(payload, travelPlanZodSchema).data;
+  const validatedPayload: any = zodValidator(payload, travelPlanZodSchema)?.data;
 
   const updatedTravelPlanData = {
     destination: validatedPayload.destination,

@@ -7,7 +7,7 @@ export const getMatchedTravelers = async () => {
   try {
     const res = await serverFetch.get(`/user/travelers/matched-travelers`);
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {

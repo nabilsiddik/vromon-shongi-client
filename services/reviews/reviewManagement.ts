@@ -8,7 +8,7 @@ export const getAllReviews = async () => {
     const res = await serverFetch.get(`/review`);
 
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {
@@ -28,7 +28,7 @@ export const fetchReviewablePlans = async () => {
     const res = await serverFetch.get(`/review/reviewable-plans`);
 
     const result = await res.json();
-    return result.data || { participantTrips: [], hostTrips: [] };
+    return result?.data || { participantTrips: [], hostTrips: [] };
   } catch (error: any) {
     console.log(error);
     return {

@@ -4,7 +4,7 @@ import { getAllTravelPlans } from "@/services/travelPlan/travelPlanManagement"
 
 const FeaturedTrips = async() => {
 
-    const allTrips = await getAllTravelPlans().then(data => data.data)
+    const allTrips = await getAllTravelPlans().then(data => data?.data)
 
     console.log(allTrips);
 

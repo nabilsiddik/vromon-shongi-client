@@ -36,7 +36,7 @@ export const userLogin = async (
     const validatedPayload = zodValidator(
       payload,
       loginValidationZodSchema
-    ).data;
+    )?.data;
 
     const res = await serverFetch.post("/auth/login", {
       body: JSON.stringify(validatedPayload),

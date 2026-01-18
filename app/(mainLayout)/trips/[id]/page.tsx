@@ -12,7 +12,7 @@ export default async function TripDetailsPage({ params }: Props) {
   const res = await serverFetch.get(`/travel-plan/${id}`, {
     cache: "no-store",
   });
-  const trip = await res.json().then((data) => data.data);
+  const trip = await res.json().then((data) => data?.data);
 
   console.log(trip);
 

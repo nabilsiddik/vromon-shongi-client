@@ -6,7 +6,7 @@ export const getAllJoinRequest = async () => {
   try {
     const res = await serverFetch.get(`/join-request`);
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {
@@ -25,7 +25,7 @@ export const getMyPlanRequests = async () => {
   try {
     const res = await serverFetch.get(`/join-request/my-request`);
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {
@@ -44,7 +44,7 @@ export const getMySentRequests = async () => {
   try {
     const res = await serverFetch.get(`/join-request/my-sent`);
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {

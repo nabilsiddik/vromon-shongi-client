@@ -19,7 +19,7 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
             return zodValidator(payload, registerUserZodSchema);
         }
 
-        const validatedPayload: any = zodValidator(payload, registerUserZodSchema).data;
+        const validatedPayload: any = zodValidator(payload, registerUserZodSchema)?.data;
 
         const date = new Date(validatedPayload.birthDate)
         const formattedBirthDate = date.toISOString()

@@ -6,7 +6,7 @@ export const getHostParticipant = async () => {
   try {
     const res = await serverFetch.get(`/participant/my-participants`);
     const result = await res.json();
-    return result.data || [];
+    return result?.data || [];
   } catch (error: any) {
     console.log(error);
     return {

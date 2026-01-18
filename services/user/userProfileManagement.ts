@@ -24,7 +24,7 @@ export const updateUserProfile = async (
             return zodValidator(payload, updateUserProfileZodSchema);
         }
 
-        const validatedPayload: any = zodValidator(payload, updateUserProfileZodSchema).data;
+        const validatedPayload: any = zodValidator(payload, updateUserProfileZodSchema)?.data;
 
         const updateUserData = {
             name: validatedPayload.name,
