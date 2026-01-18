@@ -1,21 +1,22 @@
 import { dayDifference, formatDate } from "@/utils/dateManagement";
+import { shortText } from "@/utils/shortText";
 import { VerifiedIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { MdVerified } from "react-icons/md";
 
 
-const TripCard = ({ trip }: { trip: any }) => {
+const TripCard = ({ trip, className = '', titleLength}: { trip: any, className?: string, titleLength?: number }) => {
     const { user } = trip
     return (
         <Link href={`/trips/${trip?.id}`}>
-            <div className="bg-white rounded-lg shadow-lg hover:scale-[1.02] hover:shadow-xl transition-all ease-in-out duration-300">
+            <div className={`bg-white rounded-lg shadow-lg hover:scale-[1.02] hover:shadow-xl transition-all ease-in-out duration-300 ${className}`}>
                 <div className="relative">
                     <Image className="rounded-tl-lg rounded-tr-lg w-full" src={trip?.planImages[0]} width={500} height={500} alt="Trip image" />
 
                     {/* user profile  */}
                     <Link href={`/traveler-profile/${user?.id}`}>
-                        <div className="absolute bottom-5 left-5 w-15 h-15 z-10 bg-white rounded-lg border-3 border-white"
+                        <div className="absolute bottom-3 left-3 w-15 h-15 z-10 bg-white rounded-lg border-3 border-white"
                             style={{
                                 backgroundImage: `url(${user?.profileImage})`,
                                 backgroundPosition: 'center',
@@ -36,7 +37,7 @@ const TripCard = ({ trip }: { trip: any }) => {
                         <p className="font-medium text-gray-600">host <Link className="underline" href={`/traveler-profile/${user?.id}`}>{user?.firstName}</Link></p>
                     </div>
                     <Link href={'/'}>
-                        <h3 className="font-bold text-lg text-gray-800 hover:text-primary">{trip?.title}</h3>
+                        <h3 className={`font-bold text-lg text-gray-800 hover:text-primary`}>{shortText(trip?.title, titleLength || trip?.title?.length)}</h3>
                     </Link>
 
                     <div className="flex items-center gap-2 mt-2 mb-1 font-medium text-gray-500">

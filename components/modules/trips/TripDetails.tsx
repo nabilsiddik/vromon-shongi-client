@@ -2,9 +2,11 @@ import IconList from "@/components/shared/IconList";
 import { Button } from "@/components/ui/button";
 import { dayDifference, formatDate } from "@/utils/dateManagement";
 import { formatVideoUrl } from "@/utils/formatVideoUrl";
+import { shortText } from "@/utils/shortText";
 import { CalendarDays, Check, ChevronRight, Clock4, MapPin, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import TripDescription from "./TripDescription";
 
 const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
 
@@ -46,9 +48,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                     </div>
 
                     {/* description  */}
-                    <div className="mt-3">
-                        <p>{trip?.description}</p>
-                    </div>
+                    <TripDescription description = {trip?.description}/>
 
                     {/* included  */}
                     <div className="mt-3 p-5 border rounded-lg">
