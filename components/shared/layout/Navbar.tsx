@@ -31,8 +31,6 @@ export default async function Navbar() {
 
   const navigationLinks = [
     { href: "/", label: "Home" },
-    { href: "/explore-travelers", label: "Explore Travelers" },
-    { href: "/travel-plans", label: "Find Buddy" },
     { href: "/trips", label: "Trips" },
     { href: "/subscription", label: "Subscriptions" },
   ];
