@@ -6,7 +6,7 @@ export default async function TravelerProfile({ params }: { params: any }) {
   const user = await getUserById(id);
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="max-w-6xl mx-auto px-4 mt-[65px] py-10">
       <ProfileClient user={user?.data} />
     </div>
   );

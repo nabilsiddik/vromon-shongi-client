@@ -115,7 +115,7 @@ export default function ProfileClient({ user }: { user: any }) {
           <div>
             <p className="text-gray-500">Name</p>
             <p className="font-semibold flex items-center gap-2">
-              {user?.name} {user?.verifiedBadge && <Verified width={17} />}
+              {user?.firstName} {user?.lastName} {user?.verifiedBadge && <Verified width={17} />}
             </p>
           </div>
 

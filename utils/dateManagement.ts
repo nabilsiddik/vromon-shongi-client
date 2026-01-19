@@ -1,6 +1,7 @@
 import {format, differenceInDays, ISOFormatOptions} from 'date-fns'
 
 export const formatDate = (isoDate: any) => {
+    if(!isoDate) return 
     return format(new Date(isoDate), 'd MMM yy')
 }
 

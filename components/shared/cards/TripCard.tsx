@@ -36,7 +36,7 @@ const TripCard = ({ trip, className = '', titleLength}: { trip: any, className?:
                     <div>
                         <p className="font-medium text-gray-600">host <Link className="underline" href={`/traveler-profile/${user?.id}`}>{user?.firstName}</Link></p>
                     </div>
-                    <Link href={'/'}>
+                    <Link href={`/trips/${trip?.id}`}>
                         <h3 className={`font-bold text-lg text-gray-800 hover:text-primary`}>{shortText(trip?.title, titleLength || trip?.title?.length)}</h3>
                     </Link>
 

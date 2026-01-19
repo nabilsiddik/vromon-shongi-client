@@ -7,13 +7,15 @@ import { CalendarDays, Check, ChevronRight, Clock4, MapPin, User } from "lucide-
 import Image from "next/image";
 import Link from "next/link";
 import TripDescription from "./TripDescription";
+import JoinTripCard from "@/components/shared/cards/JoinTripCard";
+import TripMetaIconList from "@/components/shared/TripMetaIconList";
 
 const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
 
     const includesHalfLength = Math.ceil(trip?.includes?.length / 2)
 
     return (
-        <section className="mt-20">
+        <section className="mt-[63px]">
             <div style={{
                 backgroundImage: `url(${trip?.planImages[0]})`,
                 backgroundSize: 'cover',
@@ -25,7 +27,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
 
             <div className="max-w-7xl mx-auto px-5 my-10 flex gap-10">
                 <div className="flex flex-col gap-3 flex-4">
-                    <h2 className="font-bold text-3xl text-gray-700">{trip?.title}</h2>
+                    <h2 className="font-bold md:text-3xl text-2xl text-gray-700">{trip?.title}</h2>
                     <div className="flex items-center gap-2 font-medium">
                         <span>Hosted by</span>
                         <span>
@@ -34,21 +36,19 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                         <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
                             <span className="font-bold text-black underline">{user?.firstName}</span>
                         </Link>
-                        <Button variant={'outline'} className="py-5 px-8">
+                        {/* <Button variant={'outline'} className="py-5 px-8">
                             Ask A Question
-                        </Button>
+                        </Button> */}
                     </div>
 
-                    <div className="flex items-center gap-5">
-                        <IconList icon={<Clock4 />} text={`${dayDifference(trip?.startDate, trip?.endDate)} Days`} />
+                    {/* trip meta data icon list  */}
+                    <TripMetaIconList trip = {trip}/>
 
-                        <IconList icon={<User />} text={`${trip?.minMates} - ${trip?.maxMates} Mates`} />
-
-                        <IconList icon={<MapPin />} text={`${trip?.destination} Days`} />
-                    </div>
+                    {/* join trip for small devices  */}
+                    <JoinTripCard trip={trip} className='block lg:hidden'/>
 
                     {/* description  */}
-                    <TripDescription description = {trip?.description}/>
+                    <TripDescription description={trip?.description} />
 
                     {/* included  */}
                     <div className="mt-3 p-5 border rounded-lg">
@@ -56,13 +56,13 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
 
                         <div className="mt-2 flex gap-10">
                             <div className="flex flex-col gap-1">
-                                {trip?.includes?.length > 0 && trip?.includes?.slice(0, includesHalfLength)?.map((trip: any) => {
-                                    return <IconList key={trip?.id} icon={<Check width={18} />} text={trip} />
+                                {trip?.includes?.length > 0 && trip?.includes?.slice(0, includesHalfLength)?.map((item: any, index: number) => {
+                                    return <IconList key={index} icon={<Check width={18} />} text={item} />
                                 })}
                             </div>
                             <div className="flex flex-col gap-1">
-                                {trip?.includes?.length > 0 && trip?.includes?.slice(includesHalfLength, trip?.includes?.length)?.map((trip: any) => {
-                                    return <IconList key={trip?.id} icon={<Check width={18} />} text={trip} />
+                                {trip?.includes?.length > 0 && trip?.includes?.slice(includesHalfLength, trip?.includes?.length)?.map((item: any, index: number) => {
+                                    return <IconList key={index} icon={<Check width={18} />} text={item} />
                                 })}
                             </div>
                         </div>
@@ -75,7 +75,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                             <h3 className="font-bold text-xl mb-4">Trip Highlights Video:</h3>
 
                             <div>
-                                <iframe className="rounded-lg" width="560" height="315" src={formatVideoUrl(trip?.videoUrl)} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                                <iframe className="rounded-lg" width="100%" height="415" src={formatVideoUrl(trip?.videoUrl)} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                             </div>
 
                         </div>
@@ -83,19 +83,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                 </div>
 
                 {/* Join trip  */}
-                <div className="border rounded-lg p-5 flex-2">
-                    <div className="py-5 border-b">
-                        <IconList icon={<CalendarDays />} text={`${formatDate(trip?.startDate)} - ${formatDate(trip?.endDate)}`} textClass="font-medium text-gray-500" iconClass="text-gray-500" />
-                    </div>
-
-                    <div className="py-5">
-                        <div className="flex items-center justify-between font-bold text-gray-500">
-                            <span>Total Price</span>
-                            <span>${trip?.budgetFrom}</span>
-                        </div>
-                        <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
-                    </div>
-                </div>
+                <JoinTripCard trip = {trip} className='hidden lg:block'/>
             </div>
         </section>
     )
