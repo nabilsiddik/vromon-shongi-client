@@ -28,7 +28,7 @@ const Modal = ({ children, open, setOpen, onAction, modalTitle, modalDescription
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <form>
-                    <DialogContent className="">
+                    <DialogContent>
                         <DialogHeader>
                             {modalTitle &&
                                 <DialogTitle className="text-2xl font-bold">{modalTitle}</DialogTitle>
@@ -44,7 +44,7 @@ const Modal = ({ children, open, setOpen, onAction, modalTitle, modalDescription
                             <DialogClose asChild>
                                 <Button className="cursor-pointer" variant="outline">{cancleButtonText}</Button>
                             </DialogClose>
-                            <Button className="cursor-pointer" onClick={() => onAction}>{actionButtonText}</Button>
+                            <Button className="cursor-pointer" onClick={onAction}>{actionButtonText}</Button>
                         </DialogFooter>
                     </DialogContent>
                 </form>

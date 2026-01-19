@@ -105,6 +105,23 @@ const data = {
       ],
     },
     {
+      title: "Trip Request",
+      icon: <GitPullRequestIcon />,
+      isActive: false,
+      items: [
+        {
+          title: "Incoming Requests",
+          url: "/user/dashboard/incoming-requests",
+          icon: <ListCheck />,
+        },
+        {
+          title: "Outgoing Request",
+          url: "/user/dashboard/outgoing-requests",
+          icon: <ListCheck />,
+        },
+      ],
+    },
+    {
       title: "Reviews",
       icon: <Star />,
       isActive: false,
