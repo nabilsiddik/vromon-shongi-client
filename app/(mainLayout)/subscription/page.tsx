@@ -4,10 +4,10 @@ import getLogedInUser from "@/services/user/userManagement";
 const Subscription = async () => {
   const user = await getLogedInUser();
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center mt-[63px]">
       <SubscriptionButton user={user} />
     </div>
-  );
+  ); 
 };
 
 export default Subscription;

@@ -7,7 +7,7 @@ import TripDescription from "./TripDescription";
 import JoinTripCard from "@/components/shared/cards/JoinTripCard";
 import TripMetaIconList from "@/components/shared/TripMetaIconList";
 
-const TripDetails = ({ user, trip, participants }: { user: any, trip: any, participants: any }) => {
+const TripDetails = ({ trip, participants, logedInUser }: { trip: any, participants: any, logedInUser: any }) => {
 
     const includesHalfLength = Math.ceil(trip?.includes?.length / 2)
 
@@ -28,10 +28,10 @@ const TripDetails = ({ user, trip, participants }: { user: any, trip: any, parti
                     <div className="flex items-center gap-2 font-medium">
                         <span>Hosted by</span>
                         <span>
-                            <Image className="rounded-rull" src={user?.profileImage} width={50} height={50} alt="host profile" />
+                            <Image className="rounded-rull" src={trip?.user?.profileImage} width={50} height={50} alt="host profile" />
                         </span>
-                        <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
-                            <span className="font-bold text-black underline">{user?.firstName}</span>
+                        <Link target="_blank" href={`/traveler-profile/${trip?.user?.id}`}>
+                            <span className="font-bold text-black underline">{`${trip?.user?.firstName} ${trip?.user?.lastName}`}</span>
                         </Link>
                         {/* <Button variant={'outline'} className="py-5 px-8">
                             Ask A Question
@@ -42,7 +42,7 @@ const TripDetails = ({ user, trip, participants }: { user: any, trip: any, parti
                     <TripMetaIconList trip = {trip}/>
 
                     {/* join trip for small devices  */}
-                    <JoinTripCard trip={trip} className='block lg:hidden' participants = {participants}/>
+                    <JoinTripCard trip={trip} className='block lg:hidden' participants = {participants} logedInUser = {logedInUser}/>
 
                     {/* description  */}
                     <TripDescription description={trip?.description} />
@@ -80,7 +80,7 @@ const TripDetails = ({ user, trip, participants }: { user: any, trip: any, parti
                 </div>
 
                 {/* Join trip  */}
-                <JoinTripCard trip = {trip} className='hidden lg:block' participants = {participants}/>
+                <JoinTripCard trip = {trip} className='hidden lg:block' participants = {participants} logedInUser = {logedInUser}/>
             </div>
         </section>
     )

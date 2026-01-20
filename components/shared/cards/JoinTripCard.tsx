@@ -16,15 +16,17 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { usePathname } from "next/navigation"
 
-const JoinTripCard = ({ trip, className = '', participants }: {
+const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
     trip: any,
     className: string,
-    participants: any
+    participants: any,
+    logedInUser: any
 }) => {
 
     const [open, setOpen] = useState<boolean>(false)
-
+    const pathName = usePathname()
     const handleTripParticipantRequest = async () => {
         const res = await createTripParticipant(trip?.id)
 
@@ -71,7 +73,13 @@ const JoinTripCard = ({ trip, className = '', participants }: {
                     </div>
                 </div>
 
-                <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
+                {logedInUser ? 
+                    <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
+                : 
+                    <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
+                        <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
+                    </Link>
+                }
 
                 {/* join trip modal  */}
                 <Modal onAction={handleTripParticipantRequest} open={open} setOpen={setOpen} actionButtonText='Join' modalTitle={'You are going to send a join request.'} modalDescription={'This will send a join request to the trip leader and you will join when trip leader approve it.'}>

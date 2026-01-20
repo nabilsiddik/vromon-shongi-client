@@ -9,7 +9,7 @@ interface Props {
 
 export default async function TripDetailsPage({ params }: Props) {
   const { id } = await params;
-  const user = await getLogedInUser();
+  const logedInUser = await getLogedInUser();
 
   const res = await serverFetch.get(`/travel-plan/${id}`, {
     cache: "no-store",
@@ -30,5 +30,5 @@ export default async function TripDetailsPage({ params }: Props) {
   const allParticipants = await getParticipantsForSpecificTrip(trip?.id)
 
 
-  return <TripDetails user={user} trip={trip} participants = {allParticipants} />;
+  return <TripDetails trip={trip} participants = {allParticipants} logedInUser = {logedInUser} />;
 }
