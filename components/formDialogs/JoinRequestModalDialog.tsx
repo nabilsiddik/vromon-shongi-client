@@ -60,14 +60,14 @@ const JoinRequestModalDialog = ({
               <Button disabled={isAlreadyRequested} className="w-full mt-3">
                 {isAlreadyRequested
                   ? "Requested"
-                  : `Join With ${plan?.user?.name}`}
+                  : `Join With ${plan?.user?.firstName} ${plan?.user?.lastName}`}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>Confirm Join</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to join <b>{currentUser?.name}</b> for
+                  Are you sure you want to join <b>{plan?.user?.firstName} ${plan?.user?.lastName}</b> for
                   this trip to <b>{plan?.destination}</b>?
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -83,7 +83,7 @@ const JoinRequestModalDialog = ({
       ) : (
         <Link href={"/subscription"}>
           <Button className="w-full mt-3 cursor-pointer">
-            Join With {plan?.user?.name}
+            Join With {plan?.user?.firstName} {plan?.user?.lastName}
           </Button>
         </Link>
       )}

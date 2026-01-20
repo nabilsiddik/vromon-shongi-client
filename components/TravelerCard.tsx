@@ -5,7 +5,9 @@ import Link from "next/link";
 
 type Traveler = {
   id: string;
-  name: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
   bio?: string;
   profileImage?: string;
   currentLocation?: string;
@@ -20,14 +22,14 @@ export default function TravelerCard({ traveler }: { traveler: Traveler }) {
       <div className="flex items-start gap-4">
         <img
           src={traveler?.profileImage || "/avatar.png"}
-          alt={traveler?.name}
+          alt={`${traveler?.firstName} ${traveler?.lastName}`}
           className="h-16 w-16 rounded-full object-cover ring-2 ring-muted"
         />
 
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <h3 className="text-lg font-semibold leading-none">
-              {traveler?.name}
+              {`${traveler?.firstName} ${traveler?.lastName}`}
             </h3>
 
             {traveler?.verifiedBadge && (

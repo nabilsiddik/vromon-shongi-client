@@ -17,7 +17,9 @@ export enum Gender {
 
 export interface IUserInfo {
   id: string;
-  name: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   role: UserRole;
   profileImage?: string;

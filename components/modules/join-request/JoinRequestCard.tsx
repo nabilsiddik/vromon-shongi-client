@@ -89,7 +89,7 @@ export default function JoinRequestCard({ request }: JoinRequestCardProps) {
               className="rounded-full"
             />
             <div>
-              <p className="font-semibold">{request.requester?.name}</p>
+              <p className="font-semibold">{request.requester?.firstName} {request.requester?.lastName}</p>
               <p className="text-sm text-gray-500">
                 {request.requester?.email}
               </p>

@@ -59,7 +59,7 @@ const DashboardNavbarProfile = async () => {
             </DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem className="flex flex-col text-left items-start gap-0">
-                <h4 className="font-bold text-lg">Hi, {user?.name}</h4>
+                <h4 className="font-bold text-lg">Hi, {user?.firstName} {user?.lastName}</h4>
                 <p className="text-md font-medium">{user?.email}</p>
               </DropdownMenuItem>
             </DropdownMenuGroup>

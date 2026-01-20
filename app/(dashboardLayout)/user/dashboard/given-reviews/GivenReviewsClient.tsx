@@ -110,14 +110,14 @@ export default function GivenReviewsClient({
             <div className="flex items-center gap-3">
               <Image
                 src={review?.targetUser?.profileImage}
-                alt={review?.targetUser?.name}
+                alt={`${review?.targetUser?.firstName} ${review?.targetUser?.lastName}`}
                 width={40}
                 height={40}
                 className="rounded-full"
               />
               <div>
                 <Link href={`/traveler-profile/${review?.targetUser?.id}`}>
-                  <p className="font-semibold">{review?.targetUser?.name}</p>
+                  <p className="font-semibold">${review?.targetUser?.firstName} ${review?.targetUser?.lastName}</p>
                 </Link>
                 <p className="text-sm text-gray-500">
                   {review?.plan?.destination}

@@ -56,7 +56,7 @@ export default async function TravelPlanDetails({
           <h1 className="text-3xl font-bold mb-2">{destination}</h1>
           <p className="text-sm opacity-90">
             A planned journey hosted by{" "}
-            <span className="font-semibold">{user?.name}</span>
+            <span className="font-semibold">{`${user?.firstName} ${user?.lastName}`}</span>
           </p>
         </div>
       </div>
@@ -73,14 +73,14 @@ export default async function TravelPlanDetails({
                   <div className="relative w-24 h-24 mx-auto">
                     <Image
                       src={user?.profileImage || "/default-avatar.png"}
-                      alt={user?.name}
+                      alt={user?.firstName}
                       fill
                       className="rounded-full object-cover"
                     />
                   </div>
 
                   <h3 className="font-semibold text-lg flex items-center gap-2">
-                    {user?.name}{" "}
+                    {user?.firstName} {user?.lastName}{" "}
                     {currentUser?.verifiedBadge ? <Verified /> : ""}
                   </h3>
                   <p className="text-sm text-gray-500">{user?.email}</p>

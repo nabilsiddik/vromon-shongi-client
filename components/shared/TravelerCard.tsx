@@ -30,14 +30,14 @@ const TravelerCard = ({ traveler }: { traveler: IUser }) => {
             src={traveler?.profileImage || "/images/man.png"}
             width={100}
             height={100}
-            alt={traveler?.name}
+            alt={traveler?.firstName}
           />
         </div>
         <CardContent className="flex flex-col gap-2">
           {/* Traveler Name and Location */}
           <div className="flex items-center gap-2 mb-2">
             <h3 className="text-md font-semibold text-gray-800 flex items-center gap-2">
-              {traveler?.name}{" "}
+              {traveler?.firstName}{" "}{traveler?.lastName} {" "}
               {traveler?.verifiedBadge && <Verified width={20} height={20} />}
             </h3>
             <span className="text-sm text-gray-500">
