@@ -12,7 +12,7 @@ export const usersColumns: Column<IUser>[] = [
     header: "User",
     accessor: (user) => (
       <UserInfoCell
-        name={user?.name}
+        name={`${user?.firstName} ${user?.lastName}`}
         email={user?.email}
         photo={user?.profileImage as string}
         gender={user?.gender}
