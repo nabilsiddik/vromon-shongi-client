@@ -8,3 +8,6 @@ export const formatDate = (isoDate: any) => {
 export const dayDifference = (startDate: any, endDate: any) => {
    return differenceInDays(startDate, endDate)
 }
+
+export const formatDateForQuery = (date?: Date) =>
+  date ? date.toISOString().split("T")[0] : "";

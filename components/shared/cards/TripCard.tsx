@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { dayDifference, formatDate } from "@/utils/dateManagement";
 import { shortText } from "@/utils/shortText";
 import { VerifiedIcon } from "lucide-react"
@@ -33,11 +34,13 @@ const TripCard = ({ trip, className = '', titleLength}: { trip: any, className?:
                 </div>
 
                 <div className="py-3 px-5 flex flex-col">
-                    <div>
+                    <div className="flex gap-5 justify-between">
                         <p className="font-medium text-gray-600">host <Link className="underline" href={`/traveler-profile/${user?.id}`}>{user?.firstName}</Link></p>
+
+                        <Badge>{trip?.travelType}</Badge>
                     </div>
                     <Link href={`/trips/${trip?.id}`}>
-                        <h3 className={`font-bold text-lg text-gray-800 hover:text-primary`}>{shortText(trip?.title, titleLength || trip?.title?.length)}</h3>
+                        <h3 className={`font-bold text-lg text-gray-800 hover:text-primary my-1`}>{shortText(trip?.title, titleLength || trip?.title?.length)}</h3>
                     </Link>
 
                     <div className="flex items-center gap-2 mt-2 mb-1 font-medium text-gray-500">
