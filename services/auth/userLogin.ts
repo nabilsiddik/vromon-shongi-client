@@ -12,21 +12,41 @@ import {
   getDefaultDashboardRoute,
   isValidRedirectForRole,
 } from "@/lib/authUtils";
-import { toast } from "sonner";
 
 export const userLogin = async (
-  _currentState: any,
-  formData: any
+  _currentState?: any,
+  formData?: any,
+  demoAdminDetails?: any,
+  demoUserDetails?: any
 ): Promise<any> => {
   try {
     const redirectTo = formData.get("redirect") || null;
     let accessTokenObj: null | any = null;
     let refreshTokenObj: null | any = null;
 
-    const payload = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-    };
+    const demoType = formData.get("demoType");
+    let payload
+
+    if (demoType === "admin") {
+      payload = {
+        email: "admindemo@gmail.com",
+        password: "123456",
+      };
+    } else if (demoType === "user") {
+      payload = {
+        email: "userdemo@gmail.com",
+        password: "123456",
+      };
+    } else {
+      payload = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+      };
+    }
+
+
+    console.log(payload, 'my payload');
+
 
     // Validate with zod
     if (zodValidator(payload, loginValidationZodSchema).success === false) {

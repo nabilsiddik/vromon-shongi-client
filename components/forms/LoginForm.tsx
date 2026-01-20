@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/field";
 import { useActionState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { userLogin } from "@/services/auth/userLogin";
 import InputFieldError from "../InputFieldError";
@@ -32,14 +31,29 @@ export function LoginForm({
     }
   }, [state]);
 
+  // demo login 
+  const submitDemoLogin = (type: "admin" | "user") => {
+    const form = document.getElementById("login-form") as HTMLFormElement;
+    const demoInput = form.querySelector(
+      'input[name="demoType"]'
+    ) as HTMLInputElement;
+
+    demoInput.value = type;
+    form.requestSubmit();
+  };
+
   return (
     <form
+      id="login-form"
       noValidate
       action={formAction}
       className={cn("flex flex-col gap-6", className)}
       {...props}
     >
       {redirect && <input type="hidden" name="redirect" value={redirect} />}
+
+      {/* hidden input for demo type  */}
+      <input type="hidden" name="demoType" />
 
       <FieldGroup>
         <Field>
@@ -64,6 +78,20 @@ export function LoginForm({
             {isPending ? "Proccessing" : "Login"}
           </Button>
         </Field>
+
+        <div className="flex gap-5">
+          <Field>
+            <Button onClick={() => submitDemoLogin("admin")} type='button' disabled={isPending} className="w-full py-2 cursor-pointer bg-black">
+              Demo Admin Login
+            </Button>
+          </Field>
+
+          <Field>
+            <Button onClick={() => submitDemoLogin("user")} type='button' disabled={isPending} className="w-full py-2 cursor-pointer bg-black">
+              Demo User Login
+            </Button>
+          </Field>
+        </div>
         <Field>
           <FieldDescription className="px-6 text-center">
             Don't have an account? <Link href={"/signup"}>Sign up</Link>
