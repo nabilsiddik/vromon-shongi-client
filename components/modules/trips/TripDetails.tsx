@@ -1,16 +1,13 @@
 import IconList from "@/components/shared/IconList";
-import { Button } from "@/components/ui/button";
-import { dayDifference, formatDate } from "@/utils/dateManagement";
 import { formatVideoUrl } from "@/utils/formatVideoUrl";
-import { shortText } from "@/utils/shortText";
-import { CalendarDays, Check, ChevronRight, Clock4, MapPin, User } from "lucide-react";
+import {Check} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import TripDescription from "./TripDescription";
 import JoinTripCard from "@/components/shared/cards/JoinTripCard";
 import TripMetaIconList from "@/components/shared/TripMetaIconList";
 
-const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
+const TripDetails = ({ user, trip, participants }: { user: any, trip: any, participants: any }) => {
 
     const includesHalfLength = Math.ceil(trip?.includes?.length / 2)
 
@@ -45,7 +42,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                     <TripMetaIconList trip = {trip}/>
 
                     {/* join trip for small devices  */}
-                    <JoinTripCard trip={trip} className='block lg:hidden'/>
+                    <JoinTripCard trip={trip} className='block lg:hidden' participants = {participants}/>
 
                     {/* description  */}
                     <TripDescription description={trip?.description} />
@@ -83,7 +80,7 @@ const TripDetails = ({ user, trip }: { user: any, trip: any }) => {
                 </div>
 
                 {/* Join trip  */}
-                <JoinTripCard trip = {trip} className='hidden lg:block'/>
+                <JoinTripCard trip = {trip} className='hidden lg:block' participants = {participants}/>
             </div>
         </section>
     )

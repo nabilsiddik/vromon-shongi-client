@@ -9,8 +9,19 @@ import TripDateRange from "../TripDateRange"
 import TripPriceRange from "../TripPriceRange"
 import { createTripParticipant } from "@/services/trip-participant/tripParticipantManagement"
 import { toast } from "sonner"
+import Image from "next/image"
+import Link from "next/link"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
-const JoinTripCard = ({ trip, className = '' }: any) => {
+const JoinTripCard = ({ trip, className = '', participants }: {
+    trip: any,
+    className: string,
+    participants: any
+}) => {
 
     const [open, setOpen] = useState<boolean>(false)
 
@@ -35,6 +46,29 @@ const JoinTripCard = ({ trip, className = '' }: any) => {
                 <div className="flex justify-between gap-10">
                     <span className="text-gray-500 font-medium">Budget</span>
                     <TripPriceRange trip={trip} />
+                </div>
+
+                <div className="my-6">
+                    <h3 className="mb-2 font-bold text-gray-700 text-xl">Already Participated</h3>
+                    <div className="flex items-center gap-4 flex-wrap">
+                        {participants?.length > 0 && participants?.map((participant: any) => {
+                            const { user } = participant
+                            return <span key={participant?.id}>
+                                <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span>
+                                                <Image className="rounded-rull" src={user?.profileImage} width={50} height={50} alt="participant profile" />
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{user?.firstName} {user?.lastName}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </Link>
+                            </span>
+                        })}
+                    </div>
                 </div>
 
                 <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>

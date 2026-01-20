@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/utils/dateManagement";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import ManageTripRequestSelectField from "@/components/shared/ManageTripRequestSelectField";
 
 export const tripRequestColumns: Column<any>[] = [
   {
@@ -44,21 +45,10 @@ export const tripRequestColumns: Column<any>[] = [
       </div>
     ),
   },
-  // {
-  //   header: "Gender",
-  //   accessor: (user) => (
-  //     <div className="flex flex-col">
-  //       <span className="text-sm">{user?.gender}</span>
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   header: "Verified Status",
-  //   accessor: (user) => <StatusBadgeCell isVerified={user.verifiedBadge} />,
-  // },
-  // {
-  //   header: "Registered",
-  //   accessor: (doctor) => <DateCell date={doctor.createdAt} />,
-  //   sortKey: "createdAt",
-  // },
+  {
+    header: "Manage",
+    accessor: (participantReq) => (
+      <ManageTripRequestSelectField participantReq={participantReq}/>
+    ),
+  }
 ];

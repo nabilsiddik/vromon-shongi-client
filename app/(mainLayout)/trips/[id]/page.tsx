@@ -1,5 +1,6 @@
 import TripDetails from "@/components/modules/trips/TripDetails";
 import { serverFetch } from "@/lib/serverFetch";
+import { getParticipantsForSpecificTrip } from "@/services/trip-participant/tripParticipantManagement";
 import getLogedInUser from "@/services/user/userManagement";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 export default async function TripDetailsPage({ params }: Props) {
   const { id } = await params;
   const user = await getLogedInUser();
+
   const res = await serverFetch.get(`/travel-plan/${id}`, {
     cache: "no-store",
   });
@@ -25,5 +27,8 @@ export default async function TripDetailsPage({ params }: Props) {
     );
   }
 
-  return <TripDetails user={user} trip={trip} />;
+  const allParticipants = await getParticipantsForSpecificTrip(trip?.id)
+
+
+  return <TripDetails user={user} trip={trip} participants = {allParticipants} />;
 }
