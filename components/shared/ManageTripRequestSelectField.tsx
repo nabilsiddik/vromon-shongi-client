@@ -23,8 +23,6 @@ const ManageTripRequestSelectField = ({ participantReq }: { participantReq: any 
 
         const res = await updateParticipantRequest(participantReq?.id, reqStatus as 'PENDING' | 'APPROVED' | 'REJECTED' | 'REMOVED')
 
-        console.log(res);
-
         if (res?.success) {
             toast.success('Trip Participant Request Status Updated.')
         } else {

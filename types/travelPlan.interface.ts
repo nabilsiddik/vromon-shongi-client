@@ -7,7 +7,8 @@ export interface ITravelPlan {
   destination: string;
   startDate: string;
   endDate: string;
-  budgetRange: string;
+  budgetFrom: string;
+  budgetTo: string;
   createdAt: string;
   updatedAt: string;
   travelType: string;

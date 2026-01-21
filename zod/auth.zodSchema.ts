@@ -35,7 +35,8 @@ export const registerUserZodSchema = z.object({
 
 
 export const updateUserProfileZodSchema = z.object({
-    name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+    firstName: z.string('First Name is required').min(2, { message: "First must be at least 2 characters." }),
+    lastName: z.string('Last Name is required').min(2, { message: "Last Name must be at least 2 characters." }),
     bio: z.string().max(300, { message: "Bio must be under 300 characters." }).optional(),
     currentLocation: z.string().max(100, { message: "Location must be under 100 characters." }).optional(),
     interests: z.string().optional(),

@@ -49,8 +49,6 @@ export default function ProfileClient({ user }: { user: any }) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${user.id}/reviews`);
         const data = await res.json();
 
-        console.log(data?.data, 'data');
-
         if (data?.success) {
           setReviewsData(data?.data);
         } else {
@@ -241,15 +239,23 @@ export default function ProfileClient({ user }: { user: any }) {
             </div>
 
             <FieldGroup>
+              {/* first name  */}
               <Field>
-                <FieldLabel>Name</FieldLabel>
-                <Input name="name" defaultValue={user.name} />
-                <InputFieldError field="name" state={profileState} />
+                <FieldLabel>First Name</FieldLabel>
+                <Input name="firstName" defaultValue={user.firstName} />
+                <InputFieldError field="firstName" state={profileState} />
+              </Field>
+
+              {/* last name  */}
+              <Field>
+                <FieldLabel>Last Name</FieldLabel>
+                <Input name="lastName" defaultValue={user.lastName} />
+                <InputFieldError field="lastName" state={profileState} />
               </Field>
 
               <Field>
                 <FieldLabel>Bio</FieldLabel>
-                <Textarea name="bio" defaultValue={user.bio} />
+                <Textarea name="bio" defaultValue={user.bio} placeholder={user?.bio ? '' : 'Write your bio'} />
               </Field>
 
               <Field>
@@ -257,6 +263,7 @@ export default function ProfileClient({ user }: { user: any }) {
                 <Input
                   name="currentLocation"
                   defaultValue={user.currentLocation}
+                  placeholder={user?.currentLocation ? '' : 'Current Location'}
                 />
               </Field>
 
@@ -267,6 +274,7 @@ export default function ProfileClient({ user }: { user: any }) {
                     <Input
                       name="interests"
                       defaultValue={user.interests?.join(", ")}
+                      placeholder={user.interests?.join(", ") ? '' : 'Your interests (Seperate by coma)'}
                     />
                   </Field>
 
@@ -275,6 +283,7 @@ export default function ProfileClient({ user }: { user: any }) {
                     <Input
                       name="visitedCountries"
                       defaultValue={user.visitedCountries?.join(", ")}
+                      placeholder={user.visitedCountries?.join(", ") ? '' : 'Visited Countries (Seperated by coma)'}
                     />
                   </Field>
                 </>

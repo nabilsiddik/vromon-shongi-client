@@ -4,8 +4,6 @@ import { myParticipantRequest } from "@/services/trip-participant/tripParticipan
 const IncommingRequests = async() => {
 
   const participantRequsts = await myParticipantRequest() || []
-  console.log(participantRequsts, 'kdf');
-
   return (
     <div>
       <TripRequestTable participantReq = {participantRequsts}/>

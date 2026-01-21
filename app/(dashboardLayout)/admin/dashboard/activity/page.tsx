@@ -10,8 +10,6 @@ const Activity = async () => {
   const reviews = await getAllReviews();
   const joinRequests = await getAllJoinRequest();
 
-  console.log(users, "users");
-  console.log(reviews, "travels");
   return (
     <div>
       <div className="grid gap-5 lg:gap-10 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">

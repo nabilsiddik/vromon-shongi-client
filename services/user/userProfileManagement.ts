@@ -10,15 +10,13 @@ export const updateUserProfile = async (
 ): Promise<any> => {
     try {
         const payload = {
-            name: formData.get("name"),
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
             bio: formData.get("bio"),
             currentLocation: formData.get("currentLocation"),
             interests: formData.get("interests") || '',
             visitedCountries: formData.get("visitedCountries") || '',
         };
-
-        // Validate payload
-        const validation = zodValidator(payload, updateUserProfileZodSchema);
 
         if (zodValidator(payload, updateUserProfileZodSchema).success === false) {
             return zodValidator(payload, updateUserProfileZodSchema);
@@ -27,7 +25,8 @@ export const updateUserProfile = async (
         const validatedPayload: any = zodValidator(payload, updateUserProfileZodSchema)?.data;
 
         const updateUserData = {
-            name: validatedPayload.name,
+            firstName: validatedPayload.firstName,
+            lastName: validatedPayload.lastName,
             bio: validatedPayload.bio,
             currentLocation: validatedPayload.currentLocation,
             interests: validatedPayload.interests,

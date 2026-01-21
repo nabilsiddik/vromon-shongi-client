@@ -2,7 +2,7 @@
 
 import { serverFetch } from "@/lib/serverFetch";
 import { zodValidator } from "@/lib/zodValidator";
-import { travelPlanZodSchema } from "@/zod/travelPlan.zodSchema";
+import { travelPlanZodSchema, updateTravelPlanZodSchema } from "@/zod/travelPlan.zodSchema";
 
 // Get all Travel Plans
 export const getAllTravelPlans = async (queryString?: string) => {
@@ -16,11 +16,10 @@ export const getAllTravelPlans = async (queryString?: string) => {
     console.log(error);
     return {
       success: false,
-      message: `${
-        process.env.NODE_ENV === "development"
+      message: `${process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong"
-      }`,
+        }`,
     };
   }
 };
@@ -35,11 +34,10 @@ export const getTravelPlanById = async (id: string) => {
     console.log(error);
     return {
       success: false,
-      message: `${
-        process.env.NODE_ENV === "development"
+      message: `${process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong"
-      }`,
+        }`,
     };
   }
 };
@@ -56,11 +54,10 @@ export const getMyTravelPlan = async (queryString: string) => {
     console.log(error);
     return {
       success: false,
-      message: `${
-        process.env.NODE_ENV === "development"
+      message: `${process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong"
-      }`,
+        }`,
     };
   }
 };
@@ -83,8 +80,6 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       description: formData.get("description") as string,
       visibility: formData.get("visibility") as string,
     };
-
-    console.log(payload);
 
     if (zodValidator(payload, travelPlanZodSchema).success === false) {
       return zodValidator(payload, travelPlanZodSchema);
@@ -117,8 +112,6 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       includes: includesArray
     };
 
-    console.log(travelPlanData, 'includes');
-
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(travelPlanData));
 
@@ -140,11 +133,10 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
     console.log("Error while creating travel plan", error);
     return {
       success: false,
-      message: `${
-        process.env.NODE_ENV === "development"
+      message: `${process.env.NODE_ENV === "development"
           ? error.message
           : "Travel plan creation failed."
-      }`,
+        }`,
     };
   }
 }
@@ -156,28 +148,39 @@ export async function updateTravelPlan(
   formData: any
 ) {
   const payload = {
+    title: formData.get("title"),
     destination: formData.get("destination"),
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate"),
-    budgetRange: formData.get("budgetRange"),
+    budgetFrom: formData.get("budgetFrom"),
+    budgetTo: formData.get("budgetTo"),
     travelType: formData.get("travelType"),
     description: formData.get("description"),
   };
 
-  if (zodValidator(payload, travelPlanZodSchema).success === false) {
-    return zodValidator(payload, travelPlanZodSchema);
+  console.log(payload);
+
+  if (zodValidator(payload, updateTravelPlanZodSchema).success === false) {
+    return zodValidator(payload, updateTravelPlanZodSchema);
   }
 
-  const validatedPayload: any = zodValidator(payload, travelPlanZodSchema)?.data;
+  const validatedPayload: any = zodValidator(payload, updateTravelPlanZodSchema)?.data;
+
+  const parsedStartDate = new Date(validatedPayload.startDate).toISOString()
+  const parsedEndDate = new Date(validatedPayload.endDate).toISOString()
 
   const updatedTravelPlanData = {
+    title: validatedPayload.title,
     destination: validatedPayload.destination,
-    startDate: new Date(validatedPayload.startDate),
-    endDate: new Date(validatedPayload.endDate),
-    budgetRange: validatedPayload.budgetRange ?? undefined,
+    startDate: parsedStartDate,
+    endDate: parsedEndDate,
+    budgetFrom: validatedPayload.budgetFrom ?? undefined,
+    budgetTo: validatedPayload.budgetTo ?? undefined,
     travelType: validatedPayload.travelType,
     description: validatedPayload.description ?? undefined,
   };
+
+  console.log(updatedTravelPlanData, 'daaa');
 
   const newFormData = new FormData();
   newFormData.append("data", JSON.stringify(updatedTravelPlanData));
@@ -216,11 +219,10 @@ export const deleteTravelPlan = async (planId: string) => {
     console.log(error);
     return {
       success: false,
-      message: `${
-        process.env.NODE_ENV === "development"
+      message: `${process.env.NODE_ENV === "development"
           ? error.message
           : "Something went wrong"
-      }`,
+        }`,
     };
   }
 };

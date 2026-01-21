@@ -18,10 +18,12 @@ export const travelPlanZodSchema = z.object({
 });
 
 export const updateTravelPlanZodSchema = z.object({
+  title: z.string().min(1, "Title is required").optional(),
   destination: z.string().min(1, "Destination is required").optional(),
   startDate: z.string().min(1, "Start date is required").optional(),
   endDate: z.string().min(1, "End date is required").optional(),
-  budgetRange: z.string().optional(),
+  budgetFrom: z.string().optional(),
+  budgetTo: z.string().optional(),
   travelType: z.enum(["SOLO", "FAMILY", "FRIENDS"]).optional(),
   description: z.string().optional(),
 });

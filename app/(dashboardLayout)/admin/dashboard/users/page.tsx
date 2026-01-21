@@ -15,9 +15,6 @@ const Users = async ({
 
   const user = await getAllUsers(queryString);
 
-  console.log(user?.data, 'test');
-
-
   const totalPages = Math.ceil(
     (user?.meta?.total || 1) / (user?.meta?.limit || 1)
   );

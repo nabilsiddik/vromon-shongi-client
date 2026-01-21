@@ -87,23 +87,23 @@ const data = {
         },
       ],
     },
-    {
-      title: "Join Request",
-      icon: <GitPullRequestIcon />,
-      isActive: false,
-      items: [
-        {
-          title: "Request Got",
-          url: "/user/dashboard/join-requests-got",
-          icon: <ListCheck />,
-        },
-        {
-          title: "Request Sent",
-          url: "/user/dashboard/join-requests-sent",
-          icon: <ListCheck />,
-        },
-      ],
-    },
+    // {
+    //   title: "Join Request",
+    //   icon: <GitPullRequestIcon />,
+    //   isActive: false,
+    //   items: [
+    //     {
+    //       title: "Request Got",
+    //       url: "/user/dashboard/join-requests-got",
+    //       icon: <ListCheck />,
+    //     },
+    //     {
+    //       title: "Request Sent",
+    //       url: "/user/dashboard/join-requests-sent",
+    //       icon: <ListCheck />,
+    //     },
+    //   ],
+    // },
     {
       title: "Trip Request",
       icon: <GitPullRequestIcon />,
@@ -114,11 +114,11 @@ const data = {
           url: "/user/dashboard/incoming-requests",
           icon: <ListCheck />,
         },
-        {
-          title: "Outgoing Request",
-          url: "/user/dashboard/outgoing-requests",
-          icon: <ListCheck />,
-        },
+        // {
+        //   title: "Outgoing Request",
+        //   url: "/user/dashboard/outgoing-requests",
+        //   icon: <ListCheck />,
+        // },
       ],
     },
     {

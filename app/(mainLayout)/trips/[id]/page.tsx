@@ -16,8 +16,6 @@ export default async function TripDetailsPage({ params }: Props) {
   });
   const trip = await res.json().then((data) => data?.data);
 
-  console.log(trip);
-
   if (!trip) {
     return (
       <div className="max-w-3xl mx-auto p-8 text-center">

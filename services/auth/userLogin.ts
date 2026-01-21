@@ -45,9 +45,6 @@ export const userLogin = async (
     }
 
 
-    console.log(payload, 'my payload');
-
-
     // Validate with zod
     if (zodValidator(payload, loginValidationZodSchema).success === false) {
       return zodValidator(payload, loginValidationZodSchema);

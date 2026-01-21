@@ -7,6 +7,8 @@ import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { DateCell } from "@/components/shared/cell/DateCell";
 import { BadgeCell } from "@/components/shared/cell/BadgeCell";
 import Image from "next/image";
+import { MapPin } from "lucide-react";
+import { shortText } from "@/utils/shortText";
 
 export const travelPlansColumns: Column<any>[] = [
   {
@@ -14,19 +16,20 @@ export const travelPlansColumns: Column<any>[] = [
     accessor: (travelPlan) => (
       <Image
         className="rounded-lg"
-        src={travelPlan?.travelPlanImage || "https://placehold.net/400x400.png"}
-        width={100}
-        height={100}
+        src={travelPlan?.planImages[0] || "https://placehold.net/400x400.png"}
+        width={50}
+        height={50}
         alt="travel plan image"
       />
     ),
     sortKey: "name",
   },
   {
-    header: "Destination",
+    header: "Title",
     accessor: (travelPlan) => (
       <div className="flex flex-col">
-        <span className="text-sm">{travelPlan?.destination}</span>
+        <span className="text-sm font-bold">{shortText(travelPlan?.title, 18)}</span>
+        <span className="text-sm flex items-center gap-1"><MapPin width={15}/> {travelPlan?.destination}</span>
       </div>
     ),
   },
@@ -46,7 +49,7 @@ export const travelPlansColumns: Column<any>[] = [
     header: "Budget Range",
     accessor: (travelPlan) => (
       <div className="flex flex-col">
-        <span className="text-sm">{travelPlan?.budgetRange}</span>
+        <span className="text-sm font-medium">{`$${travelPlan?.budgetFrom} - $${travelPlan?.budgetFrom}`}</span>
       </div>
     ),
     sortKey: "createdAt",

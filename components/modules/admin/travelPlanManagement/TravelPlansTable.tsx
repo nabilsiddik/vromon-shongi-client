@@ -29,7 +29,7 @@ const TravelPlansTable = ({ travelPlans }: any) => {
 
   // On travel plan view
   const handleTravelPlanView = (travelPlan: ITravelPlan) => {
-    router.push(`/travel-plans/${travelPlan?.id}`);
+    window.open(`/trips/${travelPlan?.id}`, "_blank");
   };
 
   const handleEditTravelPlan = async (travelPlan: ITravelPlan) => {
@@ -67,7 +67,6 @@ const TravelPlansTable = ({ travelPlans }: any) => {
         open={open}
         setOpen={setOpen}
         travelPlan={selectedPlan}
-        dialogTitle="Update Travel Plan"
       />
       <ManagementTable
         data={travelPlans}
