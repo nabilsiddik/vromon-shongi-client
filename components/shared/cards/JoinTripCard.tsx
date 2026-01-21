@@ -50,32 +50,34 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
                     <TripPriceRange trip={trip} />
                 </div>
 
-                <div className="my-6">
-                    <h3 className="mb-2 font-bold text-gray-700 text-xl">Already Participated</h3>
-                    <div className="flex items-center gap-4 flex-wrap">
-                        {participants?.length > 0 && participants?.map((participant: any) => {
-                            const { user } = participant
-                            return <span key={participant?.id}>
-                                <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <span>
-                                                <Image className="rounded-rull" src={user?.profileImage} width={50} height={50} alt="participant profile" />
-                                            </span>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>{user?.firstName} {user?.lastName}</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </Link>
-                            </span>
-                        })}
+                {participants?.length > 0 &&
+                    <div className="my-6">
+                        <h3 className="mb-2 font-bold text-gray-700 text-xl">Already Participated</h3>
+                        <div className="flex items-center gap-4 flex-wrap">
+                            {participants?.length > 0 && participants?.map((participant: any) => {
+                                const { user } = participant
+                                return <span key={participant?.id}>
+                                    <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <span>
+                                                    <Image className="rounded-rull" src={user?.profileImage} width={50} height={50} alt="participant profile" />
+                                                </span>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>{user?.firstName} {user?.lastName}</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </Link>
+                                </span>
+                            })}
+                        </div>
                     </div>
-                </div>
+                }
 
-                {logedInUser ? 
+                {logedInUser ?
                     <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
-                : 
+                    :
                     <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
                         <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
                     </Link>

@@ -11,7 +11,7 @@ const TripCard = ({ trip, className = '', titleLength}: { trip: any, className?:
     const { user } = trip
     return (
         <Link href={`/trips/${trip?.id}`}>
-            <div className={`bg-white rounded-lg shadow-lg hover:scale-[1.02] hover:shadow-xl transition-all ease-in-out duration-300 ${className}`}>
+            <div className={`bg-white rounded-lg shadow-lg hover:scale-[1.02] hover:shadow-xl transition-all ease-in-out duration-300 h-full ${className}`}>
                 <div className="relative">
                     <Image className="rounded-tl-lg rounded-tr-lg w-full" src={trip?.planImages[0]} width={500} height={500} alt="Trip image" />
 
@@ -40,7 +40,7 @@ const TripCard = ({ trip, className = '', titleLength}: { trip: any, className?:
                         <Badge>{trip?.travelType}</Badge>
                     </div>
                     <Link href={`/trips/${trip?.id}`}>
-                        <h3 className={`font-bold text-lg text-gray-800 hover:text-primary my-1`}>{shortText(trip?.title, titleLength || trip?.title?.length)}</h3>
+                        <h3 className={`font-bold text-lg text-gray-800 hover:text-primary my-1`}>{shortText(trip?.title, titleLength || 50)}</h3>
                     </Link>
 
                     <div className="flex items-center gap-2 mt-2 mb-1 font-medium text-gray-500">

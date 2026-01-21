@@ -9,7 +9,7 @@ const TripMetaIconList = ({trip}: {trip: any}) => {
 
             <IconList icon={<User />} text={`${trip?.minMates} - ${trip?.maxMates} Mates`} />
 
-            <IconList icon={<MapPin />} text={`${trip?.destination} Days`} />
+            <IconList icon={<MapPin />} text={`${trip?.destination}`} />
         </div>
     )
 }
