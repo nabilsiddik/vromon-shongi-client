@@ -6,7 +6,7 @@ const SlideUp = ({ children, className = '' }: { children: React.ReactNode, clas
     const slideUp: Variants = {
         hidden: {
             opacity: 0,
-            y: 30,
+            y: 50,
         },
         show: {
             opacity: 1,

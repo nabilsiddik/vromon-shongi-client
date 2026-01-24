@@ -3,9 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from 'motion/react'
 import SlideUp from "@/animations/Slide/SlideUp";
-import FadeIn from "@/animations/Fade/FadeIn";
 
 export default function Hero() {
   return (
@@ -42,7 +40,7 @@ export default function Hero() {
 
         {/* Hero Illustration */}
         <div className="relative mt-10 lg:mt-0">
-          <FadeIn>
+          <SlideUp>
             <Image
               src="/images/home/tour-mate-2.jpg"
               alt="Travel Illustration"
@@ -50,7 +48,7 @@ export default function Hero() {
               height={700}
               className="w-full drop-shadow-2xl animate-float rounded-lg"
             />
-          </FadeIn>
+          </SlideUp>
         </div>
       </div>
     </section>

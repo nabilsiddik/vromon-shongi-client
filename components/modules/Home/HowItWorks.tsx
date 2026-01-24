@@ -1,5 +1,6 @@
 "use client";
 
+import SlideUp from "@/animations/Slide/SlideUp";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserPlus, Map, Users } from "lucide-react";
 
@@ -30,7 +31,8 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="py-20 px-6 md:px-12 bg-gray-50">
-      <div className="max-w-6xl mx-auto text-center mb-16">
+      <SlideUp>
+        <div className="max-w-6xl mx-auto text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold">
           How It <span className="text-blue-600">Works</span>
         </h2>
@@ -38,29 +40,31 @@ export default function HowItWorks() {
           Start your journey in just three simple steps.
         </p>
       </div>
+      </SlideUp>
 
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {steps.map((step) => (
-          <Card
-            key={step.id}
-            className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border-none"
-          >
-            <CardContent className="p-8 text-center space-y-4">
-              <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                <step.icon size={32} />
-              </div>
+          <SlideUp key={step.id}>
+            <Card
+              className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border-none"
+            >
+              <CardContent className="p-8 text-center space-y-4">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                  <step.icon size={32} />
+                </div>
 
-              <h3 className="text-xl font-semibold">{step.title}</h3>
+                <h3 className="text-xl font-semibold">{step.title}</h3>
 
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {step.description}
-              </p>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {step.description}
+                </p>
 
-              <span className="font-semibold text-sm opacity-70">
-                Step {step.id}
-              </span>
-            </CardContent>
-          </Card>
+                <span className="font-semibold text-sm opacity-70">
+                  Step {step.id}
+                </span>
+              </CardContent>
+            </Card>
+          </SlideUp>
         ))}
       </div>
     </section>

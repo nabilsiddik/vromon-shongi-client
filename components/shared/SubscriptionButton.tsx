@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { IUser } from "@/types/user.interface";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SlideUp from "@/animations/Slide/SlideUp";
 
 type Plan = {
   name: string;
@@ -74,68 +75,74 @@ const SubscriptionButton = ({ user }: { user: IUser }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold text-gray-900 mb-4 text-center">
-        Choose Your Subscription Plan
-      </h1>
+      <SlideUp>
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-4 text-center">
+          Choose Your Subscription Plan
+        </h1>
+      </SlideUp>
 
-      <p className="text-lg text-gray-600 mb-12 text-center max-w-xl">
-        Unlock premium features and get the most out of Travel Buddy & Meetup!
-      </p>
+      <SlideUp>
+        <p className="text-lg text-gray-600 mb-12 text-center max-w-xl">
+          Unlock premium features and get the most out of Travel Buddy & Meetup!
+        </p>
+      </SlideUp>
 
       <div className="grid gap-8 grid-cols-1 md:grid-cols-2 w-full max-w-6xl">
         {plans.map((plan) => (
-          <Card
-            key={plan.type}
-            className="hover:shadow-xl transition-shadow duration-300"
-          >
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-              <CardDescription className="text-gray-700 mt-2">
-                {plan.price}
-              </CardDescription>
-            </CardHeader>
+          <SlideUp>
+            <Card
+              key={plan.type}
+              className="hover:shadow-xl transition-shadow duration-300"
+            >
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+                <CardDescription className="text-gray-700 mt-2">
+                  {plan.price}
+                </CardDescription>
+              </CardHeader>
 
-            <CardContent className="flex flex-col gap-6">
-              <ul className="space-y-3">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-gray-700">
-                    <svg
-                      className="w-5 h-5 text-green-500 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <CardContent className="flex flex-col gap-6">
+                <ul className="space-y-3">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-gray-700">
+                      <svg
+                        className="w-5 h-5 text-green-500 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
 
-              {user ? (
-                <Button
-                  className="mt-4 w-full"
-                  disabled={loadingPlan === plan.type}
-                  onClick={() => handleClick(plan.type)}
-                >
-                  {loadingPlan === plan.type
-                    ? "Processing..."
-                    : `Subscribe to ${plan.name}`}
-                </Button>
-              ) : (
-                <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
-                  <Button className="mt-4 w-full cursor-pointer">
-                    {`Subscribe to ${plan.name}`}
+                {user ? (
+                  <Button
+                    className="mt-4 w-full"
+                    disabled={loadingPlan === plan.type}
+                    onClick={() => handleClick(plan.type)}
+                  >
+                    {loadingPlan === plan.type
+                      ? "Processing..."
+                      : `Subscribe to ${plan.name}`}
                   </Button>
-                </Link>
-              )}
-            </CardContent>
-          </Card>
+                ) : (
+                  <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
+                    <Button className="mt-4 w-full cursor-pointer">
+                      {`Subscribe to ${plan.name}`}
+                    </Button>
+                  </Link>
+                )}
+              </CardContent>
+            </Card>
+          </SlideUp>
         ))}
       </div>
 
