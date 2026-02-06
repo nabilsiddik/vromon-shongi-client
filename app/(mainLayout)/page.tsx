@@ -7,11 +7,12 @@ import PricingSection from "@/components/modules/Home/Pricing";
 import Testimonials from "@/components/modules/Home/Testimonials";
 import TopDestinations from "@/components/modules/Home/TopDestination";
 import TopRatedTravelers from "@/components/modules/Home/TopRatedTravelers";
-import getLogedInUser from "@/services/user/userManagement";
+import getLogedInUser, { getTopRatedUser } from "@/services/user/userManagement";
 
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const user = await getLogedInUser();
+  const topRatedTravelers = await getTopRatedUser();
 
   return (
     <div>
@@ -20,7 +21,7 @@ export default async function Home() {
       <FeaturedTrips/>
       <FindBuddyCTA />
       {user && <MatchedTravelersSection />}
-      <TopRatedTravelers />
+      {topRatedTravelers.length && <TopRatedTravelers topRatedTravelers = {topRatedTravelers} />}
       <HowItWorks />
       <PricingSection />
       <Testimonials />

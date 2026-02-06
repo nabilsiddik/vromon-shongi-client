@@ -1,5 +1,4 @@
 import TripDetails from "@/components/modules/trips/TripDetails";
-import { connectWS } from "@/config/websocket/websocket";
 import { serverFetch } from "@/lib/serverFetch";
 import { getParticipantsForSpecificTrip } from "@/services/trip-participant/tripParticipantManagement";
 import getLogedInUser from "@/services/user/userManagement";
@@ -11,10 +10,6 @@ interface Props {
 export default async function TripDetailsPage({ params }: Props) {
   const { id } = await params;
   const logedInUser = await getLogedInUser();
-
-  const socket = await connectWS()
-
-  console.log(socket);
 
   const res = await serverFetch.get(`/travel-plan/${id}`, {
     cache: "no-store",

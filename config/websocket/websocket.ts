@@ -1,8 +1,14 @@
-import {io} from 'socket.io-client'
+import {io, Socket} from 'socket.io-client'
 
-export function connectWS() {
-    return io('http://localhost:5000', {
-        withCredentials: true,
-        transports: ['polling', 'websocket']
-    })
+let socket: Socket | null = null 
+
+export function getSocket() {
+    if(!socket){
+        socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL, {
+            withCredentials: true,
+            autoConnect: false
+        })
+    }
+
+    return socket
 }

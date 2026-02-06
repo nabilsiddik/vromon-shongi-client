@@ -10,8 +10,8 @@ const Logo = ({
 }) => {
   return (
     <Link href={"/"}>
-      <div className="flex items-center gap-3">
-        <h2 className="text-blue-500 font-bold text-3xl">Travel Mate</h2>
+      <div className="">
+        <Image src={'/images/logo/vromon-shongi-website-logo.png'} width={250} height={100} alt="Logo"/>
       </div>
     </Link>
   );

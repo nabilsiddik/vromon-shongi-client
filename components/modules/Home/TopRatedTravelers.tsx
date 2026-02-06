@@ -1,6 +1,5 @@
 import { getTopRatedUser } from "@/services/user/userManagement";
 import { StarIcon } from "lucide-react";
-import Image from "next/image";
 
 interface Traveler {
   id: number;
@@ -11,8 +10,7 @@ interface Traveler {
   trips: number;
 }
 
-export default async function TopRatedTravelers() {
-  const topRatedTravelers = await getTopRatedUser();
+export default async function TopRatedTravelers({topRatedTravelers}: {topRatedTravelers: any}) {
 
   return (
     <section className="py-16 bg-gradient-to-b from-white to-gray-50">

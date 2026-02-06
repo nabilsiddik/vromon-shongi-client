@@ -38,7 +38,7 @@ export default async function Navbar() {
 
   return (
     <header className="border-b fixed z-100 w-full left-0 top-0 block bg-white">
-      <div className="container mx-auto px-5 flex py-3 items-center justify-between gap-4">
+      <div className="container mx-auto px-5 flex items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}

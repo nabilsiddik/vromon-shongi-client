@@ -32,8 +32,8 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
 
         if (res?.success) {
             toast.success('Join request sent successfully. Please wait for approval from the trip leader.')
-        } else if (!res?.success && res?.message === 'You already participated to this trip.') {
-            toast.error('You already participated to this trip.')
+        } else if (!res?.success && res?.message) {
+            toast.error(res?.message || 'Something went wrong')
         } else {
             toast.error('Something went wrong')
         }
@@ -52,16 +52,16 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
 
                 {participants?.length > 0 &&
                     <div className="my-6">
-                        <h3 className="mb-2 font-bold text-gray-700 text-xl">Already Participated</h3>
+                        <h3 className="mb-3 font-bold text-gray-700 text-xl">Already Participated</h3>
                         <div className="flex items-center gap-4 flex-wrap">
                             {participants?.length > 0 && participants?.map((participant: any) => {
                                 const { user } = participant
                                 return <span key={participant?.id}>
                                     <Link target="_blank" href={`/traveler-profile/${user?.id}`}>
                                         <Tooltip>
-                                            <TooltipTrigger asChild>
+                                            <TooltipTrigger asChild >
                                                 <span>
-                                                    <Image className="rounded-rull" src={user?.profileImage} width={50} height={50} alt="participant profile" />
+                                                    <Image className="w-10 h-10  rounded-full border-2 border-blue-700" src={user?.profileImage} width={50} height={50} alt="participant profile" />
                                                 </span>
                                             </TooltipTrigger>
                                             <TooltipContent>
@@ -75,9 +75,13 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
                     </div>
                 }
 
-                {logedInUser ?
-                    <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
-                    :
+                {logedInUser &&  logedInUser?.id != trip?.userId ?
+                        <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
+                        :
+                        <></>
+                }
+
+                {!logedInUser && 
                     <Link href={`/login?redirect=${encodeURIComponent(pathName)}`}>
                         <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
                     </Link>
