@@ -49,6 +49,27 @@ export const myParticipantRequest = async () => {
 };
 
 
+// Get all approved participation of an user for join room conversation
+export const getAllParticipationsOfAnUser = async () => {
+  try {
+    const res = await serverFetch.get(
+      `/trip-participant/joined`
+    );
+    const result = await res.json();
+    return result?.data || [];
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === "development"
+        ? error.message
+        : "Something went wrong"
+        }`,
+    };
+  }
+};
+
+
 // Get trip participant by id
 export const getTripParticipantById
   = async (id: string) => {

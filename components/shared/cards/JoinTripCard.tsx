@@ -83,7 +83,9 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser, userPar
                                 <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Request Pending</Button>
                             :
                                 userParticipation?.status === 'APPROVED' ?
-                                    <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Chat Room <ChevronRight /></Button>
+                                    <Link href={`/user/dashboard/join-room/${trip?.id}`}>
+                                        <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Chat Room <ChevronRight /></Button>
+                                    </Link>
                                 :
                                     <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
                         :
