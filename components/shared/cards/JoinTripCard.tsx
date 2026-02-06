@@ -18,17 +18,20 @@ import {
 } from "@/components/ui/tooltip"
 import { usePathname } from "next/navigation"
 
-const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
+const JoinTripCard = ({ trip, className = '', participants, logedInUser, userParticipation }: {
     trip: any,
     className: string,
     participants: any,
-    logedInUser: any
+    logedInUser: any,
+    userParticipation: any
 }) => {
 
     const [open, setOpen] = useState<boolean>(false)
     const pathName = usePathname()
     const handleTripParticipantRequest = async () => {
         const res = await createTripParticipant(trip?.id)
+
+        console.log(userParticipation, 'my');
 
         if (res?.success) {
             toast.success('Join request sent successfully. Please wait for approval from the trip leader.')
@@ -76,7 +79,13 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser }: {
                 }
 
                 {logedInUser &&  logedInUser?.id != trip?.userId ?
-                        <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
+                            userParticipation?.status === 'PENDING' ?
+                                <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Request Pending</Button>
+                            :
+                                userParticipation?.status === 'APPROVED' ?
+                                    <Button className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Chat Room <ChevronRight /></Button>
+                                :
+                                    <Button onClick={() => setOpen((o) => !o)} className="bg-primary font-bold uppercase mt-3 w-full py-6 px-8 cursor-pointer">Join Trip <ChevronRight /></Button>
                         :
                         <></>
                 }

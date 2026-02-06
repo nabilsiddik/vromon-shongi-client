@@ -92,6 +92,28 @@ export const getParticipantsForSpecificTrip
     }
   };
 
+
+// Get users participation for a trip
+export const getUserParticipationForTrip
+  = async (tripId: string) => {
+    try {
+      const res = await serverFetch.get(
+        `/trip-participant/participation-status/${tripId}`
+      );
+      const result = await res.json();
+      return result?.data || null;
+    } catch (error: any) {
+      console.log(error);
+      return {
+        success: false,
+        message: `${process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong"
+          }`,
+      };
+    }
+  };
+
 // Update participant request
 export const updateParticipantRequest
   = async (id: string, status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'REMOVED') => {

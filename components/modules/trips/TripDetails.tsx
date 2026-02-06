@@ -6,10 +6,14 @@ import Link from "next/link";
 import TripDescription from "./TripDescription";
 import JoinTripCard from "@/components/shared/cards/JoinTripCard";
 import TripMetaIconList from "@/components/shared/TripMetaIconList";
+import { getUserParticipationForTrip } from "@/services/trip-participant/tripParticipantManagement";
 
-const TripDetails = ({ trip, participants, logedInUser }: { trip: any, participants: any, logedInUser: any }) => {
+const TripDetails = async({ trip, participants, logedInUser }: { trip: any, participants: any, logedInUser: any }) => {
 
     const includesHalfLength = Math.ceil(trip?.includes?.length / 2)
+    const userParticipation = await getUserParticipationForTrip(trip?.id)
+
+    console.log(userParticipation, 'my parti');
 
     return (
         <section className="mt-[63px]">
@@ -42,7 +46,7 @@ const TripDetails = ({ trip, participants, logedInUser }: { trip: any, participa
                     <TripMetaIconList trip = {trip}/>
 
                     {/* join trip for small devices  */}
-                    <JoinTripCard trip={trip} className='block lg:hidden' participants = {participants} logedInUser = {logedInUser}/>
+                    <JoinTripCard trip={trip} className='block lg:hidden' participants = {participants} logedInUser = {logedInUser} userParticipation = {userParticipation}/>
 
                     {/* description  */}
                     <TripDescription description={trip?.description} />
@@ -80,7 +84,7 @@ const TripDetails = ({ trip, participants, logedInUser }: { trip: any, participa
                 </div>
 
                 {/* Join trip  */}
-                <JoinTripCard trip = {trip} className='hidden lg:block' participants = {participants} logedInUser = {logedInUser}/>
+                <JoinTripCard trip = {trip} className='hidden lg:block' participants = {participants} logedInUser = {logedInUser} userParticipation={userParticipation}/>
             </div>
         </section>
     )
