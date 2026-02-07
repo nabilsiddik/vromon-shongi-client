@@ -31,8 +31,6 @@ const JoinTripCard = ({ trip, className = '', participants, logedInUser, userPar
     const handleTripParticipantRequest = async () => {
         const res = await createTripParticipant(trip?.id)
 
-        console.log(userParticipation, 'my');
-
         if (res?.success) {
             toast.success('Join request sent successfully. Please wait for approval from the trip leader.')
         } else if (!res?.success && res?.message) {

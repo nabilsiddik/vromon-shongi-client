@@ -13,8 +13,6 @@ const TripDetails = async({ trip, participants, logedInUser }: { trip: any, part
     const includesHalfLength = Math.ceil(trip?.includes?.length / 2)
     const userParticipation = await getUserParticipationForTrip(trip?.id)
 
-    console.log(userParticipation, 'my parti');
-
     return (
         <section className="mt-[63px]">
             <div style={{

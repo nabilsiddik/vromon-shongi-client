@@ -10,7 +10,7 @@ export default function MessageBubble({ message }: any) {
             : "bg-neutral-800 text-neutral-200"
         }`}
       >
-        {message.text}
+        {message?.content}
       </div>
     </div>
   );

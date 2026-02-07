@@ -8,8 +8,6 @@ export default async function ChatSidebar() {
 
   const allParticipations = await getAllParticipationsOfAnUser()
 
-  console.log(allParticipations, 'all parti');
-
   return (
     <div className="w-80 border-r border-gray-200 px-4 pb-4 overflow-y-auto max-h-[80vh] relative">
       <div className="sticky top-0 bg-white z-10 pb-5 border-b border-gray-200 py-4">

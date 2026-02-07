@@ -18,7 +18,7 @@ export default function ChatHeader({ participants, trip }: { participants: any, 
           {/* <p className="text-xs text-green-500">Active now</p> */}
           <div className="flex items-center gap-3">
             <span className="font-medium text-gray-600">Trip Mates: </span>
-            <div className="h-8 w-8 rounded-full">
+            <div className="h-8 w-8 rounded-full flex items-center gap-1">
               {participants?.length > 0 && participants?.map((participant: any) => {
                 return <Image src={participant?.user?.profileImage} width={60} height={60} alt="chat friend profile picture" />
               })}
