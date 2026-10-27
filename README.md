@@ -1,4 +1,4 @@
-# Vromon Shongi (ভ্রমণ সঙ্গী) — Tour The World Together
+# Vromon Shongi — Tour The World Together
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.0-blue?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
@@ -198,9 +198,3 @@ npm run start
 **Nabil Siddik**
 * **Portfolio / GitHub:** [@nabilsiddik](https://github.com/nabilsiddik)
 * **Live Application:** [Vromon Shongi on Vercel](https://vromon-shongi.vercel.app/)
-
----
-
-<p align="center">
-  Crafted with ❤️ for passionate travelers worldwide.
-</p>
