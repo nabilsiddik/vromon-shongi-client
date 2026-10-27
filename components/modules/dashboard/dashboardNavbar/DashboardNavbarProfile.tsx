@@ -1,5 +1,3 @@
-import { IoMdNotifications } from "react-icons/io";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaRegUserCircle } from "react-icons/fa";
-import { MdOutlinePassword } from "react-icons/md";
+import { User } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IUserInfo } from "@/types/user.interface";
 import LogoutUserButton from "@/components/LogoutUserButton";
 import getLogedInUser from "@/services/user/userManagement";
@@ -38,29 +36,46 @@ const DashboardNavbarProfile = async () => {
     },
   ];
 
+  const initials =
+    user?.firstName && user?.lastName
+      ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
+      : user?.firstName
+      ? user.firstName.slice(0, 2).toUpperCase()
+      : null;
+
   return (
     <div className="flex items-center gap-5">
       <div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Image
-              src={
-                user?.profileImage || "https://i.ibb.co.com/2YHLD9xh/user.png"
-              }
-              className="rounded-full cursor-pointer"
-              width={30}
-              height={30}
-              alt="dashboard profile photo"
-            />
+            <button
+              type="button"
+              className="rounded-full ring-2 ring-transparent hover:ring-primary/20 transition-all cursor-pointer focus:outline-none"
+            >
+              <Avatar className="size-9 rounded-full border border-gray-200">
+                {user?.profileImage && (
+                  <AvatarImage
+                    src={user.profileImage}
+                    alt={user.firstName ? `${user.firstName} ${user.lastName || ""}` : "User"}
+                    className="object-cover"
+                  />
+                )}
+                <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xs">
+                  {initials || <User className="size-4 text-gray-600" />}
+                </AvatarFallback>
+              </Avatar>
+            </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="start">
-            <DropdownMenuLabel className="text-lg">
+          <DropdownMenuContent className="w-56" align="end">
+            <DropdownMenuLabel className="text-sm font-semibold">
               My Account
             </DropdownMenuLabel>
             <DropdownMenuGroup>
-              <DropdownMenuItem className="flex flex-col text-left items-start gap-0">
-                <h4 className="font-bold text-lg">Hi, {user?.firstName} {user?.lastName}</h4>
-                <p className="text-md font-medium">{user?.email}</p>
+              <DropdownMenuItem className="flex flex-col text-left items-start gap-0.5">
+                <h4 className="font-semibold text-sm text-gray-900">
+                  {user?.firstName ? `${user.firstName} ${user.lastName || ""}` : "Guest User"}
+                </h4>
+                <p className="text-xs text-gray-500 truncate w-full">{user?.email}</p>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -84,7 +99,7 @@ const DashboardNavbarProfile = async () => {
                 })}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="bg-transparent">
+            <DropdownMenuItem className="bg-transparent focus:bg-transparent p-0">
               <LogoutUserButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -95,3 +110,4 @@ const DashboardNavbarProfile = async () => {
 };
 
 export default DashboardNavbarProfile;
+

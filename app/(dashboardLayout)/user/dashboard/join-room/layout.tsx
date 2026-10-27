@@ -1,15 +1,16 @@
-import ChatSidebar from "@/components/modules/chat/ChatSidebar"
-import ChatWindow from "@/components/modules/chat/ChatWindow"
+import ChatSidebar from "@/components/modules/chat/ChatSidebar";
+import JoinRoomResponsiveWrapper from "@/components/modules/chat/JoinRoomResponsiveWrapper";
 
-const JoinRoomLayout = ({ children }: {
-  children: React.ReactNode
-}) => {
+export const dynamic = "force-dynamic";
+
+export default function JoinRoomLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="min-h-[84vh] flex border rounded-lg text-white ">
-      <ChatSidebar />
+    <JoinRoomResponsiveWrapper sidebar={<ChatSidebar />}>
       {children}
-    </div>
-  )
+    </JoinRoomResponsiveWrapper>
+  );
 }
-
-export default JoinRoomLayout

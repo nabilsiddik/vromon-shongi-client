@@ -1,10 +1,12 @@
-export const dynamic = "force-dynamic";
-const AdminDashboard = () => {
-  return (
-    <div>
-      <h1>User Dashboard</h1>
-    </div>
-  )
-}
+import { getAdminAnalytics } from "@/services/admin/adminManagement";
+import AdminAnalyticsDashboard from "@/components/modules/admin/activityManagement/AdminAnalyticsDashboard";
 
-export default AdminDashboard
+export const dynamic = "force-dynamic";
+
+const AdminDashboard = async () => {
+  const analyticsData = await getAdminAnalytics();
+
+  return <AdminAnalyticsDashboard data={analyticsData} />;
+};
+
+export default AdminDashboard;

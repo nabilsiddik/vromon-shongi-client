@@ -64,6 +64,13 @@ export const userLogin = async (
 
     const result = await res.json();
 
+    if (!result?.success) {
+      return {
+        success: false,
+        message: result?.message || "Login failed. Please check your credentials.",
+      };
+    }
+
     const setCookieHeaders = res.headers.getSetCookie();
 
     if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -77,19 +84,32 @@ export const userLogin = async (
           refreshTokenObj = parsedCookie;
         }
       });
-    } else {
-      throw new Error("No set-cookie header found");
+    }
+
+    // Fallback: If cookies were not in set-cookie headers but in response data
+    if (!accessTokenObj && result?.data?.accessToken) {
+      accessTokenObj = {
+        accessToken: result.data.accessToken,
+        "Max-Age": "86400",
+        Path: "/",
+        SameSite: "none",
+      };
+    }
+
+    if (!refreshTokenObj && result?.data?.refreshToken) {
+      refreshTokenObj = {
+        refreshToken: result.data.refreshToken,
+        "Max-Age": "2592000",
+        Path: "/",
+        SameSite: "none",
+      };
     }
 
     if (!accessTokenObj) {
       throw new Error("Access Token object not found in cookies");
     }
 
-    if (!refreshTokenObj) {
-      throw new Error("Refresh Token object not found in cookies");
-    }
-
-    // Set acceess token to browser cookie
+    // Set access token to browser cookie
     await setCookie("accessToken", accessTokenObj.accessToken, {
       secure: true,
       httpOnly: true,
@@ -98,29 +118,38 @@ export const userLogin = async (
       sameSite: accessTokenObj["SameSite"] || "none",
     });
 
-    // Set refresh token to browser cookie
-    await setCookie("refreshToken", refreshTokenObj.refreshToken, {
-      secure: true,
-      httpOnly: true,
-      maxAge: parseInt(refreshTokenObj["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
-      path: refreshTokenObj.Path || "/",
-      sameSite: refreshTokenObj["SameSite"] || "none",
-    });
-
-    // Verify token
-    const verifiedToken: JwtPayload | string = jwt.verify(
-      accessTokenObj.accessToken,
-      process.env.JWT_ACCESS_SECRET as string
-    );
-
-    if (typeof verifiedToken === "string") {
-      throw new Error("Invalid token");
+    if (refreshTokenObj) {
+      // Set refresh token to browser cookie
+      await setCookie("refreshToken", refreshTokenObj.refreshToken, {
+        secure: true,
+        httpOnly: true,
+        maxAge: parseInt(refreshTokenObj["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
+        path: refreshTokenObj.Path || "/",
+        sameSite: refreshTokenObj["SameSite"] || "none",
+      });
     }
 
-    const userRole: UserRole = verifiedToken.role;
+    // Safely extract user role from token
+    let userRole: UserRole | undefined;
+    if (process.env.JWT_ACCESS_SECRET) {
+      try {
+        const verified = jwt.verify(
+          accessTokenObj.accessToken,
+          process.env.JWT_ACCESS_SECRET
+        ) as JwtPayload;
+        userRole = verified?.role;
+      } catch {
+        // Fall back to decode if secret doesn't match
+      }
+    }
 
-    if (!result.success) {
-      throw new Error(result?.message || "Login failed");
+    if (!userRole) {
+      const decoded = jwt.decode(accessTokenObj.accessToken) as JwtPayload;
+      userRole = decoded?.role;
+    }
+
+    if (!userRole) {
+      throw new Error("Invalid token: could not determine user role");
     }
 
     if (redirectTo) {
@@ -136,7 +165,6 @@ export const userLogin = async (
       }
     } else {
       redirect(`/?login=true`);
-      // redirect(`${getDefaultDashboardRoute(userRole)}?login=true`);
     }
   } catch (err: any) {
     if (err?.digest?.startsWith("NEXT_REDIRECT")) {
@@ -146,10 +174,7 @@ export const userLogin = async (
     return {
       success: false,
       error: err,
-      message:
-        process.env.NEXT_PUBLIC_NODE_ENV === "development"
-          ? err?.message
-          : "Login failed. Please check your credentials.",
+      message: err?.message || "Login failed. Please check your credentials.",
     };
   }
 };

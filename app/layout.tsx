@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description: "Find like-minded travelers going to your next destination. Create memories, make friends, and share the journey.",
 };
 
+import { Suspense } from "react";
+import PageLoadingBar from "@/components/shared/PageLoadingBar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,6 +34,9 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${inter.variable} ${dmSans.variable} antialiased`}
       >
+        <Suspense fallback={null}>
+          <PageLoadingBar />
+        </Suspense>
         {children}
         <Toaster richColors position="top-right" />
       </body>

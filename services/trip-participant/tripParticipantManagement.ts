@@ -28,7 +28,7 @@ export const createTripParticipant = async (tripId: string) => {
   }
 };
 
-// Get all my Participant join request
+// Get all my Participant join request (Incoming to my trips)
 export const myParticipantRequest = async () => {
   try {
     const res = await serverFetch.get(
@@ -38,13 +38,21 @@ export const myParticipantRequest = async () => {
     return result?.data || [];
   } catch (error: any) {
     console.log(error);
-    return {
-      success: false,
-      message: `${process.env.NODE_ENV === "development"
-        ? error.message
-        : "Something went wrong"
-        }`,
-    };
+    return [];
+  }
+};
+
+// Get all requests sent by this user to join other trips (Outgoing)
+export const getMyOutgoingTripRequests = async () => {
+  try {
+    const res = await serverFetch.get(
+      `/trip-participant/outgoing`
+    );
+    const result = await res.json();
+    return result?.data || [];
+  } catch (error: any) {
+    console.log(error);
+    return [];
   }
 };
 

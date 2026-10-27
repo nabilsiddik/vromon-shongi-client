@@ -46,6 +46,8 @@ export function TravelPlanForm({
     if (state?.success && prevSuccessRef.current !== true) {
       toast.success("Travel plan created successfully!");
       setTravelPlanImage(null);
+      setStartDate(undefined);
+      setEndDate(undefined);
       setResetImage((prev) => !prev);
     }
 
@@ -78,8 +80,8 @@ export function TravelPlanForm({
           hidden
         />
 
-        <input name="startDate" type="text" value={startDate ? startDate.toString() : ''} hidden />
-        <input name="endDate" type="text" value={endDate ? endDate.toString() : ''} hidden />
+        <input name="startDate" type="text" value={startDate ? startDate.toISOString() : ''} hidden />
+        <input name="endDate" type="text" value={endDate ? endDate.toISOString() : ''} hidden />
 
         <FieldGroup>
           {/* title  */}
@@ -93,7 +95,7 @@ export function TravelPlanForm({
               placeholder="Title of your plan"
             />
             <InputFieldError
-              field="destination"
+              field="title"
               state={state as IInputErrorState}
             />
           </Field>
@@ -141,13 +143,17 @@ export function TravelPlanForm({
                       selected={startDate}
                       captionLayout="dropdown"
                       onSelect={(date) => {
-                        setStartDate(date)
-                        setOpenStartDate(false)
+                        if (date && endDate && endDate <= date) {
+                          setEndDate(undefined);
+                          toast.info("End date reset because it must be greater than start date");
+                        }
+                        setStartDate(date);
+                        setOpenStartDate(false);
                       }}
                     />
                   </PopoverContent>
                 </Popover>
-                <InputFieldError field="birthDate" state={state} />
+                <InputFieldError field="startDate" state={state as IInputErrorState} />
               </Field>
             </div>
             {/* End date  */}
@@ -173,14 +179,19 @@ export function TravelPlanForm({
                       mode="single"
                       selected={endDate}
                       captionLayout="dropdown"
+                      disabled={(date) => (startDate ? date <= startDate : false)}
                       onSelect={(date) => {
-                        setEndDate(date)
-                        setOpenEndDate(false)
+                        if (date && startDate && date <= startDate) {
+                          toast.error("End date must be greater than start date");
+                          return;
+                        }
+                        setEndDate(date);
+                        setOpenEndDate(false);
                       }}
                     />
                   </PopoverContent>
                 </Popover>
-                <InputFieldError field="birthDate" state={state} />
+                <InputFieldError field="endDate" state={state as IInputErrorState} />
               </Field>
             </div>
           </div>
@@ -298,7 +309,7 @@ export function TravelPlanForm({
               placeholder="Past Youtube URL"
             />
             <InputFieldError
-              field="destination"
+              field="videoUrl"
               state={state as IInputErrorState}
             />
           </Field>
@@ -313,7 +324,7 @@ export function TravelPlanForm({
               placeholder="Trip details, companions, notes..."
             />
             <InputFieldError
-              field="description"
+              field="includes"
               state={state as IInputErrorState}
             />
           </Field>

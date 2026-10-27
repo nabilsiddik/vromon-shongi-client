@@ -43,7 +43,7 @@ export const getTravelPlanById = async (id: string) => {
 };
 
 // Get my travel plan
-export const getMyTravelPlan = async (queryString: string) => {
+export const getMyTravelPlan = async (queryString: string = "") => {
   try {
     const res = await serverFetch.get(
       `/travel-plan/my-plans${queryString ? `?${queryString}` : ""}`
@@ -90,11 +90,50 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       travelPlanZodSchema
     )?.data;
 
-    const includesArray = validatedPayload?.includes.split('\r\n').map((item: string) => item.trim()) || []
+    if (!validatedPayload.startDate || String(validatedPayload.startDate).trim() === "") {
+      return {
+        success: false,
+        message: "Please select a start date for your travel plan.",
+      };
+    }
+    if (!validatedPayload.endDate || String(validatedPayload.endDate).trim() === "") {
+      return {
+        success: false,
+        message: "Please select an end date for your travel plan.",
+      };
+    }
 
-    const parsedStartDate = new Date(validatedPayload.startDate).toISOString()
-    const parsedEndDate = new Date(validatedPayload.endDate).toISOString()
+    const start = new Date(validatedPayload.startDate);
+    const end = new Date(validatedPayload.endDate);
 
+    if (isNaN(start.getTime())) {
+      return {
+        success: false,
+        message: "Invalid start date. Please select a valid date.",
+      };
+    }
+    if (isNaN(end.getTime())) {
+      return {
+        success: false,
+        message: "Invalid end date. Please select a valid date.",
+      };
+    }
+    if (end <= start) {
+      return {
+        success: false,
+        message: "End date must be greater than start date.",
+      };
+    }
+
+    const parsedStartDate = start.toISOString();
+    const parsedEndDate = end.toISOString();
+
+    const includesArray = validatedPayload?.includes
+      ? validatedPayload.includes
+          .split(/\r?\n/)
+          .map((item: string) => item.trim())
+          .filter(Boolean)
+      : [];
 
     const travelPlanData = {
       title: validatedPayload.title,
@@ -108,15 +147,21 @@ export async function createTravelPlan(prevState: any, formData: FormData) {
       travelType: validatedPayload.travelType,
       description: validatedPayload.description ?? undefined,
       videoUrl: validatedPayload.videoUrl ?? undefined,
-      visibility: validatedPayload.visibility,
-      includes: includesArray
+      visibility: validatedPayload.visibility || "PUBLIC",
+      includes: includesArray,
     };
 
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(travelPlanData));
 
-    if (formData.get("travelPlanImage")) {
-      newFormData.append("file", formData.get("travelPlanImage") as Blob);
+    const travelPlanImage = formData.get("travelPlanImage");
+    if (
+      travelPlanImage &&
+      typeof travelPlanImage === "object" &&
+      "size" in travelPlanImage &&
+      (travelPlanImage as File).size > 0
+    ) {
+      newFormData.append("file", travelPlanImage as Blob);
     }
 
     const res = await serverFetch.post("/travel-plan", {
@@ -166,14 +211,35 @@ export async function updateTravelPlan(
 
   const validatedPayload: any = zodValidator(payload, updateTravelPlanZodSchema)?.data;
 
-  const parsedStartDate = new Date(validatedPayload.startDate).toISOString()
-  const parsedEndDate = new Date(validatedPayload.endDate).toISOString()
+  let parsedStartDate: string | undefined;
+  let parsedEndDate: string | undefined;
+
+  if (validatedPayload.startDate) {
+    const start = new Date(validatedPayload.startDate);
+    if (!isNaN(start.getTime())) {
+      parsedStartDate = start.toISOString();
+    }
+  }
+
+  if (validatedPayload.endDate) {
+    const end = new Date(validatedPayload.endDate);
+    if (!isNaN(end.getTime())) {
+      parsedEndDate = end.toISOString();
+    }
+  }
+
+  if (parsedStartDate && parsedEndDate && new Date(parsedEndDate) <= new Date(parsedStartDate)) {
+    return {
+      success: false,
+      message: "End date must be greater than start date.",
+    };
+  }
 
   const updatedTravelPlanData = {
     title: validatedPayload.title,
     destination: validatedPayload.destination,
-    startDate: parsedStartDate,
-    endDate: parsedEndDate,
+    ...(parsedStartDate ? { startDate: parsedStartDate } : {}),
+    ...(parsedEndDate ? { endDate: parsedEndDate } : {}),
     budgetFrom: validatedPayload.budgetFrom ?? undefined,
     budgetTo: validatedPayload.budgetTo ?? undefined,
     travelType: validatedPayload.travelType,
@@ -185,8 +251,14 @@ export async function updateTravelPlan(
   const newFormData = new FormData();
   newFormData.append("data", JSON.stringify(updatedTravelPlanData));
 
-  if (formData.get("travelPlanImage")) {
-    newFormData.append("file", formData.get("travelPlanImage") as Blob);
+  const travelPlanImage = formData.get("travelPlanImage");
+  if (
+    travelPlanImage &&
+    typeof travelPlanImage === "object" &&
+    "size" in travelPlanImage &&
+    (travelPlanImage as File).size > 0
+  ) {
+    newFormData.append("file", travelPlanImage as Blob);
   }
 
   try {

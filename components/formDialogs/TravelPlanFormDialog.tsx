@@ -165,6 +165,11 @@ export default function UpdateTravelPlanFormDialog({
                         selected={startDate}
                         captionLayout="dropdown"
                         onSelect={(date) => {
+                          const currentEnd = endDate || (travelPlan?.endDate ? new Date(travelPlan.endDate) : undefined);
+                          if (date && currentEnd && currentEnd <= date) {
+                            setEndDate(undefined);
+                            toast.info("End date reset because it must be greater than start date");
+                          }
                           setStartDate(date)
                           setOpenStartDate(false)
                         }}
@@ -179,6 +184,7 @@ export default function UpdateTravelPlanFormDialog({
               <div className="flex-1">
                 <Field>
                   <FieldLabel htmlFor="date" className="px-1">
+                    End Date
                   </FieldLabel>
                   <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                     <PopoverTrigger asChild>
@@ -190,6 +196,7 @@ export default function UpdateTravelPlanFormDialog({
                       >
                         {/* {travelPlan?.endDate ? formatDate(travelPlan?.endDate) : "Select End Date"} */}
                         {endDate ? formatDate(endDate) : formatDate(travelPlan?.endDate)}
+                        {/* {endDate?.toISOString()} */}
                         <ChevronDownIcon />
                       </Button>
                     </PopoverTrigger>
@@ -198,7 +205,16 @@ export default function UpdateTravelPlanFormDialog({
                         mode="single"
                         selected={endDate}
                         captionLayout="dropdown"
+                        disabled={(date) => {
+                          const currentStart = startDate || (travelPlan?.startDate ? new Date(travelPlan.startDate) : undefined);
+                          return currentStart ? date <= currentStart : false;
+                        }}
                         onSelect={(date) => {
+                          const currentStart = startDate || (travelPlan?.startDate ? new Date(travelPlan.startDate) : undefined);
+                          if (date && currentStart && date <= currentStart) {
+                            toast.error("End date must be greater than start date");
+                            return;
+                          }
                           setEndDate(date)
                           setOpenEndDate(false)
                         }}

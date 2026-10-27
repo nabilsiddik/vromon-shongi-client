@@ -74,7 +74,7 @@ const Footer = ({
     //   ],
     // },
   ],
-  copyright = "© 2026 TravelBuddy.com. All rights reserved.",
+  copyright = "© 2026 VromonShongi. All rights reserved. Developed By Nabil Siddik",
   bottomLinks = [
     { text: "Terms and Conditions", url: "#" },
     { text: "Privacy Policy", url: "#" },
@@ -91,7 +91,7 @@ const Footer = ({
               </div>
               <p className="mt-3 text-center">Connect with like-minded travelers, plan trips together, and create unforgettable experiences. Your journey starts here!</p>
               <div className="flex items-center justify-center">
-                <FooterSocialIcons/>
+                <FooterSocialIcons />
               </div>
             </div>
             {menuItems.map((section, sectionIdx) => (

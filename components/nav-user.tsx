@@ -37,6 +37,13 @@ export function NavUser({ user }: { user: IUserInfo }) {
     profileUrl = "/user/dashboard/profile";
   }
 
+  const initials =
+    user?.firstName && user?.lastName
+      ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
+      : user?.firstName
+      ? user.firstName.slice(0, 2).toUpperCase()
+      : "U";
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -47,11 +54,13 @@ export function NavUser({ user }: { user: IUserInfo }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user?.profileImage || ""} alt={`${user?.firstName} ${user?.lastName}`} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage src={user?.profileImage || ""} alt={`${user?.firstName || ""} ${user?.lastName || ""}`} />
+                <AvatarFallback className="rounded-lg bg-primary/10 text-primary font-semibold text-xs">
+                  {initials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
+                <span className="truncate font-medium">{`${user?.firstName || "User"} ${user?.lastName || ""}`}</span>
                 <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -67,16 +76,15 @@ export function NavUser({ user }: { user: IUserInfo }) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={
-                      user?.profileImage ||
-                      "https://i.ibb.co.com/2YHLD9xh/user.png"
-                    }
-                    alt={`${user?.firstName} ${user?.lastName}`}
+                    src={user?.profileImage || ""}
+                    alt={`${user?.firstName || ""} ${user?.lastName || ""}`}
                   />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg bg-primary/10 text-primary font-semibold text-xs">
+                    {initials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
+                  <span className="truncate font-medium">{`${user?.firstName || "User"} ${user?.lastName || ""}`}</span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>

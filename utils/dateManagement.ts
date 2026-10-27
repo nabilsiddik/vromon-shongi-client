@@ -6,7 +6,13 @@ export const formatDate = (isoDate: any) => {
 }
 
 export const dayDifference = (startDate: any, endDate: any) => {
-   return differenceInDays(startDate, endDate)
+  if (!startDate || !endDate) return 1;
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) return 1;
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return Math.max(1, diffDays);
 }
 
 export const formatDateForQuery = (date?: Date) =>

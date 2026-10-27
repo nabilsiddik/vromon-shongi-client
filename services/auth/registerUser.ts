@@ -9,7 +9,6 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
         const payload = {
             firstName: formData.get("firstName"),
             lastName: formData.get("lastName"),
-            birthDate: formData.get('birthDate'),
             email: formData.get("email"),
             password: formData.get("password"),
             confirmPassword: formData.get("confirmPassword"),
@@ -21,22 +20,19 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
 
         const validatedPayload: any = zodValidator(payload, registerUserZodSchema)?.data;
 
-        const date = new Date(validatedPayload.birthDate)
-        const formattedBirthDate = date.toISOString()
-
         const registerData = {
-            firstName: validatedPayload.firstName,
-            lastName: validatedPayload.lastName,
-            email: validatedPayload.email,
-            birthDate: formattedBirthDate,
+            firstName: validatedPayload.firstName?.trim(),
+            lastName: validatedPayload.lastName?.trim(),
+            email: validatedPayload.email?.trim()?.toLowerCase(),
             password: validatedPayload.password,
         }
 
         const newFormData = new FormData()
         newFormData.append('data', JSON.stringify(registerData))
 
-        if (formData.get('profileImage')) {
-            newFormData.append('file', formData.get('profileImage') as Blob)
+        const file = formData.get('file') || formData.get('profileImage');
+        if (file && typeof file === 'object' && 'size' in file && (file as File).size > 0) {
+            newFormData.append('file', file as Blob);
         }
 
         const res = await serverFetch.post('/user/create-user', {
@@ -55,7 +51,7 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error
         }
-        console.log('Error while registering patient', error)
+        console.log('Error while registering user', error)
         return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Registration Failed. Please try again."}` };
     }
 }

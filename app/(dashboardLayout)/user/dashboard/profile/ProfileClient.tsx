@@ -128,6 +128,15 @@ export default function ProfileClient({ user }: { user: any }) {
           </div>
 
           <div>
+            <p className="text-gray-500">Birth Date</p>
+            <p className="font-semibold">
+              {user?.birthDate
+                ? new Date(user.birthDate).toLocaleDateString()
+                : "N/A"}
+            </p>
+          </div>
+
+          <div>
             <p className="text-gray-500">Current Location</p>
             <p className="font-semibold">{user?.currentLocation || "N/A"}</p>
           </div>
@@ -265,6 +274,20 @@ export default function ProfileClient({ user }: { user: any }) {
                   defaultValue={user.currentLocation}
                   placeholder={user?.currentLocation ? '' : 'Current Location'}
                 />
+              </Field>
+
+              <Field>
+                <FieldLabel>Birth Date</FieldLabel>
+                <Input
+                  type="date"
+                  name="birthDate"
+                  defaultValue={
+                    user?.birthDate
+                      ? new Date(user.birthDate).toISOString().split("T")[0]
+                      : ""
+                  }
+                />
+                <InputFieldError field="birthDate" state={profileState} />
               </Field>
 
               {user?.role === "USER" && (

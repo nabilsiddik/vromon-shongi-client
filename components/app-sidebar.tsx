@@ -12,11 +12,13 @@ import {
   ActivityIcon,
   BaggageClaim,
   GitPullRequestIcon,
+  LayoutDashboard,
   List,
   ListCheck,
   MessageSquareDiff,
   PersonStanding,
   PlaneTakeoff,
+  Send,
   Settings,
   Star,
   User,
@@ -28,12 +30,17 @@ import { IUserInfo } from "@/types/user.interface";
 const data = {
   adminNavItems: [
     {
-      title: "Activity Management",
-      icon: <Activity />,
-      isActive: false,
+      title: "Overview",
+      icon: <LayoutDashboard />,
+      isActive: true,
       items: [
         {
-          title: "Activities",
+          title: "Dashboard",
+          url: "/admin/dashboard",
+          icon: <LayoutDashboard />,
+        },
+        {
+          title: "Activities & Analytics",
           url: "/admin/dashboard/activity",
           icon: <ActivityIcon />,
         },
@@ -42,7 +49,7 @@ const data = {
     {
       title: "User Management",
       icon: <User />,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Users",
@@ -66,9 +73,21 @@ const data = {
   ],
   userNavItems: [
     {
+      title: "Overview",
+      icon: <LayoutDashboard />,
+      isActive: true,
+      items: [
+        {
+          title: "Dashboard",
+          url: "/user/dashboard",
+          icon: <LayoutDashboard />,
+        },
+      ],
+    },
+    {
       title: "Travel Plans",
       icon: <PlaneTakeoff />,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Create Plan",
@@ -87,25 +106,8 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Join Request",
-    //   icon: <GitPullRequestIcon />,
-    //   isActive: false,
-    //   items: [
-    //     {
-    //       title: "Request Got",
-    //       url: "/user/dashboard/join-requests-got",
-    //       icon: <ListCheck />,
-    //     },
-    //     {
-    //       title: "Request Sent",
-    //       url: "/user/dashboard/join-requests-sent",
-    //       icon: <ListCheck />,
-    //     },
-    //   ],
-    // },
     {
-      title: "Trip Request",
+      title: "Trip Requests",
       icon: <GitPullRequestIcon />,
       isActive: false,
       items: [
@@ -114,11 +116,11 @@ const data = {
           url: "/user/dashboard/incoming-requests",
           icon: <ListCheck />,
         },
-        // {
-        //   title: "Outgoing Request",
-        //   url: "/user/dashboard/outgoing-requests",
-        //   icon: <ListCheck />,
-        // },
+        {
+          title: "Outgoing Requests",
+          url: "/user/dashboard/outgoing-requests",
+          icon: <Send />,
+        },
       ],
     },
     {

@@ -13,6 +13,7 @@ export const updateUserProfile = async (
             firstName: formData.get("firstName"),
             lastName: formData.get("lastName"),
             bio: formData.get("bio"),
+            birthDate: (formData.get("birthDate") as string) || undefined,
             currentLocation: formData.get("currentLocation"),
             interests: formData.get("interests") || '',
             visitedCountries: formData.get("visitedCountries") || '',
@@ -28,6 +29,7 @@ export const updateUserProfile = async (
             firstName: validatedPayload.firstName,
             lastName: validatedPayload.lastName,
             bio: validatedPayload.bio,
+            birthDate: validatedPayload.birthDate,
             currentLocation: validatedPayload.currentLocation,
             interests: validatedPayload.interests,
             visitedCountries: validatedPayload.visitedCountries

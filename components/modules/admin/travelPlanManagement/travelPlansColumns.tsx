@@ -49,7 +49,7 @@ export const travelPlansColumns: Column<any>[] = [
     header: "Budget Range",
     accessor: (travelPlan) => (
       <div className="flex flex-col">
-        <span className="text-sm font-medium">{`$${travelPlan?.budgetFrom} - $${travelPlan?.budgetFrom}`}</span>
+        <span className="text-sm font-medium">{`$${travelPlan?.budgetFrom} - $${travelPlan?.budgetTo}`}</span>
       </div>
     ),
     sortKey: "createdAt",

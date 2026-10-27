@@ -6,7 +6,7 @@ export const SubscriptionStatusEnum = z.enum(["NONE", "MONTHLY", "YEARLY"]);
 export const UserStatusEnum = z.enum(["ACTIVE", "BLOCKED", "DELETED"]);
 export const Gender = z.enum(["MALE", "FEMALE", "OTHERS"]);
 
-// patient creation input zod schema
+// user registration input zod schema
 export const registerUserZodSchema = z.object({
     firstName: z
         .string()
@@ -19,8 +19,6 @@ export const registerUserZodSchema = z.object({
     email: z
         .string()
         .email("Invalid email format"),
-
-    birthDate: z.string('Date is required'),
 
     password: z
         .string()
@@ -35,9 +33,10 @@ export const registerUserZodSchema = z.object({
 
 
 export const updateUserProfileZodSchema = z.object({
-    firstName: z.string('First Name is required').min(2, { message: "First must be at least 2 characters." }),
-    lastName: z.string('Last Name is required').min(2, { message: "Last Name must be at least 2 characters." }),
+    firstName: z.string().min(2, { message: "First must be at least 2 characters." }),
+    lastName: z.string().min(2, { message: "Last Name must be at least 2 characters." }),
     bio: z.string().max(300, { message: "Bio must be under 300 characters." }).optional(),
+    birthDate: z.string().optional(),
     currentLocation: z.string().max(100, { message: "Location must be under 100 characters." }).optional(),
     interests: z.string().optional(),
     visitedCountries: z.string().optional(),

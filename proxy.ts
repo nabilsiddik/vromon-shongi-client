@@ -12,27 +12,40 @@ import getLogedInUser from "./services/user/userManagement";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const accessToken = (await getCookie("accessToken")) || null;
+  const rawAccessToken = (await getCookie("accessToken")) || null;
 
   // If access token available verify it and store user role otherwise delete accesstoken and refresh token if they are already available
   let userRole: UserRole | null = null;
   let isVerified = false;
-  if (accessToken) {
-    const verifiedToken: JwtPayload | string = jwt.verify(
-      accessToken,
-      process.env.JWT_ACCESS_SECRET as string
-    );
+  let accessToken: string | null = null;
 
-    if (typeof verifiedToken === "string") {
+  if (rawAccessToken) {
+    try {
+      const secret = (process.env.JWT_ACCESS_SECRET as string) || "";
+      const verifiedToken = jwt.verify(rawAccessToken, secret) as JwtPayload;
+
+      if (verifiedToken && typeof verifiedToken !== "string") {
+        userRole = verifiedToken?.role;
+        accessToken = rawAccessToken;
+
+        try {
+          const logedInUser = await getLogedInUser();
+          isVerified = Boolean(logedInUser?.verifiedBadge);
+        } catch {
+          // Ignore profile fetch failure in proxy
+        }
+      } else {
+        await deleteCookie("accessToken");
+        await deleteCookie("refreshToken");
+      }
+    } catch {
+      // If token verification fails (invalid signature, expired, or secret changed):
+      // Clean up stale cookies so browser does not crash or get stuck in an error loop
       await deleteCookie("accessToken");
       await deleteCookie("refreshToken");
-      return NextResponse.redirect(new URL("/login", request.url));
+      userRole = null;
+      accessToken = null;
     }
-
-    userRole = verifiedToken?.role;
-
-    const logedInUser = await getLogedInUser();
-    isVerified = logedInUser?.verifiedBadge;
   }
 
   if (

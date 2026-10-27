@@ -1,8 +1,8 @@
 "use client";
 
-import { Avatar } from "@/components/ui/avatar";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { User } from "lucide-react";
 
 interface UserInfoCellProps {
   name?: string;
@@ -19,8 +19,11 @@ export function UserInfoCell({ userId, name, email, photo, gender }: UserInfoCel
   return (
     <div className="flex items-center gap-3">
       <Link target="_blank" href={`/traveler-profile/${userId}`}>
-        <Avatar>
-          <Image src={photo ? photo : userPlaceholderImage} alt={name || 'user'} width={40} height={40} />
+        <Avatar className="w-10 h-10 border">
+          {photo && <AvatarImage src={photo} alt={name || 'user'} className="object-cover" />}
+          <AvatarFallback className="bg-slate-100 text-slate-700 flex items-center justify-center text-xs font-semibold">
+            {name ? name.slice(0, 2).toUpperCase() : <User className="size-4 text-gray-500" />}
+          </AvatarFallback>
         </Avatar>
       </Link>
 

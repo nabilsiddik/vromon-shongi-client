@@ -1,15 +1,18 @@
 import getLogedInUser from "@/services/user/userManagement";
 import SubscriptionSuccessClient from "./SubscriptionSuccessClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ session_id?: string }>;
 }) {
-  // const sessionId = searchParams?.session_id;
+  const resolvedParams = await searchParams;
+  const sessionId = resolvedParams?.session_id;
 
   const user = await getLogedInUser();
   const isPremium = Boolean(user?.verifiedBadge);
 
-  return <SubscriptionSuccessClient isPremium={isPremium} />;
+  return <SubscriptionSuccessClient isPremium={isPremium} sessionId={sessionId} />;
 }
