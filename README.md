@@ -1,4 +1,4 @@
-# 🌍 Vromon Shongi (ভ্রমণ সঙ্গী) — Tour The World Together
+# Vromon Shongi (ভ্রমণ সঙ্গী) — Tour The World Together
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.0-blue?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
@@ -12,32 +12,32 @@
 
 ---
 
-## 🔗 Live Deployments
+## Live Deployments
 
-* **🌐 Live Frontend App:** [vromon-shongi.vercel.app](https://vromon-shongi.vercel.app/)
-* **⚡ Live Backend API:** [travel-buddy-backend-73ls.onrender.com](https://travel-buddy-backend-73ls.onrender.com/)
-* **🩺 Health Check Endpoint:** [travel-buddy-backend-73ls.onrender.com/health](https://travel-buddy-backend-73ls.onrender.com/health)
+* **Live Frontend App:** [vromon-shongi.vercel.app](https://vromon-shongi.vercel.app/)
+* **Live Backend API:** [travel-buddy-backend-73ls.onrender.com](https://travel-buddy-backend-73ls.onrender.com/)
+* **Health Check Endpoint:** [travel-buddy-backend-73ls.onrender.com/health](https://travel-buddy-backend-73ls.onrender.com/health)
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 1. 🔍 Trip Discovery & Intelligent Filtering
+### 1. Trip Discovery & Intelligent Filtering
 * **Dynamic Search & Filtering:** Filter plans in real-time by destination, travel style (`Solo`, `Family`, `Friends`), date ranges, and budget tiers.
 * **Rich Trip Profiles:** Detailed itineraries, estimated expenses, activity lists, host profile previews, and accepted participant rosters.
 
-### 2. 🤝 Travel Buddy Request & Matching Lifecycle
+### 2. Travel Buddy Request & Matching Lifecycle
 * **Join Requests with Custom Notes:** Users can submit join requests to trip creators with personalized notes.
 * **Host Control Center:** Hosts review incoming requests and have one-click `Approve` or `Reject` actions.
 * **Instant UI Feedback:** Instant optimistic state transitions (`Pending Approval`, `Approved`, `Rejected`) preventing duplicate applications.
 
-### 3. 💬 Real-Time Group Chat Coordination (Socket.IO)
+### 3. Real-Time Group Chat Coordination (Socket.IO)
 * **Access-Gated Chat Rooms:** Dedicated group chat rooms created automatically for each trip, strictly accessible to the host and approved participants.
 * **Zero-Latency Optimistic UI:** Sent messages render immediately in the user's inbox with background socket synchronization.
 * **Live Indicators:** Real-time typing indicators (`"User is typing..."`) and automatic reconnection resilience.
-* **Visual Hierarchy:** Distinct `Host 👑` badges and verified traveler indicators.
+* **Visual Hierarchy:** Distinct `Host` badges and verified traveler indicators.
 
-### 4. 📊 Role-Based Dashboards
+### 4. Role-Based Dashboards
 * **User Dashboard:**
   * **Overview:** High-level activity metrics and recent trips.
   * **My Travel Plans:** Create, update, and manage hosted trips with date validation.
@@ -50,18 +50,18 @@
   * **Travel Plan Oversight:** Moderate, filter, and inspect all platform travel plans.
   * **System Activity:** Audit platform activity feeds.
 
-### 5. 💳 Stripe Subscriptions & Verified Traveler Status
+### 5. Stripe Subscriptions & Verified Traveler Status
 * Integrated Stripe Checkout for monthly and annual subscriptions.
 * Grants verified badge perks (`verifiedBadge`), increasing trust within the travel community.
 
-### 6. 🎨 Modern Design & Micro-Interactions
+### 6. Modern Design & Micro-Interactions
 * Built with **Tailwind CSS v4** and **Radix UI** primitives.
 * Fluid animations and transitions powered by **Motion (Framer Motion)**.
 * Accessible theme colors, custom loading skeletons, and interactive toast notifications via **Sonner**.
 
 ---
 
-## 🛠️ Architecture & Workflow
+## Architecture & Workflow
 
 ```mermaid
 flowchart LR
@@ -77,7 +77,7 @@ flowchart LR
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 | Domain | Technology |
 |---|---|
@@ -95,7 +95,7 @@ flowchart LR
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```bash
 vromon-shongi-client/
@@ -130,7 +130,7 @@ vromon-shongi-client/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 * **Node.js**: v20.x or higher
@@ -184,7 +184,7 @@ npm run start
 
 ---
 
-## 🔒 Security & Performance Highlights
+## Security & Performance Highlights
 
 * **Server-Side Token Verification:** Sensitive dashboard routes are guarded using Next.js Middleware and SSR cookie validation.
 * **Cache-Safe SSR:** Real-time data endpoints implement `cache: 'no-store'` to prevent stale responses in production edge environments.
@@ -193,7 +193,7 @@ npm run start
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Nabil Siddik**
 * **Portfolio / GitHub:** [@nabilsiddik](https://github.com/nabilsiddik)
