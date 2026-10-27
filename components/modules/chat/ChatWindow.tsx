@@ -33,12 +33,39 @@ export default function ChatWindow({
   useEffect(() => {
     socket.connect();
 
-    // send join room event
-    socket.emit("join-room", { tripId: trip?.id, userId: user?.id });
+    const joinTripRoom = () => {
+      if (trip?.id) {
+        socket.emit("join-room", { tripId: trip?.id, userId: user?.id });
+      }
+    };
+
+    if (socket.connected) {
+      joinTripRoom();
+    }
+
+    socket.on("connect", joinTripRoom);
 
     // listen new messages and set message
     socket.on("new-message", (message) => {
-      setMessagesList((prev) => [...prev, message]);
+      setMessagesList((prev) => {
+        const idExists = prev.some((m) => m.id === message.id);
+        if (idExists) return prev;
+
+        const matchingOptimisticIndex = prev.findIndex(
+          (m) =>
+            m.isOptimistic &&
+            m.content === message.content &&
+            m.senderId === message.senderId
+        );
+
+        if (matchingOptimisticIndex !== -1) {
+          const updated = [...prev];
+          updated[matchingOptimisticIndex] = message;
+          return updated;
+        }
+
+        return [...prev, message];
+      });
     });
 
     // Listen typing users and set typing users
@@ -49,10 +76,11 @@ export default function ChatWindow({
     });
 
     socket.on("user-stop-typing", (userName) => {
-      setTypingUsers((prev) => prev.filter((user) => user !== userName));
+      setTypingUsers((prev) => prev.filter((u) => u !== userName));
     });
 
     return () => {
+      socket.off("connect", joinTripRoom);
       socket.off("new-message");
       socket.off("user-typing");
       socket.off("user-stop-typing");
@@ -63,16 +91,37 @@ export default function ChatWindow({
 
   // send message
   const sendMessage = () => {
-    if (!input.trim()) return;
+    if (!input.trim() || !user?.id || !trip?.id) return;
+
+    const messageContent = input.trim();
+
+    // Optimistically add message so sender sees it immediately
+    const optimisticMessage = {
+      id: `temp-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      content: messageContent,
+      senderId: user.id,
+      roomId: trip.id,
+      createdAt: new Date().toISOString(),
+      isOptimistic: true,
+      sender: {
+        id: user.id,
+        firstName: user.firstName || "You",
+        lastName: user.lastName || "",
+        profileImage: user.profileImage || null,
+        verifiedBadge: user.verifiedBadge || false,
+      },
+    };
+
+    setMessagesList((prev) => [...prev, optimisticMessage]);
 
     socket.emit("send-message", {
-      tripId: trip?.id,
-      senderId: user?.id,
-      content: input,
+      tripId: trip.id,
+      senderId: user.id,
+      content: messageContent,
     });
 
     setInput("");
-    socket.emit("stop-typing", { tripId: trip?.id });
+    socket.emit("stop-typing", { tripId: trip.id });
   };
 
   const handleTyping = (value: string) => {

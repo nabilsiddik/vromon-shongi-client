@@ -11,6 +11,7 @@ export const serverFetchHelper = async (
 
   const response = await fetch(`${SERVER_URL}${endPoint}`, {
     credentials: "include",
+    cache: "no-store",
     headers: {
       Cookie: accessToken ? `accessToken=${accessToken}` : "",
       ...headers,
