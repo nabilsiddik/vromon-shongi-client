@@ -25,7 +25,7 @@ export default async function MatchedTravelersSection() {
     <section className="max-w-7xl mx-auto px-5 my-20">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-gray-900">
-          Matched Travelers for You 🤝
+          Matched Travelers for You
         </h2>
         <p className="text-sm text-muted-foreground mt-2">
           Based on your shared interests, visited countries, and current destination.

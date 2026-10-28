@@ -41,7 +41,7 @@ export default function TopDestinations() {
       <SlideIn>
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
-            ✈️ Top Travel Destinations
+            Top Travel Destinations
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base mt-2 max-w-xl mx-auto">
             Discover popular destinations where travelers are actively organizing trips and looking for buddies.
