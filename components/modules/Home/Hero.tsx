@@ -27,7 +27,7 @@ export default function Hero() {
               memories, make friends, and share the journey.
             </p>
 
-            <Link href={"/travel-plans"}>
+            <Link href={"/trips"}>
               <Button
                 size="lg"
                 className="mt-4 rounded-xl px-8 py-6 text-lg shadow-lg cursor-pointer"
